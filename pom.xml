@@ -17,6 +17,7 @@
 
     <modules>
         <module>java8</module>
+        <module>java16</module>
     </modules>
 
     <dependencies>
