@@ -36,16 +36,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class StreamApiTest {
 
     private StreamApi streamApi;
-//    private static List<Account> accounts = Arrays.asList(
-//            new Account(1L, "Justin", "Butler", "justin.butler@gmail.com",
-//                    LocalDate.parse("2003-04-17"), Sex.MALE, LocalDate.parse("2016-06-13"), BigDecimal.valueOf(172966)),
-//            new Account(2L, "Olivia", "Cardenas", "cardenas@mail.com",
-//                    LocalDate.parse("1930-01-19"), Sex.FEMALE, LocalDate.parse("2014-06-21"), BigDecimal.valueOf(38029)),
-//            new Account(3L, "Nolan", "Donovan", "nolandonovan@gmail.com",
-//                    LocalDate.parse("1925-04-19"), Sex.MALE, LocalDate.parse("2011-03-10"), BigDecimal.valueOf(13889)),
-//            new Account(4L, "Lucas", "Lynn", "lucas.lynn@yahoo.com",
-//                    LocalDate.parse("1987-05-25"), Sex.MALE, LocalDate.parse("2009-03-05"), BigDecimal.valueOf(16980))
-//    );
 
     @BeforeEach
     void setUp() {
@@ -68,32 +58,25 @@ public class StreamApiTest {
         assertEquals(expectedList, actualList);
     }
 
-//    @Test
-//    @Order(1)
-//    void findRichestPerson() {
-//        Optional<Account> expectedPerson = Optional.of(accounts.get(0));
-//        Optional<Account> actualRichestPerson = streams.findRichestPerson();
-//
-//        assertEquals(expectedPerson, actualRichestPerson);
-//    }
-//
-//    @Test
-//    @Order(2)
-//    void findAccountsByBirthdayMonth() {
-//        List<Account> expectedList = getExpectedList();
-//        List<Account> aprilAccounts = streams.findAccountsByBirthdayMonth(Month.APRIL);
-//
-//        assertEquals(expectedList, aprilAccounts);
-//    }
-//
-//    @Test
-//    @Order(3)
-//    void separateMaleAccounts() {
-//        Map<Boolean, List<Account>> expectedAccountMap = getExpectedMaleMap();
-//        Map<Boolean, List<Account>> maleToAccountsMap = streams.partitionMaleAccounts();
-//
-//        assertEquals(expectedAccountMap, maleToAccountsMap);
-//    }
+    @Test
+    @Order(2)
+    void testGetLengthOfLongestString() {
+        List<String> list = List.of("air", "grass", "road", "buildings");
+        int expectedLength = list.get(3).length();
+        int actualLength = streamApi.getLongestStringLength(list);
+
+        assertEquals(expectedLength, actualLength);
+    }
+
+    @Test
+    @Order(3)
+    void testDeleteFirstLetterFromStrings() {
+        List<String> originalList = List.of("air", "grass", "road", "buildings");
+        List<String> expectedList = List.of("ir", "rass", "oad", "uildings");
+        List<String> actualList = streamApi.deleteFirstLetterFromStrings(originalList);
+
+        assertEquals(expectedList, actualList);
+    }
 //
 //    private Map<Boolean, List<Account>> getExpectedMaleMap() {
 //        Map<Boolean, List<Account>> expectedMap = new HashMap<>(2);

@@ -7,6 +7,7 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.OptionalInt;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -36,5 +37,22 @@ public class StreamApi {
                 .entrySet().stream()
                 .sorted(Map.Entry.comparingByValue(Comparator.reverseOrder()))
                 .map(Map.Entry::getKey).toList();
+    }
+
+    public int getLongestStringLength(List<String> list) {
+        OptionalInt response = list.stream()
+                .mapToInt(String::length)
+                .max();
+        if (response.isPresent()) {
+            return response.getAsInt();
+        } else {
+            return 0;
+        }
+    }
+
+    public List<String> deleteFirstLetterFromStrings(List<String> list) {
+        return list.stream()
+                .map(string -> string.substring(1))
+                .toList();
     }
 }
