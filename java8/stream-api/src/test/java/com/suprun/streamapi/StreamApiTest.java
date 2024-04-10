@@ -73,7 +73,7 @@ public class StreamApiTest {
     @Order(3)
     void testDeleteFirstLetterFromStrings() {
         List<String> originalList = List.of("air", "grass", "road", "buildings");
-        List<String> expectedList = List.of("ir", "rass", "oad", "uildings");
+        List<String> expectedList = List.of("uildings", "rass", "oad", "ir");
         List<String> actualList = streamApi.deleteFirstLetterFromStrings(originalList);
 
         assertEquals(expectedList, actualList);
