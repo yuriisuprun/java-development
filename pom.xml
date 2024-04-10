@@ -18,6 +18,7 @@
     <modules>
         <module>java8</module>
         <module>java16</module>
+        <module>algorithms</module>
     </modules>
 
     <dependencies>

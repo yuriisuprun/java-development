@@ -85,23 +85,48 @@ public class StreamApi {
 //                .sum();
     }
 
+    /**
+     * Returns the oldest Person
+     *
+     * @param people a list of People objects
+     * @return a Person object
+     */
     public Person findOldestPerson(List<Person> people) {
         return people.stream()
                 .sorted(Comparator.comparing(Person::getAge, Comparator.reverseOrder()))
                 .findFirst().get();
     }
 
-    public Map<Boolean, List<Person>> partitionPeopleByAge(List<Person> people) {
+    /**
+     * Returns a map where key is true if a person is older than @param age
+     *
+     * @param people a list of People objects
+     * @param age    an age of people to divide on 2 groups
+     * @return a Map with Boolean and List of Person as key and value
+     */
+    public Map<Boolean, List<Person>> partitionPeopleByAge(List<Person> people, int age) {
         return people.stream()
-                .collect(partitioningBy(person -> person.getAge() > 17));
+                .collect(partitioningBy(person -> person.getAge() > age));
     }
 
+    /**
+     * Returns a map where key is a character and value is the frequency of the letter in the word
+     *
+     * @param word an incoming word to count the letters in it
+     * @return a Map with Character and Long as key and value
+     */
     public Map<Character, Long> countLettersInWord(String word) {
         return word.chars()
                 .mapToObj(c -> (char) c)
                 .collect(groupingBy(Function.identity(), counting()));
     }
 
+    /**
+     * Returns a map where key is a character and value is the frequency of the letter in the word
+     *
+     * @param word an incoming word to count the letters in it
+     * @return a Map with Character and Long as key and value
+     */
     public Map<Character, Long> countLettersInWordOldStyle(String word) {
         char[] chars = word.toCharArray();
         Map<Character, Long> charactersByFrequency = new HashMap<>();

@@ -107,7 +107,7 @@ public class StreamApiTest {
         Map<Boolean, List<Person>> expectedMap = new HashMap<>();
         expectedMap.put(false, List.of(new Person("Sara", 4), new Person("Chiara", 17)));
         expectedMap.put(true, List.of(new Person("Viktor".intern(), 40), new Person("Eva", 42)));
-        Map<Boolean, List<Person>> actualMap = streamApi.partitionPeopleByAge(people);
+        Map<Boolean, List<Person>> actualMap = streamApi.partitionPeopleByAge(people, 17);
 
         assertEquals(expectedMap, actualMap);
     }
