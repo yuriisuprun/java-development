@@ -98,6 +98,29 @@ public class StreamApiTest {
 
         assertEquals(expectedPerson, actualPerson);
     }
+
+    @Test
+    @Order(6)
+    void testPartitionPeopleByAge() {
+        List<Person> people = List.of(new Person("Sara", 4), new Person("Chiara", 17),
+                new Person("Viktor".intern(), 40), new Person("Eva", 42));
+        Map<Boolean, List<Person>> expectedMap = new HashMap<>();
+        expectedMap.put(false, List.of(new Person("Sara", 4), new Person("Chiara", 17)));
+        expectedMap.put(true, List.of(new Person("Viktor".intern(), 40), new Person("Eva", 42)));
+        Map<Boolean, List<Person>> actualMap = streamApi.partitionPeopleByAge(people);
+
+        assertEquals(expectedMap, actualMap);
+    }
+
+    @Test
+    @Order(7)
+    void testCountLettersInWord() {
+        String String = "Discussion";
+        Map<Character, Long> expectedMap = Map.of('c',1L, 's', 3L, 'D', 1L, 'u',1L, 'i', 2L, 'n', 1L, 'o', 1L);
+        Map<Character, Long> actualMap = streamApi.countLettersInWord(String);
+
+        assertEquals(expectedMap, actualMap);
+    }
 //
 //    private Map<Boolean, List<Account>> getExpectedMaleMap() {
 //        Map<Boolean, List<Account>> expectedMap = new HashMap<>(2);

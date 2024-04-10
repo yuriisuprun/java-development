@@ -11,6 +11,7 @@ import java.util.function.Function;
 
 import static java.util.stream.Collectors.counting;
 import static java.util.stream.Collectors.groupingBy;
+import static java.util.stream.Collectors.partitioningBy;
 
 /**
  * @author Yurii_Suprun
@@ -87,5 +88,16 @@ public class StreamApi {
         return people.stream()
                 .sorted(Comparator.comparing(Person::getAge, Comparator.reverseOrder()))
                 .findFirst().get();
+    }
+
+    public Map<Boolean, List<Person>> partitionPeopleByAge(List<Person> people) {
+        return people.stream()
+                .collect(partitioningBy(person -> person.getAge() > 17));
+    }
+
+    public Map<Character, Long> countLettersInWord(String word) {
+        return word.chars()
+                .mapToObj(c -> (char)c)
+                .collect(groupingBy(Function.identity(), counting()));
     }
 }
