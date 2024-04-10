@@ -2,7 +2,9 @@ package com.suprun.algorithms;
 
 import lombok.AllArgsConstructor;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
@@ -16,20 +18,11 @@ import java.util.stream.Collectors;
 public class Algorithms {
 
     /**
-     * Returns a {@link List} of strings with sorted strings by frequency
+     * Returns a sorted array using bubble sort algorithm
      *
-     * @param textWithHashtags a text with hashtags
-     * @return list of strings
+     * @param array to sort
+     * @return a sorted array
      */
-    public List<String> getSortedHashCodes(String textWithHashtags) {
-        return Arrays.stream(textWithHashtags.split(" "))
-                .filter(word -> word.startsWith("#"))
-                .collect(Collectors.groupingBy(Function.identity(), Collectors.counting()))
-                .entrySet().stream()
-                .sorted(Map.Entry.comparingByValue(Comparator.reverseOrder()))
-                .map(Map.Entry::getKey).toList();
-    }
-
     public int[] bubbleSort(int[] array) {
         int temp;
         for (int i = 0; i < array.length; i++) {
@@ -42,5 +35,20 @@ public class Algorithms {
             }
         }
         return array;
+    }
+
+    public int[] reverseArray(int[] numbers) {
+        int temp;
+        for (int i = 0; i < numbers.length/2; i++) {
+            temp = numbers[i];
+            numbers[i] = numbers[numbers.length - i - 1];
+            numbers[numbers.length - i - 1] = temp;
+        }
+        return numbers;
+    }
+
+    public void reverseArray(Integer[] numbers) {
+        List<Integer> numbersList = new ArrayList<>(Arrays.asList(numbers));
+        Collections.reverse(numbersList);
     }
 }

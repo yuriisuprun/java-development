@@ -54,6 +54,15 @@ public class AlgorithmsTest {
         assertEquals(Arrays.toString(expectedArray), Arrays.toString(actualArray));
     }
 
+    @Test
+    @Order(1)
+    void testReverseArray() {
+        int[] numbers = {25, 5, 4, 67, 85, 104};
+        int [] expectedArray = {104, 85, 67, 4, 5, 25};
+        int [] actualArray = algorithms.reverseArray(numbers);
+
+        assertEquals(Arrays.toString(expectedArray), Arrays.toString(actualArray));
+    }
 }
 
 

@@ -140,4 +140,9 @@ public class StreamApi {
         }
         return charactersByFrequency;
     }
+
+    public void printParallelStreamListWithOrder() {
+        List<String> list = Arrays.asList("A", "B", "C", "D");
+        list.parallelStream().forEachOrdered(System.out::println);
+    }
 }
