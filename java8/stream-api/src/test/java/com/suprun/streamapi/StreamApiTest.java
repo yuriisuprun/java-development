@@ -12,6 +12,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.Month;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -76,6 +77,15 @@ public class StreamApiTest {
         List<String> actualList = streamApi.deleteFirstLetterFromStrings(originalList);
 
         assertEquals(expectedList, actualList);
+    }
+
+    @Test
+    @Order(4)
+    void testCountLettersForStringsLongerThan() {
+        List<String> originalList = List.of("Bill", "Tom", "Ronny", "Michelangelo", "Alexander");
+        int actualSum = streamApi.countLettersForStringsLongerThan(originalList, 4);
+
+        assertEquals(26, actualSum);
     }
 //
 //    private Map<Boolean, List<Account>> getExpectedMaleMap() {

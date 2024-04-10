@@ -22,16 +22,13 @@ import static java.util.stream.Collectors.groupingBy;
 public class StreamApi {
 
     /**
-     * Returns List of strings with the max value of balance
+     * Returns List of strings with sorted strings by frequency
      *
-     * @return account with max balance wrapped with optional
+     *  @param textWithHashtags a text with hashtags
+     * @return list of Strings
      */
-//    public Optional<Account> findRichestPerson() {
-//        return accounts.stream()
-//                .max(Comparator.comparing(Account::getBalance));
-//    }
-    public List<String> getSortedHashCodes(String textWithHashTags) {
-        return Arrays.stream(textWithHashTags.split(" "))
+    public List<String> getSortedHashCodes(String textWithHashtags) {
+        return Arrays.stream(textWithHashtags.split(" "))
                 .filter(word -> word.startsWith("#"))
                 .collect(groupingBy(Function.identity(), counting()))
                 .entrySet().stream()
@@ -54,5 +51,17 @@ public class StreamApi {
         return list.stream()
                 .map(string -> string.substring(1))
                 .toList();
+    }
+
+    public int countLettersForStringsLongerThan(List<String> originalList, int wordLengthToCount) {
+        return originalList.stream()
+                .map(String::length)
+                .filter(length -> length > wordLengthToCount)
+                .reduce(0, Integer::sum);
+
+//        return originalList.stream()
+//                .mapToInt(String::length)
+//                .filter(length -> length > wordLengthToCount)
+//                .sum();
     }
 }
