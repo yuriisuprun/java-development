@@ -14,6 +14,7 @@ import java.time.LocalDate;
 import java.time.Month;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -55,13 +56,43 @@ public class AlgorithmsTest {
     }
 
     @Test
-    @Order(1)
+    @Order(2)
     void testReverseArray() {
         int[] numbers = {25, 5, 4, 67, 85, 104};
         int [] expectedArray = {104, 85, 67, 4, 5, 25};
         int [] actualArray = algorithms.reverseArray(numbers);
 
         assertEquals(Arrays.toString(expectedArray), Arrays.toString(actualArray));
+    }
+
+    @Test
+    @Order(3)
+    void testFindMinInArray() {
+        int[] numbers = {25, 5, 4, 67, 85, 104};
+        Integer Integer = 4;
+        int actualMin = algorithms.findMinInArray(numbers);
+
+        assertEquals(Integer, actualMin);
+    }
+
+    @Test
+    @Order(4)
+    void testFindMinInArrayGenericComparable() {
+        Integer[] numbers = {25, 5, 4, 67, 85, 104};
+        Integer Integer = 4;
+        int actualMin = algorithms.findMinInArrayGenericComparable(numbers);
+
+        assertEquals(Integer, actualMin);
+    }
+
+    @Test
+    @Order(4)
+    void testFindMinInArrayGenericComparator() {
+        Integer[] numbers = {25, 5, 4, 67, 85, 104};
+        Integer Integer = 4;
+        int actualMin = algorithms.findMinInArrayGenericComparator(numbers, (o1, o2) -> o1.compareTo(o2));
+
+        assertEquals(Integer, actualMin);
     }
 }
 

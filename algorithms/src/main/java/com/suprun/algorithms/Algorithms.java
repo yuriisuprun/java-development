@@ -7,9 +7,6 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
-import java.util.Map;
-import java.util.function.Function;
-import java.util.stream.Collectors;
 
 /**
  * @author Yurii_Suprun
@@ -26,8 +23,8 @@ public class Algorithms {
     public int[] bubbleSort(int[] array) {
         int temp;
         for (int i = 0; i < array.length; i++) {
-            for (int j = 0; j < array.length - 1; j++){
-                if(array[j + 1] < array[j]){
+            for (int j = 0; j < array.length - 1; j++) {
+                if (array[j + 1] < array[j]) {
                     temp = array[j + 1];
                     array[j + 1] = array[j];
                     array[j] = temp;
@@ -39,7 +36,7 @@ public class Algorithms {
 
     public int[] reverseArray(int[] numbers) {
         int temp;
-        for (int i = 0; i < numbers.length/2; i++) {
+        for (int i = 0; i < numbers.length / 2; i++) {
             temp = numbers[i];
             numbers[i] = numbers[numbers.length - i - 1];
             numbers[numbers.length - i - 1] = temp;
@@ -50,5 +47,35 @@ public class Algorithms {
     public void reverseArray(Integer[] numbers) {
         List<Integer> numbersList = new ArrayList<>(Arrays.asList(numbers));
         Collections.reverse(numbersList);
+    }
+
+    public int findMinInArray(int[] numbers) {
+        int min = numbers[0];
+        for (int number: numbers) {
+            if (number < min){
+                min = number;
+            }
+        }
+        return min;
+    }
+
+    public <T extends Comparable<T>> T findMinInArrayGenericComparable(T[] numbers) {
+        T min = numbers[0];
+        for (T number: numbers) {
+            if (number.compareTo(min) < 0){
+                min = number;
+            }
+        }
+        return min;
+    }
+
+    public <T> T findMinInArrayGenericComparator(T[] numbers, Comparator<T> comparator) {
+        T min = numbers[0];
+        for (T number: numbers) {
+            if (comparator.compare(number, min) < 0){
+                min = number;
+            }
+        }
+        return min;
     }
 }
