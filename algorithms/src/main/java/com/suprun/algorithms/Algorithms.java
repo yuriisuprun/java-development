@@ -78,4 +78,13 @@ public class Algorithms {
         }
         return min;
     }
+
+    public boolean isTextPalindrome(String text) {
+        String cleanedText = text.replaceAll("[ ,.;!]", "");
+        String cleanedLowerCaseText = cleanedText.toLowerCase();
+        StringBuilder stringBuilder = new StringBuilder(cleanedLowerCaseText);
+        stringBuilder.reverse();
+        String reversedText = stringBuilder.toString();
+        return cleanedLowerCaseText.equals(reversedText);
+    }
 }

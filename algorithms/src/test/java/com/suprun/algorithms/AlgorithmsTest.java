@@ -94,6 +94,24 @@ public class AlgorithmsTest {
 
         assertEquals(Integer, actualMin);
     }
+
+    @Test
+    @Order(5)
+    void testIsTextPalindrome_true() {
+        String text = "A man, a plan, a canal, Panama!";
+        boolean result = algorithms.isTextPalindrome(text);
+
+        assertTrue(result);
+    }
+
+    @Test
+    @Order(6)
+    void testIsTextPalindrome_false() {
+        String text = "Banana";
+        boolean result = algorithms.isTextPalindrome(text);
+
+        assertFalse(result);
+    }
 }
 
 
