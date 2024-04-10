@@ -82,4 +82,10 @@ public class StreamApi {
 //                .filter(length -> length > wordLengthToCount)
 //                .sum();
     }
+
+    public Person findOldestPerson(List<Person> people) {
+        return people.stream()
+                .sorted(Comparator.comparing(Person::getAge, Comparator.reverseOrder()))
+                .findFirst().get();
+    }
 }

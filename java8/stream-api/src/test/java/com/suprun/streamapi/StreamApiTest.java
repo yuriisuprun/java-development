@@ -21,6 +21,7 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Stream;
 
+import static java.util.Arrays.asList;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -86,6 +87,16 @@ public class StreamApiTest {
         int actualSum = streamApi.countLettersForStringsLongerThan(originalList, 4);
 
         assertEquals(26, actualSum);
+    }
+
+    @Test
+    @Order(5)
+    void testFindOldestPerson() {
+        List<Person> people = List.of(new Person("Sara", 4), new Person("Viktor".intern(), 40), new Person("Eva", 42));
+        Person expectedPerson = new Person("Eva", 42);
+        Person actualPerson = streamApi.findOldestPerson(people);
+
+        assertEquals(expectedPerson, actualPerson);
     }
 //
 //    private Map<Boolean, List<Account>> getExpectedMaleMap() {
