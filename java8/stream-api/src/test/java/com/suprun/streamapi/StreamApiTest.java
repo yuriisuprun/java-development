@@ -121,6 +121,16 @@ public class StreamApiTest {
 
         assertEquals(expectedMap, actualMap);
     }
+
+    @Test
+    @Order(7)
+    void testCountLettersInWordOldStyle() {
+        String String = "Discussion";
+        Map<Character, Long> expectedMap = Map.of('c',1L, 's', 3L, 'D', 1L, 'u',1L, 'i', 2L, 'n', 1L, 'o', 1L);
+        Map<Character, Long> actualMap = streamApi.countLettersInWordOldStyle(String);
+
+        assertEquals(expectedMap, actualMap);
+    }
 //
 //    private Map<Boolean, List<Account>> getExpectedMaleMap() {
 //        Map<Boolean, List<Account>> expectedMap = new HashMap<>(2);

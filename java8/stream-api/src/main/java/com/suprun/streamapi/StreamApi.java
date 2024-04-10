@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 
 import java.util.Arrays;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.OptionalInt;
@@ -22,7 +23,7 @@ public class StreamApi {
     /**
      * Returns a {@link List} of strings with sorted strings by frequency
      *
-     *  @param textWithHashtags a text with hashtags
+     * @param textWithHashtags a text with hashtags
      * @return list of strings
      */
     public List<String> getSortedHashCodes(String textWithHashtags) {
@@ -68,7 +69,7 @@ public class StreamApi {
     /**
      * Returns a letters sum of string which length is more than @param wordLengthToCount
      *
-     * @param list a list of strings
+     * @param list              a list of strings
      * @param wordLengthToCount a list of strings
      * @return a string length
      */
@@ -97,7 +98,21 @@ public class StreamApi {
 
     public Map<Character, Long> countLettersInWord(String word) {
         return word.chars()
-                .mapToObj(c -> (char)c)
+                .mapToObj(c -> (char) c)
                 .collect(groupingBy(Function.identity(), counting()));
+    }
+
+    public Map<Character, Long> countLettersInWordOldStyle(String word) {
+        char[] chars = word.toCharArray();
+        Map<Character, Long> charactersByFrequency = new HashMap<>();
+        for (char c : chars) {
+            if (!charactersByFrequency.containsKey(c)) {
+                charactersByFrequency.put(c, 0L);
+            }
+            long frequency = charactersByFrequency.get(c);
+            frequency++;
+            charactersByFrequency.put(c, frequency);
+        }
+        return charactersByFrequency;
     }
 }
