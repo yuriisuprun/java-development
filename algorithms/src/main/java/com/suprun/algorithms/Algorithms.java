@@ -51,8 +51,8 @@ public class Algorithms {
 
     public int findMinInArray(int[] numbers) {
         int min = numbers[0];
-        for (int number: numbers) {
-            if (number < min){
+        for (int number : numbers) {
+            if (number < min) {
                 min = number;
             }
         }
@@ -61,8 +61,8 @@ public class Algorithms {
 
     public <T extends Comparable<T>> T findMinInArrayGenericComparable(T[] numbers) {
         T min = numbers[0];
-        for (T number: numbers) {
-            if (number.compareTo(min) < 0){
+        for (T number : numbers) {
+            if (number.compareTo(min) < 0) {
                 min = number;
             }
         }
@@ -71,8 +71,8 @@ public class Algorithms {
 
     public <T> T findMinInArrayGenericComparator(T[] numbers, Comparator<T> comparator) {
         T min = numbers[0];
-        for (T number: numbers) {
-            if (comparator.compare(number, min) < 0){
+        for (T number : numbers) {
+            if (comparator.compare(number, min) < 0) {
                 min = number;
             }
         }
@@ -80,6 +80,9 @@ public class Algorithms {
     }
 
     public boolean isTextPalindrome(String text) {
+        if (text == null) {
+            text = "";
+        }
         String cleanedText = text.replaceAll("[ ,.;!]", "");
         String cleanedLowerCaseText = cleanedText.toLowerCase();
         StringBuilder stringBuilder = new StringBuilder(cleanedLowerCaseText);
