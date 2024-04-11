@@ -19,6 +19,7 @@
         <module>java8</module>
         <module>java16</module>
         <module>algorithms</module>
+        <module>design-patterns</module>
     </modules>
 
     <dependencies>
