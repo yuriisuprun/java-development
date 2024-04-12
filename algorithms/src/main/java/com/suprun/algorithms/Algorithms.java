@@ -90,4 +90,31 @@ public class Algorithms {
         String reversedText = stringBuilder.toString();
         return cleanedLowerCaseText.equals(reversedText);
     }
+
+    public int reverseInteger(int number) {
+        String string = Integer.toString(Math.abs(number));
+        StringBuilder sb = new StringBuilder(string);
+        sb.reverse();
+        int result = Integer.parseInt(sb.toString());
+        if (number < 0) {
+            result = -result;
+        }
+        return result;
+    }
+
+    public int reverseIntegerWithoutString(int number) {
+        var reversed = 0L;
+        var digit = 0;
+
+        while (number != 0) {
+            digit = number % 10;
+            reversed = reversed * 10 + digit;
+            number = number / 10;
+
+            if (reversed > Integer.MAX_VALUE || reversed < Integer.MIN_VALUE) {
+                return 0;
+            }
+        }
+        return (int) reversed;
+    }
 }

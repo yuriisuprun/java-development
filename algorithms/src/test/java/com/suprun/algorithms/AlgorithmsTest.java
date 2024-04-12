@@ -112,6 +112,60 @@ public class AlgorithmsTest {
 
         assertFalse(result);
     }
+
+    @Test
+    @Order(7)
+    void testReversePositiveInteger() {
+        int originalInt = 123;
+        int result = algorithms.reverseInteger(originalInt);
+
+        assertEquals(321, result);
+    }
+
+    @Test
+    @Order(8)
+    void testReverseNegativeInteger() {
+        int originalInt = -123;
+        int result = algorithms.reverseInteger(originalInt);
+
+        assertEquals(-321, result);
+    }
+
+    @Test
+    @Order(9)
+    void testReverseInteger() {
+        int originalInt = 120;
+        int result = algorithms.reverseInteger(originalInt);
+
+        assertEquals(21, result);
+    }
+
+    @Test
+    @Order(10)
+    void testReversePositiveIntegerWithoutString() {
+        int originalInt = 123;
+        int result = algorithms.reverseIntegerWithoutString(originalInt);
+
+        assertEquals(321, result);
+    }
+
+    @Test
+    @Order(11)
+    void testReverseNegativeIntegerWithoutString() {
+        int originalInt = -123;
+        int result = algorithms.reverseIntegerWithoutString(originalInt);
+
+        assertEquals(-321, result);
+    }
+
+    @Test
+    @Order(12)
+    void testReverseIntegerWithoutString() {
+        int originalInt = 120;
+        int result = algorithms.reverseIntegerWithoutString(originalInt);
+
+        assertEquals(21, result);
+    }
 }
 
 
