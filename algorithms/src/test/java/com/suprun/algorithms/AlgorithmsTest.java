@@ -143,19 +143,19 @@ public class AlgorithmsTest {
     @Test
     @Order(10)
     void testReversePositiveIntegerWithoutString() {
-        int originalInt = 123;
+        int originalInt = 2147483647;
         int result = algorithms.reverseIntegerWithoutString(originalInt);
 
-        assertEquals(321, result);
+        assertEquals(0, result);
     }
 
     @Test
     @Order(11)
     void testReverseNegativeIntegerWithoutString() {
-        int originalInt = -123;
+        int originalInt = -2147483648;
         int result = algorithms.reverseIntegerWithoutString(originalInt);
 
-        assertEquals(-321, result);
+        assertEquals(0, result);
     }
 
     @Test
