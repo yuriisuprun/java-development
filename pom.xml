@@ -20,6 +20,7 @@
         <module>java16</module>
         <module>algorithms</module>
         <module>design-patterns</module>
+        <module>java-core-fundamentals</module>
     </modules>
 
     <dependencies>
