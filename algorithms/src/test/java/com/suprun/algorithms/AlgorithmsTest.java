@@ -166,6 +166,22 @@ public class AlgorithmsTest {
 
         assertEquals(21, result);
     }
+
+    @Test
+    @Order(13)
+    void testFindMissedNumber() {
+        int[] integers = {4, 5, 6, 7, 8, 10, 11};
+        int result = algorithms.findMissedNumber(integers);
+
+        assertEquals(9, result);
+    }
+
+    @Test
+    @Order(14)
+    void testFindMissedNumberBySum() {
+        int[] integers = {4, 5, 6, 8, 9, 10, 11};
+        int result = algorithms.findMissedNumberBySum(integers);
+
+        assertEquals(7, result);
+    }
 }
-
-

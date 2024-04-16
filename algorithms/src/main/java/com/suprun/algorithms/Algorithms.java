@@ -117,4 +117,30 @@ public class Algorithms {
         }
         return (int) reversed;
     }
+
+    public int findMissedNumber(int[] array) {
+        int length = array.length;
+        int currentNumber = array[0];
+        for (int i = 1; i < length; i++) {
+            currentNumber++;
+            if (currentNumber != array[i]) {
+                return currentNumber;
+            }
+        }
+        return 0;
+    }
+
+    public int findMissedNumberBySum(int[] array) {
+        int first = array[0];
+        int fullSum = 0;
+        int actualSum = Arrays.stream(array).sum();
+        for (int i = first; i <= array[array.length - 1]; i++) {
+            fullSum = fullSum + first;
+            first++;
+        }
+        if (fullSum != actualSum) {
+            return fullSum - actualSum;
+        }
+        return 0;
+    }
 }
