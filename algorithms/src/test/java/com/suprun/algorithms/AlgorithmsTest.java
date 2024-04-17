@@ -1,6 +1,7 @@
 package com.suprun.algorithms;
 
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
@@ -59,8 +60,8 @@ public class AlgorithmsTest {
     @Order(2)
     void testReverseArray() {
         int[] numbers = {25, 5, 4, 67, 85, 104};
-        int [] expectedArray = {104, 85, 67, 4, 5, 25};
-        int [] actualArray = algorithms.reverseArray(numbers);
+        int[] expectedArray = {104, 85, 67, 4, 5, 25};
+        int[] actualArray = algorithms.reverseArray(numbers);
 
         assertEquals(Arrays.toString(expectedArray), Arrays.toString(actualArray));
     }
@@ -183,5 +184,15 @@ public class AlgorithmsTest {
         int result = algorithms.findMissedNumberBySum(integers);
 
         assertEquals(7, result);
+    }
+
+    @Test
+    @Order(15)
+    @DisplayName("insertionSort method returns correct sorted array")
+    void testSortArray() {int[] integers = {5, 2, 4, 6, 1};
+        int[] expected = {1, 2, 4, 5, 6};
+        int[] actual = algorithms.insertionSort(integers);
+
+        assertEquals(Arrays.toString(expected), Arrays.toString(actual));
     }
 }
