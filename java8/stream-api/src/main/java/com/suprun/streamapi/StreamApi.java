@@ -32,7 +32,8 @@ public class StreamApi {
                 .collect(groupingBy(Function.identity(), counting()))
                 .entrySet().stream()
                 .sorted(Map.Entry.comparingByValue(Comparator.reverseOrder()))
-                .map(Map.Entry::getKey).toList();
+                .map(Map.Entry::getKey)
+                .toList();
     }
 
     /**
