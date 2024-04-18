@@ -1,8 +1,8 @@
-package com.suprun;
+package com.suprun.annotations;
 
 /**
  * @author Yurii_Suprun
  */
-@Marker
+@TestAnnotation
 public class MagicClass {
 }
