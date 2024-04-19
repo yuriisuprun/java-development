@@ -5,6 +5,7 @@ target/
 
 ### IntelliJ IDEA ###
 .idea/libraries/
+.idea/.gitignore
 .idea
 *.iws
 *.iml
