@@ -21,6 +21,7 @@
         <module>algorithms</module>
         <module>design-patterns</module>
         <module>java-core-fundamentals</module>
+        <module>threads</module>
     </modules>
 
     <dependencies>
