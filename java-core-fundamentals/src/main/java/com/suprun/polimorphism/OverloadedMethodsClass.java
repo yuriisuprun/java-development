@@ -27,7 +27,7 @@ public class OverloadedMethodsClass {
 
     // Method to find the maximum of two integers
     public int max(int a, int b) {
-        return (a > b) ? a : b;
+        return Math.max(a, b);
     }
 }
 
