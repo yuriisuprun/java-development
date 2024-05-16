@@ -7,6 +7,9 @@ import java.net.HttpURLConnection;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 public class Main {
     public static void main(String[] args) throws IOException, URISyntaxException {
@@ -44,5 +47,13 @@ public class Main {
 
         // Disconnect the connection
         connection.disconnect();
+
+        LocalDate currentDate = LocalDate.now();
+        System.out.println(currentDate);
+        LocalTime currentTime = LocalTime.now();
+        System.out.println(currentTime.getHour());
+        System.out.println(currentTime);
+        LocalDateTime currentDateTime = LocalDateTime.now();
+        System.out.println(currentDateTime);
     }
 }
