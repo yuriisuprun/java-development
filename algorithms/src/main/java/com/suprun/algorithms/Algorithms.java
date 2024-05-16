@@ -6,7 +6,12 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.function.Function;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 /**
  * @author Yurii_Suprun
@@ -156,5 +161,55 @@ public class Algorithms {
             array[j + 1] = current;
         }
         return array;
+    }
+
+    public static int[] mergeSorted(int[] arr1, int[] arr2) {
+//        Objects.checkIndex(4, 10);
+        return IntStream.concat(Arrays.stream(arr1), Arrays.stream(arr2))
+                .sorted()
+                .toArray();
+    }
+
+    public static void main(String[] args) {
+        int[] arr1 = {1, 5, 9};
+        int[] arr2 = {4, 6, 7, 10};
+        System.out.println(Arrays.toString(mergeSorted(arr1, arr2)));
+    }
+
+//    You are given two strings as an input. You must check if they form an anagram.
+//    public boolean areAnagram(String s1, String s2) {}
+//    HEART <-> EARTH, LISTEN <-> SILENT
+    public boolean areAnagrams(String s1, String s2) {
+        if (s1.length() != s2.length()) {
+            return false;
+        }
+        Map<Character, Long> letters1 = s1.chars()
+                .mapToObj(c -> (char) c)
+                .collect(Collectors.groupingBy(Function.identity(), Collectors.counting()));
+        Map<Character, Long> letters2 = s2.chars()
+                .mapToObj(c -> (char) c)
+                .collect(Collectors.groupingBy(Function.identity(), Collectors.counting()));
+        return letters1.equals(letters2);
+    }
+
+    public boolean areAnagramsOopApproach(String s1, String s2) {
+        if (s1.length() != s2.length()) {
+            return false;
+        }
+        Map<Character, Integer> mappedLetters1 = countLettersOfString(s1);
+        Map<Character, Integer> mappedLetters2 = countLettersOfString(s2);
+        return mappedLetters1.equals(mappedLetters2);
+    }
+
+    private Map<Character, Integer> countLettersOfString(String str) {
+        Map<Character, Integer> letters = new HashMap<>();
+        for (char c : str.toCharArray()) {
+            if (letters.containsKey(c)) {
+                letters.put(c, letters.get(c) + 1);
+            } else {
+                letters.put(c, 1);
+            }
+        }
+        return letters;
     }
 }

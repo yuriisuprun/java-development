@@ -189,10 +189,55 @@ public class AlgorithmsTest {
     @Test
     @Order(15)
     @DisplayName("insertionSort method returns correct sorted array")
-    void testSortArray() {int[] integers = {5, 2, 4, 6, 1};
+    void testSortArray() {
+        int[] integers = {5, 2, 4, 6, 1};
         int[] expected = {1, 2, 4, 5, 6};
         int[] actual = algorithms.insertionSort(integers);
 
         assertEquals(Arrays.toString(expected), Arrays.toString(actual));
+    }
+
+    @Test
+    @Order(16)
+    @DisplayName("areAnagrams returns correct value")
+    void testAreAnagrams_true() {
+        boolean actual1 = algorithms.areAnagrams("HEART", "EARTH");
+        boolean actual2 = algorithms.areAnagrams("LISTEN", "SILENT");
+
+        assertTrue(actual1);
+        assertTrue(actual2);
+    }
+
+    @Test
+    @Order(17)
+    @DisplayName("areAnagrams returns correct value")
+    void testAreAnagrams_false() {
+        boolean actual1 = algorithms.areAnagrams("HEART", "EARTH2");
+        boolean actual2 = algorithms.areAnagrams("LISTEN", "SILENT2");
+
+        assertFalse(actual1);
+        assertFalse(actual2);
+    }
+
+    @Test
+    @Order(18)
+    @DisplayName("areAnagrams returns correct value")
+    void testAreAnagramsOopApproach_true() {
+        boolean actual1 = algorithms.areAnagramsOopApproach("HEART", "EARTH");
+        boolean actual2 = algorithms.areAnagramsOopApproach("LISTEN", "SILENT");
+
+        assertTrue(actual1);
+        assertTrue(actual2);
+    }
+
+    @Test
+    @Order(19)
+    @DisplayName("areAnagrams returns correct value")
+    void testAreAnagramsOopApproach_false() {
+        boolean actual1 = algorithms.areAnagramsOopApproach("HEART", "EARTH2");
+        boolean actual2 = algorithms.areAnagramsOopApproach("LISTEN", "SILENT2");
+
+        assertFalse(actual1);
+        assertFalse(actual2);
     }
 }
