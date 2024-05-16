@@ -196,19 +196,22 @@ public class Algorithms {
         if (s1.length() != s2.length()) {
             return false;
         }
-        Map<Character, Integer> mappedLetters1 = countLettersOfString(s1);
-        Map<Character, Integer> mappedLetters2 = countLettersOfString(s2);
-        return mappedLetters1.equals(mappedLetters2);
+        return countLettersOfString(s1).equals(countLettersOfString(s2));
     }
 
     private Map<Character, Integer> countLettersOfString(String str) {
+//        Map<Character, Integer> letters = new HashMap<>();
+//        for (char c : str.toCharArray()) {
+//            if (letters.containsKey(c)) {
+//                letters.put(c, letters.get(c) + 1);
+//            } else {
+//                letters.put(c, 1);
+//            }
+//        }
+//        return letters;
         Map<Character, Integer> letters = new HashMap<>();
         for (char c : str.toCharArray()) {
-            if (letters.containsKey(c)) {
-                letters.put(c, letters.get(c) + 1);
-            } else {
-                letters.put(c, 1);
-            }
+            letters.put(c, letters.getOrDefault(c, 0) + 1);
         }
         return letters;
     }
