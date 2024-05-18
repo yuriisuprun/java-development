@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.OptionalInt;
 import java.util.function.Function;
+import java.util.stream.Collectors;
 
 import static java.util.stream.Collectors.counting;
 import static java.util.stream.Collectors.groupingBy;
@@ -145,5 +146,17 @@ public class StreamApi {
     public void printParallelStreamListWithOrder() {
         List<String> list = Arrays.asList("A", "B", "C", "D");
         list.parallelStream().forEachOrdered(System.out::println);
+    }
+
+    List<Employee> employees = Arrays.asList(
+            new Employee(8, "Robert", "manager", 590L),
+            new Employee(2, "Rob", "manager", 790L),
+            new Employee(3, "Joshua", "dev", 1200L),
+            new Employee(5, "Bill", "hr", 2300L)
+    );
+
+    public void printEmployees() {
+        System.out.println(employees.stream()
+                .collect(Collectors.groupingBy(employee -> employee.getSalary() % 1000)));
     }
 }
