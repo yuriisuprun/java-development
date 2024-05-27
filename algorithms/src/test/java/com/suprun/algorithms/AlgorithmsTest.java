@@ -15,8 +15,10 @@ import java.time.LocalDate;
 import java.time.Month;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -87,7 +89,7 @@ public class AlgorithmsTest {
     }
 
     @Test
-    @Order(4)
+    @Order(5)
     void testFindMinInArrayGenericComparator() {
         Integer[] numbers = {25, 5, 4, 67, 85, 104};
         Integer Integer = 4;
@@ -97,7 +99,7 @@ public class AlgorithmsTest {
     }
 
     @Test
-    @Order(5)
+    @Order(6)
     void testIsTextPalindrome_true() {
         String text = "A man, a plan, a canal, Panama!";
         boolean result = algorithms.isTextPalindrome(text);
@@ -106,7 +108,7 @@ public class AlgorithmsTest {
     }
 
     @Test
-    @Order(6)
+    @Order(7)
     void testIsTextPalindrome_false() {
         String text = "Banana";
         boolean result = algorithms.isTextPalindrome(text);
@@ -115,7 +117,7 @@ public class AlgorithmsTest {
     }
 
     @Test
-    @Order(7)
+    @Order(8)
     void testReversePositiveInteger() {
         int originalInt = 123;
         int result = algorithms.reverseInteger(originalInt);
@@ -124,7 +126,7 @@ public class AlgorithmsTest {
     }
 
     @Test
-    @Order(8)
+    @Order(9)
     void testReverseNegativeInteger() {
         int originalInt = -123;
         int result = algorithms.reverseInteger(originalInt);
@@ -133,7 +135,7 @@ public class AlgorithmsTest {
     }
 
     @Test
-    @Order(9)
+    @Order(10)
     void testReverseInteger() {
         int originalInt = 120;
         int result = algorithms.reverseInteger(originalInt);
@@ -142,7 +144,7 @@ public class AlgorithmsTest {
     }
 
     @Test
-    @Order(10)
+    @Order(11)
     void testReversePositiveIntegerWithoutString() {
         int originalInt = 2147483647;
         int result = algorithms.reverseIntegerWithoutString(originalInt);
@@ -151,7 +153,7 @@ public class AlgorithmsTest {
     }
 
     @Test
-    @Order(11)
+    @Order(12)
     void testReverseNegativeIntegerWithoutString() {
         int originalInt = -2147483648;
         int result = algorithms.reverseIntegerWithoutString(originalInt);
@@ -160,7 +162,7 @@ public class AlgorithmsTest {
     }
 
     @Test
-    @Order(12)
+    @Order(13)
     void testReverseIntegerWithoutString() {
         int originalInt = 120;
         int result = algorithms.reverseIntegerWithoutString(originalInt);
@@ -169,7 +171,7 @@ public class AlgorithmsTest {
     }
 
     @Test
-    @Order(13)
+    @Order(14)
     void testFindMissedNumber() {
         int[] integers = {4, 5, 6, 7, 8, 10, 11};
         int result = algorithms.findMissedNumber(integers);
@@ -178,7 +180,7 @@ public class AlgorithmsTest {
     }
 
     @Test
-    @Order(14)
+    @Order(15)
     void testFindMissedNumberBySum() {
         int[] integers = {4, 5, 6, 8, 9, 10, 11};
         int result = algorithms.findMissedNumberBySum(integers);
@@ -187,7 +189,7 @@ public class AlgorithmsTest {
     }
 
     @Test
-    @Order(15)
+    @Order(16)
     @DisplayName("insertionSort method returns correct sorted array")
     void testSortArray() {
         int[] integers = {5, 2, 4, 6, 1};
@@ -198,7 +200,7 @@ public class AlgorithmsTest {
     }
 
     @Test
-    @Order(16)
+    @Order(17)
     @DisplayName("areAnagrams returns correct value")
     void testAreAnagrams_true() {
         boolean actual1 = algorithms.areAnagrams("HEART", "EARTH");
@@ -209,7 +211,7 @@ public class AlgorithmsTest {
     }
 
     @Test
-    @Order(17)
+    @Order(18)
     @DisplayName("areAnagrams returns correct value")
     void testAreAnagrams_false() {
         boolean actual1 = algorithms.areAnagrams("HEART", "EARTH2");
@@ -220,7 +222,7 @@ public class AlgorithmsTest {
     }
 
     @Test
-    @Order(18)
+    @Order(19)
     @DisplayName("areAnagrams returns correct value")
     void testAreAnagramsOopApproach_true() {
         boolean actual1 = algorithms.areAnagramsOopApproach("HEART", "EARTH");
@@ -231,7 +233,7 @@ public class AlgorithmsTest {
     }
 
     @Test
-    @Order(19)
+    @Order(20)
     @DisplayName("areAnagrams returns correct value")
     void testAreAnagramsOopApproach_false() {
         boolean actual1 = algorithms.areAnagramsOopApproach("HEART", "EARTH2");
@@ -239,5 +241,16 @@ public class AlgorithmsTest {
 
         assertFalse(actual1);
         assertFalse(actual2);
+    }
+
+    @Test
+    @Order(21)
+    @DisplayName("filterUniqueHashtags returns correct value")
+    void testfilterUniqueHashtags() {
+        Set<String> hashSet = new HashSet<>();
+        Collections.addAll(hashSet, "#applications", "#strict", "#mainly", "#floating-point");
+        Set<String> actual = algorithms.filterUniqueHashtags();
+
+        assertEquals(hashSet, actual);
     }
 }

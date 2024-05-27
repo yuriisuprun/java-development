@@ -9,6 +9,7 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -176,7 +177,7 @@ public class Algorithms {
         System.out.println(Arrays.toString(mergeSorted(arr1, arr2)));
     }
 
-//    You are given two strings as an input. You must check if they form an anagram.
+    //    You are given two strings as an input. You must check if they form an anagram.
 //    public boolean areAnagram(String s1, String s2) {}
 //    HEART <-> EARTH, LISTEN <-> SILENT
     public boolean areAnagrams(String s1, String s2) {
@@ -213,8 +214,34 @@ public class Algorithms {
         for (char c : str.toCharArray()) {
             letters.put(c, letters.getOrDefault(c, 0) + 1);
         }
+        String s = "abcdefg";
+        String sss = IntStream.range(0, s.length())
+                .filter(i -> i != 3)
+                .mapToObj(s::charAt)
+                .map(String::valueOf)
+                .collect(Collectors.joining());
         return letters;
     }
+
+    public Set<String> filterUniqueHashtags() {
+        List<String> list = List.of("This JEP is #mainly for scientific #applications",
+                "and it makes #floating-point operations consistently #strict.",
+                "The default #floating-point operations are #strict or strictfp,",
+                "both of which guarantee the same results from the #floating-point calculations on every platform.");
+
+        return list.stream()
+                .map(str -> str.split(" "))
+                .flatMap(Arrays::stream)
+                .filter(word -> word.startsWith("#"))
+                .map(word -> {
+                    if (word.endsWith(".")) {
+                        return word.substring(0, word.length() - 1);
+                    }
+                    return word;
+                })
+                .collect(Collectors.toSet());
+    }
+
 //        NIO package
 //        InputStream/OutputStream
 //        factory pattern

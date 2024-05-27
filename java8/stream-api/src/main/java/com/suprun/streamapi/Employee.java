@@ -1,5 +1,7 @@
 package com.suprun.streamapi;
 
+import java.util.Objects;
+
 /**
  * @author Yurii_Suprun
  */
@@ -46,6 +48,19 @@ public class Employee {
 
     public void setSalary(Long salary) {
         this.salary = salary;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Employee employee = (Employee) o;
+        return id == employee.id && Objects.equals(name, employee.name) && Objects.equals(position, employee.position) && Objects.equals(salary, employee.salary);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, position, salary);
     }
 
     @Override
