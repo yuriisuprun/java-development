@@ -214,6 +214,8 @@ public class Algorithms {
         for (char c : str.toCharArray()) {
             letters.put(c, letters.getOrDefault(c, 0) + 1);
         }
+
+
         String s = "abcdefg";
         String sss = IntStream.range(0, s.length())
                 .filter(i -> i != 3)
@@ -228,7 +230,7 @@ public class Algorithms {
                 "and it makes #floating-point operations consistently #strict.",
                 "The default #floating-point operations are #strict or strictfp,",
                 "both of which guarantee the same results from the #floating-point calculations on every platform.");
-
+        
         return list.stream()
                 .map(str -> str.split(" "))
                 .flatMap(Arrays::stream)

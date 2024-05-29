@@ -23,6 +23,7 @@
         <module>java-core-fundamentals</module>
         <module>threads</module>
         <module>web</module>
+        <module>coding-practice</module>
     </modules>
 
     <dependencies>
