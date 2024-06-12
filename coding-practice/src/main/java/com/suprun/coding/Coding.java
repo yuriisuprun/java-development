@@ -64,19 +64,17 @@ public class Coding {
             return 0;
         }
 
-        Map<Character, Integer> map = new HashMap<>();
+        int leftPosition = 0;
         int maxLength = 0;
-        int left = 0;
+        Map<Character, Integer> map = new HashMap<>();
 
-        for (int right = 0; right < str.length(); right++) {
-            char currentChar = str.charAt(right);
-
-            if (map.containsKey(currentChar) && map.get(currentChar) >= left) {
-                left = map.get(currentChar) + 1;
+        for (int rightCharPosition = 0; rightCharPosition < str.length(); rightCharPosition++) {
+            char currentChar = str.charAt(rightCharPosition);
+            if (map.containsKey(currentChar) && map.get(currentChar) >= leftPosition) {
+                leftPosition = map.get(currentChar) + 1;
             }
-
-            maxLength = Math.max(maxLength, right - left + 1);
-            map.put(currentChar, right);
+            map.put(currentChar, rightCharPosition);
+            maxLength = Math.max(maxLength, rightCharPosition - leftPosition + 1);
         }
 
         return maxLength;
@@ -104,19 +102,18 @@ public class Coding {
     public int[] toSum(int[] nums, int target) {
 
         Map<Integer, Integer> map = new HashMap<>();
-        int[] result = new int[2];
-
         for (int i = 0; i < nums.length; i++) {
             int diff = target - nums[i];
-
             if (map.containsKey(diff)) {
-                result[0] = map.get(diff);
-                result[1] = i;
-                return result;
+                return new int[]{map.get(diff), i};
             }
             map.put(nums[i], i);
         }
-        return result;
+
+        return new int[]{0, 0};
+
+
+//        return result;
 
 
 //        Map<Integer, Integer> map = new HashMap<>();
@@ -136,6 +133,7 @@ public class Coding {
     }
 
     // Deltix interview 03.06.24
+
     /**
      * numbers array of size N + 1
      * numbers contains any integer in range 0...N
