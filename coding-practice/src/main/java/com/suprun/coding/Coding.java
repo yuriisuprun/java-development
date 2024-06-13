@@ -68,13 +68,13 @@ public class Coding {
         int maxLength = 0;
         Map<Character, Integer> map = new HashMap<>();
 
-        for (int rightCharPosition = 0; rightCharPosition < str.length(); rightCharPosition++) {
-            char currentChar = str.charAt(rightCharPosition);
-            if (map.containsKey(currentChar) && map.get(currentChar) >= leftPosition) {
+        for (int right = 0; right < str.length(); right++) {
+            var currentChar = str.charAt(right);
+            if (map.containsKey(currentChar) && map.get(currentChar) >= leftPosition){
                 leftPosition = map.get(currentChar) + 1;
             }
-            map.put(currentChar, rightCharPosition);
-            maxLength = Math.max(maxLength, rightCharPosition - leftPosition + 1);
+            map.put(currentChar, right);
+            maxLength = Math.max(maxLength, right - leftPosition + 1);
         }
 
         return maxLength;
@@ -103,17 +103,14 @@ public class Coding {
 
         Map<Integer, Integer> map = new HashMap<>();
         for (int i = 0; i < nums.length; i++) {
-            int diff = target - nums[i];
-            if (map.containsKey(diff)) {
+            var diff = target - nums[i];
+            if (map.containsKey(diff)){
                 return new int[]{map.get(diff), i};
             }
             map.put(nums[i], i);
         }
+        throw new IllegalArgumentException("Target number cannot be achieved by the sum of provided numbers in the array");
 
-        return new int[]{0, 0};
-
-
-//        return result;
 
 
 //        Map<Integer, Integer> map = new HashMap<>();
