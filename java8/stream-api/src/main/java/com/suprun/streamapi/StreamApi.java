@@ -10,6 +10,7 @@ import java.util.Map;
 import java.util.OptionalInt;
 import java.util.function.Function;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import static java.util.stream.Collectors.counting;
 import static java.util.stream.Collectors.groupingBy;
@@ -20,6 +21,15 @@ import static java.util.stream.Collectors.partitioningBy;
  */
 @AllArgsConstructor
 public class StreamApi {
+
+    private Stream<String> shoppingStream = Stream.of("milk", "eggs", "bread", "flour", "butter", "coffee", "tea");
+
+    private Stream<String> shoppingArrayStream = Arrays.stream(new String[]{"milk", "eggs", "bread", "flour", "butter"});
+
+    private List<String> shoppingList = List.of("milk", "eggs", "bread", "flour", "butter", "coffee", "tea");
+    private Stream<String> shoppingListStream = shoppingList.stream();
+
+    public StreamApi() {}
 
     /**
      * Returns a {@link List} of strings with sorted strings by frequency
