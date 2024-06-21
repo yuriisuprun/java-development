@@ -68,14 +68,18 @@ public class Coding {
         int maxLength = 0;
         Map<Character, Integer> map = new HashMap<>();
 
-        for (int right = 0; right < str.length(); right++) {
-            var currentChar = str.charAt(right);
+        for (int rightPosition = 0; rightPosition < str.length(); rightPosition++) {
+            char currentChar = str.charAt(rightPosition);
             if (map.containsKey(currentChar) && map.get(currentChar) >= leftPosition){
-                leftPosition = map.get(currentChar) + 1;
+                leftPosition = rightPosition + 1;
             }
-            map.put(currentChar, right);
-            maxLength = Math.max(maxLength, right - leftPosition + 1);
+            map.put(currentChar, rightPosition);
+            maxLength = Math.max(maxLength, rightPosition - leftPosition + 1);
         }
+
+
+
+
 
         return maxLength;
 
@@ -102,8 +106,9 @@ public class Coding {
     public int[] toSum(int[] nums, int target) {
 
         Map<Integer, Integer> map = new HashMap<>();
+
         for (int i = 0; i < nums.length; i++) {
-            var diff = target - nums[i];
+            int diff = target - nums[i];
             if (map.containsKey(diff)){
                 return new int[]{map.get(diff), i};
             }
@@ -155,11 +160,35 @@ public class Coding {
     public int getDuplicateUsingStreamApi(List<Integer> numbers) {
         Map<Integer, Integer> numberCounts = new HashMap<>();
         return numbers.stream()
-                .filter(number -> {
-                    int count = numberCounts.getOrDefault(number, 0);
-                    numberCounts.put(number, count + 1);
+                .filter(n -> {
+                    int count = numberCounts.getOrDefault(n, 0);
+                    numberCounts.put(n, count + 1);
                     return count > 0;
-                }).findFirst().orElse(0); // Assuming 0 is returned if no duplicate is found
+                }).findFirst().orElse(0);
+
+
+
+
+//        return numbers.stream()
+//                .filter(number -> {
+//                    int count = numberCounts.getOrDefault(number, 0);
+//                    numberCounts.put(number, count + 1);
+//                    return count > 0;
+//                }).findFirst().orElse(0); // Assuming 0 is returned if no duplicate is found
+    }
+
+    static boolean isPalindrome(String original) {
+        StringBuilder sb = new StringBuilder(original.toLowerCase());
+        String reversed = sb.reverse().toString();
+//        for (int i = 0; i < original.length(); i++){
+//            if (original.charAt(i) == reversed.charAt(i)){
+//                continue;
+//            } else {
+//                return false;
+//            }
+//        }
+        return reversed.equals(original);
+//        return true;
     }
 
 //    public int getDuplicateWithArray(List<Integer> numbers) {
@@ -180,19 +209,31 @@ public class Coding {
             throw new IllegalArgumentException("Input string must not be null or empty.");
         }
 
-        StringBuilder result = new StringBuilder();
-        char previousChar = str.charAt(0);
-        result.append(previousChar);
+        StringBuilder sb = new StringBuilder();
+        char currentChar = str.charAt(0);
+        sb.append(currentChar);
 
         for (int i = 1; i < str.length(); i++) {
-
-            char currentChar = str.charAt(i);
-            if (currentChar != previousChar) {
-                result.append(currentChar);
-                previousChar = currentChar;
+            if (str.charAt(i) != currentChar){
+                sb.append(str.charAt(i));
+                currentChar = str.charAt(i);
             }
         }
-        return result.toString();
+        return sb.toString();
+
+//        StringBuilder result = new StringBuilder();
+//        char previousChar = str.charAt(0);
+//        result.append(previousChar);
+//
+//        for (int i = 1; i < str.length(); i++) {
+//
+//            char currentChar = str.charAt(i);
+//            if (currentChar != previousChar) {
+//                result.append(currentChar);
+//                previousChar = currentChar;
+//            }
+//        }
+//        return result.toString();
 
     }
 }
