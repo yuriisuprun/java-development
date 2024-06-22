@@ -1,4 +1,4 @@
-package com.suprun.array_list_implementation;
+package com.suprun.list_implementations;
 
 /**
  * @author Yurii_Suprun

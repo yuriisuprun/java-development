@@ -1,6 +1,4 @@
-package com.suprun.array_list_implementation;
-
-import com.suprun.util.ExerciseNotCompletedException;
+package com.suprun.list_implementations;
 
 import java.util.NoSuchElementException;
 import java.util.Objects;

@@ -1,7 +1,7 @@
 package com.suprun;
 
-import com.suprun.array_list_implementation.ArrayList;
-import com.suprun.array_list_implementation.List;
+import com.suprun.list_implementations.ArrayList;
+import com.suprun.list_implementations.List;
 import lombok.SneakyThrows;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Order;
