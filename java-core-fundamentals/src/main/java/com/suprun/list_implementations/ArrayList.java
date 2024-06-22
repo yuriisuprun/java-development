@@ -7,9 +7,6 @@ import java.util.stream.Stream;
 /**
  * {@link ArrayList} is an implementation of {@link List} interface. This resizable data structure
  * based on an array and is simplified version of {@link java.util.ArrayList}.
- * <p><p>
- * <strong>TODO: to get the most out of your learning, <a href="https://www.bobocode.com">visit our website</a></strong>
- * <p>
  *
  * @author Yurii_Suprun
  */
