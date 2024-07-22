@@ -4,17 +4,23 @@ import lombok.AllArgsConstructor;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
+import java.util.TreeMap;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
+
+import static java.util.stream.Collectors.counting;
+import static java.util.stream.Collectors.groupingBy;
 
 /**
  * @author Yurii_Suprun
@@ -23,8 +29,84 @@ import java.util.stream.IntStream;
 public class Coding {
 
     public static void main(String[] args) {
-        System.out.println("");
+
+//        TreeMap<String, String> tree = new TreeMap<>();
+//        tree.put("see1", "bus1");
+//        tree.put("see2", "bus2");
+//        tree.put("see3", "bus3");
+//        System.out.println(tree.ceilingEntry("see1"));
+//        System.out.println(tree.get("see1"));
+//        System.out.println(reverse("Bicycle"));
+//        System.out.println(reverse("Home"));
+//        System.out.println(reverse("Cat"));
+//        System.out.println(reverse2("Hello, world!"));
+//        System.out.println(reverse2("Hello"));
+//        System.out.println(reverse3("Hello"));
+//        System.out.println(reverse3("Hello"));
+        System.out.println(filterEvenNumbers(Arrays.asList(1, 2, 3, 4, 5, 6, 7)));
+        System.out.println(maxNumber(Arrays.asList(1, 2, 3, 4, 5, 6, 7)));
     }
+
+    private static String reverse(String string) {
+        int length = string.length();
+        char[] result = new char[length];
+        for (int i = 0; i < length; i++) {
+            result[i] = string.charAt(length - i - 1);
+        }
+        return new String(result);
+    }
+
+    private static String reverse2(String string) {
+        String result = "";
+        for (int i = string.length() - 1; i > 0; i--) {
+            result += string.charAt(i);
+        }
+        return result;
+    }
+
+    private static String reverse3(String string) {
+        StringBuilder result = new StringBuilder();
+        for (int i = string.length() - 1; i > 0; i--) {
+            result.append(string.charAt(i));
+        }
+        return result.toString();
+    }
+
+    private static List<Integer> filterEvenNumbers(List<Integer> list){
+        return list.stream()
+                .filter(n -> n % 2 == 0)
+                .toList();
+    }
+
+    private static int maxNumber(List<Integer> list){
+        return list.stream()
+                .max(Comparator.naturalOrder())
+                .orElseThrow(() -> new IllegalArgumentException("List is empty"));
+    }
+
+
+
+
+
+
+//    public static void main(String[] args) {
+//        List<String> tweets = Arrays.asList("#hi hello", "hi", "#hello", "#hello", "#hello", "#hello", "#hello",
+//                "#epam", "#epam", "#epam", "#epam", "#epam", "#1", "#2", "#2", "#3", "#3", "#3", "#4", "#4", "#4", "#4");
+//
+//        System.out.println(getMostUsedHashes(tweets));
+//    }
+//
+//    private static Map<String, Integer> getMostUsedHashes(Collection<String> tweets) {
+//        return tweets.stream()
+//                .flatMap(w -> Arrays.stream(w.split(" "))) // Split by space to get words
+//                .filter(w -> w.startsWith("#")) // Filter out hashtags
+//                .collect(Collectors.groupingBy(Function.identity(), Collectors.counting())) // Group by hashtag and count
+//                .entrySet().stream()
+//                .sorted(Map.Entry.<String, Long>comparingByValue(Comparator.reverseOrder())) // Sort by count in descending order
+//                .limit(10) // Limit to top 10
+//                .collect(Collectors.toMap(Map.Entry::getKey, entry -> entry.getValue().intValue(), (e1, e2) -> e1, LinkedHashMap::new)); // Collect to LinkedHashMap to maintain order
+//    }
+
 
 //    private static String removeDuplicates(String str) {
 //
@@ -70,16 +152,12 @@ public class Coding {
 
         for (int rightPosition = 0; rightPosition < str.length(); rightPosition++) {
             char currentChar = str.charAt(rightPosition);
-            if (map.containsKey(currentChar) && map.get(currentChar) >= leftPosition){
+            if (map.containsKey(currentChar) && map.get(currentChar) >= leftPosition) {
                 leftPosition = rightPosition + 1;
             }
             map.put(currentChar, rightPosition);
             maxLength = Math.max(maxLength, rightPosition - leftPosition + 1);
         }
-
-
-
-
 
         return maxLength;
 
@@ -109,13 +187,13 @@ public class Coding {
 
         for (int i = 0; i < nums.length; i++) {
             int diff = target - nums[i];
-            if (map.containsKey(diff)){
+            if (map.containsKey(diff)) {
                 return new int[]{map.get(diff), i};
             }
             map.put(nums[i], i);
         }
-        throw new IllegalArgumentException("Target number cannot be achieved by the sum of provided numbers in the array");
 
+        throw new IllegalArgumentException("Target number cannot be achieved by the sum of provided numbers in the array");
 
 
 //        Map<Integer, Integer> map = new HashMap<>();
@@ -167,8 +245,6 @@ public class Coding {
                 }).findFirst().orElse(0);
 
 
-
-
 //        return numbers.stream()
 //                .filter(number -> {
 //                    int count = numberCounts.getOrDefault(number, 0);
@@ -214,7 +290,7 @@ public class Coding {
         sb.append(currentChar);
 
         for (int i = 1; i < str.length(); i++) {
-            if (str.charAt(i) != currentChar){
+            if (str.charAt(i) != currentChar) {
                 sb.append(str.charAt(i));
                 currentChar = str.charAt(i);
             }
