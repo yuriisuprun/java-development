@@ -1,17 +1,11 @@
 package com.suprun.coding;
 
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
-import java.util.Comparator;
 import java.util.List;
-import java.util.Map;
-import java.util.function.Function;
-import java.util.stream.Collectors;
-
-import static java.util.stream.Collectors.counting;
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -24,66 +18,66 @@ public class PracticeTest {
     private Practice practice;
 
     @BeforeEach
-    public void setUp() {
+    void setUp() {
         practice = new Practice();
     }
 
     @Test
-    public void reverseString_ShouldReturnCorrectString_WhenValidStringProvided() {
+    void reverseString_ShouldReturnCorrectString_WhenValidStringProvided() {
         String actual = practice.reverseString("Propagation");
         assertEquals("noitagaporP", actual);
     }
 
     @Test
-    public void reverseString_ShouldReturnCorrectString_WhenEmptyStringProvided() {
+    void reverseString_ShouldReturnCorrectString_WhenEmptyStringProvided() {
         String actual = practice.reverseString("");
         assertEquals("", actual);
     }
 
     @Test
-    public void reverseString_ShouldReturnCorrectString_WhenOneSymbolStringProvided() {
+    void reverseString_ShouldReturnCorrectString_WhenOneSymbolStringProvided() {
         String actual = practice.reverseString("P");
         assertEquals("P", actual);
     }
 
     @Test
-    public void reverseString_ShouldReturnCorrectString_WhenPalindromeStringProvided() {
+    void reverseString_ShouldReturnCorrectString_WhenPalindromeStringProvided() {
         String actual = practice.reverseString("rotator");
         assertEquals("rotator", actual);
     }
 
     @Test
-    public void reverseString_ShouldReturnCorrectString_WhenStringWithSpaceProvided() {
+    void reverseString_ShouldReturnCorrectString_WhenStringWithSpaceProvided() {
         String actual = practice.reverseString("Propa gation");
         assertEquals("noitag aporP", actual);
     }
 
     @Test
-    public void reverseString_ShouldReturnCorrectString_WhenSpecialSymbolStringProvided() {
+    void reverseString_ShouldReturnCorrectString_WhenSpecialSymbolStringProvided() {
         String actual = practice.reverseString("#@");
         assertEquals("@#", actual);
     }
 
     @Test
-    public void reverseStringWithConcatenation() {
+    void reverseStringWithConcatenation() {
         String actual = practice.reverseStringWithConcatenation("Propagation");
         assertEquals("noitagaporP", actual);
     }
 
     @Test
-    public void reverseStringWithStringBuilder() {
+    void reverseStringWithStringBuilder() {
         String actual = practice.reverseStringWithStringBuilder("Propagation");
         assertEquals("noitagaporP", actual);
     }
 
     @Test
-    public void filterEvenNumbers() {
+    void filterEvenNumbers() {
         List<Integer> actual = practice.filterEvenNumbers(Arrays.asList(1, 2, 3, 4, 5, 6));
         assertEquals(Arrays.asList(2, 4, 6), actual);
     }
 
     @Test
-    public void maxNumber() {
+    void maxNumber() {
         int actual = practice.maxNumber(Arrays.asList(1, 2, 3, 4, 5, 6));
         assertEquals(6, actual);
     }
@@ -111,43 +105,43 @@ public class PracticeTest {
     }
 
     @Test
-    public void getDuplicate_ShouldReturnCorrectDuplicateNumber_WhenListWithDuplicatesProvided() {
+    void getDuplicate_ShouldReturnCorrectDuplicateNumber_WhenListWithDuplicatesProvided() {
         int actual = practice.getDuplicate(Arrays.asList(1, 2, 2, 3, 4, 5, 6));
         assertEquals(2, actual);
     }
 
     @Test
-    public void getDuplicateUsingStreamApi_ShouldReturnCorrectDuplicateNumber_WhenListWithDuplicatesProvided() {
+    void getDuplicateUsingStreamApi_ShouldReturnCorrectDuplicateNumber_WhenListWithDuplicatesProvided() {
         int actual = practice.getDuplicateUsingStreamApi(Arrays.asList(1, 2, 2, 3, 4, 5, 6));
         assertEquals(2, actual);
     }
 
     @Test
-    public void getDuplicateWithArray_ShouldReturnCorrectDuplicateNumber_WhenListWithDuplicatesProvided() {
+    void getDuplicateWithArray_ShouldReturnCorrectDuplicateNumber_WhenListWithDuplicatesProvided() {
         int actual = practice.getDuplicateWithArray(Arrays.asList(1, 2, 2, 3, 4, 5, 6));
         assertEquals(2, actual);
     }
 
     @Test
-    public void getDuplicate() {
+    void getDuplicate() {
         int actual = practice.getDuplicate(Arrays.asList(1, 2, 3, 4, 5, 6));
         assertEquals(0, actual);
     }
 
     @Test
-    public void removeDuplicates() {
+    void removeDuplicates() {
         String actual = practice.removeDuplicates("pppolymorphism");
         assertEquals("polymorphism", actual);
     }
 
     @Test
-    public void isPalindrome() {
+    void isPalindrome() {
         boolean actual = practice.isPalindrome("kayak");
         assertTrue(actual);
     }
 
     @Test
-    public void isPalindrome_false() {
+    void isPalindrome_false() {
         boolean actual = practice.isPalindrome("abstraction");
         assertFalse(actual);
     }
@@ -162,5 +156,38 @@ public class PracticeTest {
 
         List<String> hashTags = practice.getSortedHashTags(tweets);
         assertEquals(List.of("#java", "#python", "#typescript"), hashTags);
+    }
+
+    @Test
+    void bubbleSortArray() {
+        int[] result = practice.bubbleSortArray(new int[]{5, 3, 1, 0, 2, 4});
+        assertEquals(Arrays.toString(new int[]{0, 1, 2, 3, 4, 5}), Arrays.toString(result));
+    }
+
+    @Test
+    void bubbleSortArray_emptyArray() {
+        int[] result = practice.bubbleSortArray(new int[]{});
+        assertEquals(Arrays.toString(new int[]{}), Arrays.toString(result));
+    }
+
+    @Test
+    void bubbleSortArray_minMaxIntegers() {
+        assertArrayEquals(new int[]{Integer.MIN_VALUE, 0, Integer.MAX_VALUE},
+                practice.bubbleSortArray(new int[]{Integer.MIN_VALUE, Integer.MAX_VALUE, 0}));
+    }
+
+    @Test
+    void bubbleSortArray_duplicateValues() {
+        assertArrayEquals(new int[]{1, 2, 2, 4, 4}, practice.bubbleSortArray(new int[]{4, 2, 4, 1, 2}));
+    }
+
+    @Test
+    void bubbleSortArray_negativeAndPositiveIntegers() {
+        assertArrayEquals(new int[]{-2, -1, 0, 3, 5}, practice.bubbleSortArray(new int[]{-1, 3, -2, 5, 0}));
+    }
+
+    @Test
+    void bubbleSortArray_singleElementArray() {
+        assertArrayEquals(new int[]{42}, practice.bubbleSortArray(new int[]{42}));
     }
 }
