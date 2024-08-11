@@ -5,8 +5,13 @@ import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
+import java.util.Map;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
+import static java.util.stream.Collectors.counting;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -19,66 +24,66 @@ public class PracticeTest {
     private Practice practice;
 
     @BeforeEach
-    public void setUp(){
+    public void setUp() {
         practice = new Practice();
     }
 
     @Test
-    public void reverseString_ShouldReturnCorrectString_WhenValidStringProvided(){
+    public void reverseString_ShouldReturnCorrectString_WhenValidStringProvided() {
         String actual = practice.reverseString("Propagation");
         assertEquals("noitagaporP", actual);
     }
 
     @Test
-    public void reverseString_ShouldReturnCorrectString_WhenEmptyStringProvided(){
+    public void reverseString_ShouldReturnCorrectString_WhenEmptyStringProvided() {
         String actual = practice.reverseString("");
         assertEquals("", actual);
     }
 
     @Test
-    public void reverseString_ShouldReturnCorrectString_WhenOneSymbolStringProvided(){
+    public void reverseString_ShouldReturnCorrectString_WhenOneSymbolStringProvided() {
         String actual = practice.reverseString("P");
         assertEquals("P", actual);
     }
 
     @Test
-    public void reverseString_ShouldReturnCorrectString_WhenPalindromeStringProvided(){
+    public void reverseString_ShouldReturnCorrectString_WhenPalindromeStringProvided() {
         String actual = practice.reverseString("rotator");
         assertEquals("rotator", actual);
     }
 
     @Test
-    public void reverseString_ShouldReturnCorrectString_WhenStringWithSpaceProvided(){
+    public void reverseString_ShouldReturnCorrectString_WhenStringWithSpaceProvided() {
         String actual = practice.reverseString("Propa gation");
         assertEquals("noitag aporP", actual);
     }
 
     @Test
-    public void reverseString_ShouldReturnCorrectString_WhenSpecialSymbolStringProvided(){
+    public void reverseString_ShouldReturnCorrectString_WhenSpecialSymbolStringProvided() {
         String actual = practice.reverseString("#@");
         assertEquals("@#", actual);
     }
 
     @Test
-    public void reverseStringWithConcatenation(){
+    public void reverseStringWithConcatenation() {
         String actual = practice.reverseStringWithConcatenation("Propagation");
         assertEquals("noitagaporP", actual);
     }
 
     @Test
-    public void reverseStringWithStringBuilder(){
+    public void reverseStringWithStringBuilder() {
         String actual = practice.reverseStringWithStringBuilder("Propagation");
         assertEquals("noitagaporP", actual);
     }
 
     @Test
-    public void filterEvenNumbers(){
+    public void filterEvenNumbers() {
         List<Integer> actual = practice.filterEvenNumbers(Arrays.asList(1, 2, 3, 4, 5, 6));
         assertEquals(Arrays.asList(2, 4, 6), actual);
     }
 
     @Test
-    public void maxNumber(){
+    public void maxNumber() {
         int actual = practice.maxNumber(Arrays.asList(1, 2, 3, 4, 5, 6));
         assertEquals(6, actual);
     }
@@ -106,44 +111,56 @@ public class PracticeTest {
     }
 
     @Test
-    public void getDuplicate_ShouldReturnCorrectDuplicateNumber_WhenListWithDuplicatesProvided(){
+    public void getDuplicate_ShouldReturnCorrectDuplicateNumber_WhenListWithDuplicatesProvided() {
         int actual = practice.getDuplicate(Arrays.asList(1, 2, 2, 3, 4, 5, 6));
         assertEquals(2, actual);
     }
 
     @Test
-    public void getDuplicateUsingStreamApi_ShouldReturnCorrectDuplicateNumber_WhenListWithDuplicatesProvided(){
+    public void getDuplicateUsingStreamApi_ShouldReturnCorrectDuplicateNumber_WhenListWithDuplicatesProvided() {
         int actual = practice.getDuplicateUsingStreamApi(Arrays.asList(1, 2, 2, 3, 4, 5, 6));
         assertEquals(2, actual);
     }
 
     @Test
-    public void getDuplicateWithArray_ShouldReturnCorrectDuplicateNumber_WhenListWithDuplicatesProvided(){
+    public void getDuplicateWithArray_ShouldReturnCorrectDuplicateNumber_WhenListWithDuplicatesProvided() {
         int actual = practice.getDuplicateWithArray(Arrays.asList(1, 2, 2, 3, 4, 5, 6));
         assertEquals(2, actual);
     }
 
     @Test
-    public void getDuplicate(){
+    public void getDuplicate() {
         int actual = practice.getDuplicate(Arrays.asList(1, 2, 3, 4, 5, 6));
         assertEquals(0, actual);
     }
 
     @Test
-    public void removeDuplicates(){
+    public void removeDuplicates() {
         String actual = practice.removeDuplicates("pppolymorphism");
         assertEquals("polymorphism", actual);
     }
 
     @Test
-    public void isPalindrome(){
+    public void isPalindrome() {
         boolean actual = practice.isPalindrome("kayak");
         assertTrue(actual);
     }
 
     @Test
-    public void isPalindrome_false(){
+    public void isPalindrome_false() {
         boolean actual = practice.isPalindrome("abstraction");
         assertFalse(actual);
+    }
+
+
+    @Test
+    void getSortedHashTags() {
+        List<String> tweets = List.of("This JEP is #typescript for scientific #python",
+                "and it makes #java operations consistently #python.",
+                "The default #java operations are #python or strictfp,",
+                "#Java both of which guarantee the same results from the #java calculations on every platform.");
+
+        List<String> hashTags = practice.getSortedHashTags(tweets);
+        assertEquals(List.of("#java", "#python", "#typescript"), hashTags);
     }
 }

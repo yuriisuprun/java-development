@@ -165,7 +165,7 @@ public class Practice {
             }
         }
         return sb.toString();
-
+    }
 
 //    public static void main(String[] args) {
 //        List<String> tweets = Arrays.asList("#hi hello", "hi", "#hello", "#hello", "#hello", "#hello", "#hello",
@@ -185,5 +185,20 @@ public class Practice {
 //                .collect(Collectors.toMap(Map.Entry::getKey, entry -> entry.getValue().intValue(), (e1, e2) -> e1, LinkedHashMap::new)); // Collect to LinkedHashMap to maintain order
 //    }
 
+    public List<String> getSortedHashTags(List<String> tweets) {
+        return tweets.stream()
+                .flatMap(tweet -> Arrays.stream(tweet.split("\\s+"))) // Split by whitespace and flatten the stream
+                .map(String::toLowerCase)
+                .filter(word -> word.startsWith("#"))
+                .map(word -> word.replaceAll("[\\p{Punct}&&[^#]]+$", "")) // Remove punctuation from the end
+                .collect(Collectors.groupingBy(Function.identity(), Collectors.counting()))
+                .entrySet().stream()
+                .sorted(Map.Entry.comparingByValue(Comparator.reverseOrder()))
+                .map(Map.Entry::getKey)
+                .toList();
     }
+
+//    public List<String> getSortedHashTagsOldStyleSolution(List<String> tweets) {
+//
+//    }
 }

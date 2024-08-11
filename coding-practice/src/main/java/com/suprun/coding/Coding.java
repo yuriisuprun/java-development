@@ -87,27 +87,6 @@ public class Coding {
 
 
 
-
-
-//    public static void main(String[] args) {
-//        List<String> tweets = Arrays.asList("#hi hello", "hi", "#hello", "#hello", "#hello", "#hello", "#hello",
-//                "#epam", "#epam", "#epam", "#epam", "#epam", "#1", "#2", "#2", "#3", "#3", "#3", "#4", "#4", "#4", "#4");
-//
-//        System.out.println(getMostUsedHashes(tweets));
-//    }
-//
-//    private static Map<String, Integer> getMostUsedHashes(Collection<String> tweets) {
-//        return tweets.stream()
-//                .flatMap(w -> Arrays.stream(w.split(" "))) // Split by space to get words
-//                .filter(w -> w.startsWith("#")) // Filter out hashtags
-//                .collect(Collectors.groupingBy(Function.identity(), Collectors.counting())) // Group by hashtag and count
-//                .entrySet().stream()
-//                .sorted(Map.Entry.<String, Long>comparingByValue(Comparator.reverseOrder())) // Sort by count in descending order
-//                .limit(10) // Limit to top 10
-//                .collect(Collectors.toMap(Map.Entry::getKey, entry -> entry.getValue().intValue(), (e1, e2) -> e1, LinkedHashMap::new)); // Collect to LinkedHashMap to maintain order
-//    }
-
-
 //    private static String removeDuplicates(String str) {
 //
 //        StringBuilder result = new StringBuilder();

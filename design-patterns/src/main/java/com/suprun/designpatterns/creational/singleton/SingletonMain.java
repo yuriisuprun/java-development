@@ -1,6 +1,4 @@
-package com.suprun.designpatterns.creational;
-
-import com.suprun.designpatterns.creational.Singleton;
+package com.suprun.designpatterns.creational.singleton;
 
 /**
  * @author Yurii_Suprun

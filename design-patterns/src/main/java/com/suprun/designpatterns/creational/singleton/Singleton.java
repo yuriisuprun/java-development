@@ -1,4 +1,4 @@
-package com.suprun.designpatterns.creational;
+package com.suprun.designpatterns.creational.singleton;
 
 /**
  * @author Yurii_Suprun

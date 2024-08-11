@@ -1,4 +1,4 @@
-package com.suprun.designpatterns.structural;
+package com.suprun.designpatterns.structural.proxy;
 
 /**
  * @author Yurii_Suprun
