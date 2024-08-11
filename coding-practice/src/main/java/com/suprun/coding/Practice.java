@@ -18,6 +18,12 @@ import static java.util.stream.Collectors.groupingBy;
 @AllArgsConstructor
 public class Practice {
 
+    public static void main(String[] args) {
+        Practice practice = new Practice();
+        practice.printFormattedStrings(new String[]{"4", "7", "nkjhjhjkljl", "l", "8", "kl", "oipip", "hhhsu", "6"}, 4);
+        practice.dontCallThisMethod();
+    }
+
     public String reverseString(String string) {
         int length = string.length();
         char[] result = new char[length];
@@ -203,5 +209,49 @@ public class Practice {
             }
         }
         return array;
+    }
+
+    public void printFormattedStrings(String[] strings, int columns_number) {
+        // Create a 2D array to hold strings arranged in columns
+        String[][] columns = new String[(strings.length + columns_number - 1) / columns_number][columns_number];
+
+        // Fill the 2D array with strings from the input array
+        for (int i = 0; i < strings.length; i++) {
+            int row = i / columns_number;
+            int col = i % columns_number;
+            columns[row][col] = strings[i];
+        }
+
+        // Find the maximum length of strings in each column
+        int[] maxLengths = new int[columns_number];
+        for (int col = 0; col < columns_number; col++) {
+            int maxLength = 0;
+            for (String[] row : columns) {
+                if (row[col] != null && row[col].length() > maxLength) {
+                    maxLength = row[col].length();
+                }
+            }
+            maxLengths[col] = maxLength;
+        }
+
+        // Print the formatted strings
+        for (String[] row : columns) {
+            for (int col = 0; col < columns_number; col++) {
+                if (row[col] != null) {
+                    System.out.printf("%-" + (maxLengths[col] + 2) + "s", row[col]);
+                } else {
+                    System.out.printf("%-" + (maxLengths[col] + 2) + "s", "");
+                }
+            }
+            System.out.println();
+        }
+    }
+
+    public void dontCallThisMethod() {
+        try {
+            dontCallThisMethod();
+        } catch (StackOverflowError e) {
+            System.out.println("Caught StackOverflowError: " + e.getMessage());
+        }
     }
 }
