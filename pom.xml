@@ -20,7 +20,6 @@
         <module>java14</module>
         <module>java16</module>
         <module>java21</module>
-        <module>algorithms</module>
         <module>design-patterns</module>
         <module>java-core-fundamentals</module>
         <module>threads</module>
