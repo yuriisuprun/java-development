@@ -137,19 +137,6 @@ public class Coding {
 //
 //    }
 
-    public int[] bubbleSortArray(int[] array) {
-        for (int i = 0; i < array.length - 1; i++) {
-            for (int j = 0; j < array.length - i - 1; j++) {
-                if (array[j] > array[j + 1]) {
-                    int temp = array[j];
-                    array[j] = array[j + 1];
-                    array[j + 1] = temp;
-                }
-            }
-        }
-        return array;
-    }
-
     public void printFormattedStrings(String[] strings, int columns_number) {
         // Create a 2D array to hold strings arranged in columns
         String[][] columns = new String[(strings.length + columns_number - 1) / columns_number][columns_number];
@@ -424,11 +411,10 @@ public class Coding {
      * @return a sorted array
      */
     public int[] bubbleSort(int[] array) {
-        int temp;
         for (int i = 0; i < array.length; i++) {
             for (int j = 0; j < array.length - 1; j++) {
                 if (array[j + 1] < array[j]) {
-                    temp = array[j + 1];
+                    int temp = array[j + 1];
                     array[j + 1] = array[j];
                     array[j] = temp;
                 }

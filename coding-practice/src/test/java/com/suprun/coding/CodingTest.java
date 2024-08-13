@@ -522,14 +522,14 @@ public class CodingTest {
     @Test
     @Order(59)
     void bubbleSortArray() {
-        int[] result = coding.bubbleSortArray(new int[]{5, 3, 1, 0, 2, 4});
+        int[] result = coding.bubbleSort(new int[]{5, 3, 1, 0, 2, 4});
         assertEquals(Arrays.toString(new int[]{0, 1, 2, 3, 4, 5}), Arrays.toString(result));
     }
 
     @Test
     @Order(60)
     void bubbleSortArray_emptyArray() {
-        int[] result = coding.bubbleSortArray(new int[]{});
+        int[] result = coding.bubbleSort(new int[]{});
         assertEquals(Arrays.toString(new int[]{}), Arrays.toString(result));
     }
 
@@ -537,24 +537,24 @@ public class CodingTest {
     @Order(61)
     void bubbleSortArray_minMaxIntegers() {
         assertArrayEquals(new int[]{Integer.MIN_VALUE, 0, Integer.MAX_VALUE},
-                coding.bubbleSortArray(new int[]{Integer.MIN_VALUE, Integer.MAX_VALUE, 0}));
+                coding.bubbleSort(new int[]{Integer.MIN_VALUE, Integer.MAX_VALUE, 0}));
     }
 
     @Test
     @Order(62)
     void bubbleSortArray_duplicateValues() {
-        assertArrayEquals(new int[]{1, 2, 2, 4, 4}, coding.bubbleSortArray(new int[]{4, 2, 4, 1, 2}));
+        assertArrayEquals(new int[]{1, 2, 2, 4, 4}, coding.bubbleSort(new int[]{4, 2, 4, 1, 2}));
     }
 
     @Test
     @Order(63)
     void bubbleSortArray_negativeAndPositiveIntegers() {
-        assertArrayEquals(new int[]{-2, -1, 0, 3, 5}, coding.bubbleSortArray(new int[]{-1, 3, -2, 5, 0}));
+        assertArrayEquals(new int[]{-2, -1, 0, 3, 5}, coding.bubbleSort(new int[]{-1, 3, -2, 5, 0}));
     }
 
     @Test
     @Order(64)
     void bubbleSortArray_singleElementArray() {
-        assertArrayEquals(new int[]{42}, coding.bubbleSortArray(new int[]{42}));
+        assertArrayEquals(new int[]{42}, coding.bubbleSort(new int[]{42}));
     }
 }
