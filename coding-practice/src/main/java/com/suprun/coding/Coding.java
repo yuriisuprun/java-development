@@ -633,19 +633,6 @@ public class Coding {
                     return s;
                 })
                 .collect(Collectors.toSet());
-
-
-//        return list.stream()
-//                .map(str -> str.split(" "))
-//                .flatMap(Arrays::stream)
-//                .filter(word -> word.startsWith("#"))
-//                .map(word -> {
-//                    if (word.endsWith(".")) {
-//                        return word.substring(0, word.length() - 1);
-//                    }
-//                    return word;
-//                })
-//                .collect(Collectors.toSet());
     }
 
 //        NIO package
