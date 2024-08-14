@@ -182,87 +182,21 @@ public class Coding {
     }
 
 //    public static void main(String[] args) {
-
+//
 //        TreeMap<String, String> tree = new TreeMap<>();
 //        tree.put("see1", "bus1");
 //        tree.put("see2", "bus2");
 //        tree.put("see3", "bus3");
 //        System.out.println(tree.ceilingEntry("see1"));
 //        System.out.println(tree.get("see1"));
-//        System.out.println(reverse("Bicycle"));
-//        System.out.println(reverse("Home"));
-//        System.out.println(reverse("Cat"));
-//        System.out.println(reverse2("Hello, world!"));
-//        System.out.println(reverse2("Hello"));
-//        System.out.println(reverse3("Hello"));
-//        System.out.println(reverse3("Hello"));
 //        System.out.println(filterEvenNumbers(Arrays.asList(1, 2, 3, 4, 5, 6, 7)));
 //        System.out.println(maxNumber(Arrays.asList(1, 2, 3, 4, 5, 6, 7)));
 //    }
 
-    private static String reverse(String string) {
-        int length = string.length();
-        char[] result = new char[length];
-        for (int i = 0; i < length; i++) {
-            result[i] = string.charAt(length - i - 1);
-        }
-        return new String(result);
-    }
-
-    private static String reverse2(String string) {
-        String result = "";
-        for (int i = string.length() - 1; i > 0; i--) {
-            result += string.charAt(i);
-        }
-        return result;
-    }
-
-    private static String reverse3(String string) {
-        StringBuilder result = new StringBuilder();
-        for (int i = string.length() - 1; i > 0; i--) {
-            result.append(string.charAt(i));
-        }
-        return result.toString();
-    }
-
-//    private static String removeDuplicates(String str) {
-//
-//        StringBuilder result = new StringBuilder();
-//        char previousChar = str.charAt(0);
-//        result.append(previousChar);
-//
-//        for (int i = 1; i < str.length(); i++) {
-//            char currentChar = str.charAt(i);
-//            if (currentChar != previousChar) {
-//                result.append(currentChar);
-//                previousChar = currentChar;
-//            }
-//        }
-//
-//        return result.toString();
-
-
-//        StringBuilder output = new StringBuilder();
-//        char previousChar = str.charAt(0);
-//        output.append(previousChar);
-//
-//        for (int i = 1; i < str.length(); i++) {
-//            char currentChar = str.charAt(i);
-//            if (currentChar != previousChar) {
-//                output.append(currentChar);
-//                previousChar = currentChar;
-//            }
-//        }
-//
-//        return output.toString();
-//    }
-
     public int lengthOfLongestSubstring(String str) {
-
         if (str == null || str.isEmpty()) {
             return 0;
         }
-
         int leftPosition = 0;
         int maxLength = 0;
         Map<Character, Integer> map = new HashMap<>();
