@@ -211,25 +211,6 @@ public class Coding {
         }
 
         return maxLength;
-
-
-//        if (str == null || str.isEmpty()){
-//            return 0;
-//        }
-//        Map<Character, Integer> map = new HashMap<>();
-//        int maxLength = 0;
-//        int leftPosition = 0;
-//
-//        for (int rightPosition = 0; rightPosition < str.length(); rightPosition++) {
-//            char currentChar = str.charAt(rightPosition);
-//
-//            if (map.containsKey(currentChar) && map.get(currentChar) >= leftPosition) {
-//                leftPosition = map.get(currentChar) + 1;
-//            }
-//            map.put(currentChar, rightPosition);
-//            maxLength = Math.max(maxLength, rightPosition - leftPosition + 1);
-//        }
-//        return maxLength;
     }
 
     public int[] toSum(int[] nums, int target) {
