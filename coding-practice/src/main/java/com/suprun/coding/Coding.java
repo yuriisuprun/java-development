@@ -89,8 +89,7 @@ public class Coding {
         return 0;
     }
 
-    public int getDuplicateWithArray(List<Integer> numbers) {
-        int[] integers = new int[numbers.size()];
+    public int getDuplicateWithMap(List<Integer> numbers) {
         Map<Integer, Integer> integersMap = new HashMap<>();
         for (Integer number : numbers) {
             int numberQuantity = integersMap.getOrDefault(number, 1);
@@ -101,24 +100,6 @@ public class Coding {
         }
         return 0;
     }
-
-//    public static void main(String[] args) {
-//        List<String> tweets = Arrays.asList("#hi hello", "hi", "#hello", "#hello", "#hello", "#hello", "#hello",
-//                "#epam", "#epam", "#epam", "#epam", "#epam", "#1", "#2", "#2", "#3", "#3", "#3", "#4", "#4", "#4", "#4");
-//
-//        System.out.println(getMostUsedHashes(tweets));
-//    }
-//
-//    private static Map<String, Integer> getMostUsedHashes(Collection<String> tweets) {
-//        return tweets.stream()
-//                .flatMap(w -> Arrays.stream(w.split(" "))) // Split by space to get words
-//                .filter(w -> w.startsWith("#")) // Filter out hashtags
-//                .collect(Collectors.groupingBy(Function.identity(), Collectors.counting())) // Group by hashtag and count
-//                .entrySet().stream()
-//                .sorted(Map.Entry.<String, Long>comparingByValue(Comparator.reverseOrder())) // Sort by count in descending order
-//                .limit(10) // Limit to top 10
-//                .collect(Collectors.toMap(Map.Entry::getKey, entry -> entry.getValue().intValue(), (e1, e2) -> e1, LinkedHashMap::new)); // Collect to LinkedHashMap to maintain order
-//    }
 
     public List<String> getSortedHashTags(List<String> tweets) {
         return tweets.stream()
@@ -133,9 +114,30 @@ public class Coding {
                 .toList();
     }
 
-//    public List<String> getSortedHashTagsOldStyleSolution(List<String> tweets) {
-//
-//    }
+    public List<String> getSortedHashTagsOldStyle(List<String> tweets) {
+        Map<String, Integer> hashtagCountMap = new HashMap<>();
+
+        for (String tweet : tweets) {
+            String[] words = tweet.split("\\s+"); // split the tweet into words
+            for (String word : words) {
+                if (word.startsWith("#")) {
+                    String hashtag = word.toLowerCase().replaceAll("[\\p{Punct}&&[^#]]+$", ""); // Normalize and clean
+                    hashtagCountMap.put(hashtag, hashtagCountMap.getOrDefault(hashtag, 0) + 1); // Count occurrences
+                }
+            }
+        }
+
+        List<Map.Entry<String, Integer>> sortedEntries = new ArrayList<>(hashtagCountMap.entrySet());
+        sortedEntries.sort((entry1, entry2) -> entry2.getValue().compareTo(entry1.getValue())); // Sort by frequency
+
+        List<String> sortedHashtags = new ArrayList<>();
+        for (Map.Entry<String, Integer> entry : sortedEntries) {
+            sortedHashtags.add(entry.getKey());
+        }
+
+        return sortedHashtags;
+    }
+
 
     public void printFormattedStrings(String[] strings, int columns_number) {
         // Create a 2D array to hold strings arranged in columns
@@ -181,18 +183,6 @@ public class Coding {
         }
     }
 
-//    public static void main(String[] args) {
-//
-//        TreeMap<String, String> tree = new TreeMap<>();
-//        tree.put("see1", "bus1");
-//        tree.put("see2", "bus2");
-//        tree.put("see3", "bus3");
-//        System.out.println(tree.ceilingEntry("see1"));
-//        System.out.println(tree.get("see1"));
-//        System.out.println(filterEvenNumbers(Arrays.asList(1, 2, 3, 4, 5, 6, 7)));
-//        System.out.println(maxNumber(Arrays.asList(1, 2, 3, 4, 5, 6, 7)));
-//    }
-
     public int lengthOfLongestSubstring(String str) {
         if (str == null || str.isEmpty()) {
             return 0;
@@ -224,22 +214,6 @@ public class Coding {
         }
 
         throw new IllegalArgumentException("Target number cannot be achieved by the sum of provided numbers in the array");
-
-
-//        Map<Integer, Integer> map = new HashMap<>();
-//
-//        for (int i = 0; i < nums.length; i++) {
-//            int diff = target - nums[i];
-//
-//            if (map.containsKey(diff)){
-//                return new int[]{map.get(diff), i};
-//            }
-//
-//            map.put(nums[i], i);
-//        }
-//
-//        return new int[]{0, 0};
-//    }
     }
 
     public int getDuplicateUsingStreamApi(List<Integer> numbers) {
@@ -250,42 +224,36 @@ public class Coding {
                     numberCounts.put(n, count + 1);
                     return count > 0;
                 }).findFirst().orElse(0);
+    }
 
-
-//        return numbers.stream()
-//                .filter(number -> {
-//                    int count = numberCounts.getOrDefault(number, 0);
-//                    numberCounts.put(number, count + 1);
-//                    return count > 0;
-//                }).findFirst().orElse(0); // Assuming 0 is returned if no duplicate is found
+    public boolean isPalindromeStringBuilder(String original) {
+        StringBuilder sb = new StringBuilder(original.toLowerCase());
+        String reversed = sb.reverse().toString();
+        return reversed.equals(original);
     }
 
     public boolean isPalindrome(String original) {
-        StringBuilder sb = new StringBuilder(original.toLowerCase());
-        String reversed = sb.reverse().toString();
-//        for (int i = 0; i < original.length(); i++){
-//            if (original.charAt(i) == reversed.charAt(i)){
-//                continue;
-//            } else {
-//                return false;
-//            }
-//        }
-        return reversed.equals(original);
-//        return true;
+        int length = original.length();
+        for (int i = 0; i < length / 2; i++) {
+            if (original.charAt(i) != original.charAt(length - 1 - i)) {
+                return false;
+            }
+        }
+        return true;
     }
 
-//    public int getDuplicateWithArray(List<Integer> numbers) {
-//        int[] integers = new int[numbers.size()];
-//        Map<Integer, Integer> integers = new HashMap<>();
-//        for (Integer number : numbers) {
-//            int numberQuantity = integers.getOrDefault(number, 1);
-//            if (numberQuantity > 1) {
-//                return number;
-//            }
-//            integers.put(number, numberQuantity + 1);
-//        }
-//        return 0;
-//    }
+    public int getDuplicateWithArray(List<Integer> numbers) {
+        Map<Integer, Integer> numberCount = new HashMap<>();
+        for (Integer number : numbers) {
+            int count = numberCount.getOrDefault(number, 0);
+            if (count >= 1) {
+                return number;
+            }
+            numberCount.put(number, count + 1);
+        }
+        throw new IllegalArgumentException("No duplicate is found");
+    }
+
 
     public String removeDuplicates(String str) {
         if (str == null || str.isEmpty()) {
@@ -521,6 +489,21 @@ public class Coding {
                 })
                 .collect(Collectors.toSet());
     }
+
+    public int[] sortOnesZeros(int[] array) {
+        int zero_counter = 0;
+        for (int number : array) {
+            if (number == 0) {
+                zero_counter++;
+            }
+        }
+        int[] result = new int[array.length];
+        for (int i = 0; i < array.length; i++) {
+            result[i] = (i < zero_counter) ? 0 : 1;
+        }
+        return result;
+    }
+
 
 //        NIO package
 //        InputStream/OutputStream

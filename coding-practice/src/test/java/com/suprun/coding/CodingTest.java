@@ -557,4 +557,42 @@ public class CodingTest {
     void bubbleSortArray_singleElementArray() {
         assertArrayEquals(new int[]{42}, coding.bubbleSort(new int[]{42}));
     }
+
+    @Test
+    @Order(65)
+    void sortOnesZeros() {
+        assertArrayEquals(new int[]{0, 0, 0, 1, 1}, coding.sortOnesZeros(new int[]{0, 1, 0, 0, 1}));
+    }
+
+    @Test
+    @Order(66)
+    void getDuplicateWithMap() {
+        int actual = coding.getDuplicateWithMap(Arrays.asList(1, 2, 2, 3, 4, 5, 6));
+        assertEquals(2, actual);
+    }
+
+    @Test
+    @Order(67)
+    void isPalindrome_StringBuilder() {
+        boolean actual = coding.isPalindromeStringBuilder("kayak");
+        assertTrue(actual);
+    }
+
+    @Test
+    @Order(68)
+    void isPalindrome_StringBuilder_false() {
+        boolean actual = coding.isPalindromeStringBuilder("abstraction");
+        assertFalse(actual);
+    }
+
+    @Order(69)
+    void getSortedHashTagsOldStyle() {
+        List<String> tweets = List.of("This JEP is #typescript for scientific #python",
+                "and it makes #java operations consistently #python.",
+                "The default #java operations are #python or strictfp,",
+                "#Java both of which guarantee the same results from the #java calculations on every platform.");
+
+        List<String> hashTags = coding.getSortedHashTagsOldStyle(tweets);
+        assertEquals(List.of("#java", "#python", "#typescript"), hashTags);
+    }
 }
