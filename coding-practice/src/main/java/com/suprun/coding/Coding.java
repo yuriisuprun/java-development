@@ -447,27 +447,10 @@ public class Coding {
     }
 
     private Map<Character, Integer> countLettersOfString(String str) {
-//        Map<Character, Integer> letters = new HashMap<>();
-//        for (char c : str.toCharArray()) {
-//            if (letters.containsKey(c)) {
-//                letters.put(c, letters.get(c) + 1);
-//            } else {
-//                letters.put(c, 1);
-//            }
-//        }
-//        return letters;
         Map<Character, Integer> letters = new HashMap<>();
         for (char c : str.toCharArray()) {
             letters.put(c, letters.getOrDefault(c, 0) + 1);
         }
-
-
-        String s = "abcdefg";
-        String sss = IntStream.range(0, s.length())
-                .filter(i -> i != 3)
-                .mapToObj(s::charAt)
-                .map(String::valueOf)
-                .collect(Collectors.joining());
         return letters;
     }
 
