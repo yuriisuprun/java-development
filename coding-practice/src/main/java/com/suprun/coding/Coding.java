@@ -121,14 +121,14 @@ public class Coding {
             String[] words = tweet.split("\\s+"); // split the tweet into words
             for (String word : words) {
                 if (word.startsWith("#")) {
-                    String hashtag = word.toLowerCase().replaceAll("[\\p{Punct}&&[^#]]+$", ""); // Normalize and clean
-                    hashtagCountMap.put(hashtag, hashtagCountMap.getOrDefault(hashtag, 0) + 1); // Count occurrences
+                    String hashtag = word.toLowerCase().replaceAll("[\\p{Punct}&&[^#]]+$", ""); // normalize and clean
+                    hashtagCountMap.put(hashtag, hashtagCountMap.getOrDefault(hashtag, 0) + 1); // count occurrences
                 }
             }
         }
 
         List<Map.Entry<String, Integer>> sortedEntries = new ArrayList<>(hashtagCountMap.entrySet());
-        sortedEntries.sort((entry1, entry2) -> entry2.getValue().compareTo(entry1.getValue())); // Sort by frequency
+        sortedEntries.sort((entry1, entry2) -> entry2.getValue().compareTo(entry1.getValue())); // sort by frequency
 
         List<String> sortedHashtags = new ArrayList<>();
         for (Map.Entry<String, Integer> entry : sortedEntries) {
@@ -140,17 +140,17 @@ public class Coding {
 
 
     public void printFormattedStrings(String[] strings, int columns_number) {
-        // Create a 2D array to hold strings arranged in columns
+        // create a 2D array to hold strings arranged in columns
         String[][] columns = new String[(strings.length + columns_number - 1) / columns_number][columns_number];
 
-        // Fill the 2D array with strings from the input array
+        // fill the 2D array with strings from the input array
         for (int i = 0; i < strings.length; i++) {
             int row = i / columns_number;
             int col = i % columns_number;
             columns[row][col] = strings[i];
         }
 
-        // Find the maximum length of strings in each column
+        // find the maximum length of strings in each column
         int[] maxLengths = new int[columns_number];
         for (int col = 0; col < columns_number; col++) {
             int maxLength = 0;
@@ -162,7 +162,7 @@ public class Coding {
             maxLengths[col] = maxLength;
         }
 
-        // Print the formatted strings
+        // print the formatted strings
         for (String[] row : columns) {
             for (int col = 0; col < columns_number; col++) {
                 if (row[col] != null) {
