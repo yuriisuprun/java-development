@@ -24,7 +24,8 @@ public class StreamApi {
 
     private Stream<String> shoppingStream = Stream.of("milk", "eggs", "bread", "flour", "butter", "coffee", "tea");
 
-    private Stream<String> shoppingArrayStream = Arrays.stream(new String[]{"milk", "eggs", "bread", "flour", "butter"});
+    private String[] shoppingArray = new String[]{"milk", "eggs", "bread", "flour", "butter"};
+    private Stream<String> shoppingArrayStream = Arrays.stream(shoppingArray);
 
     private List<String> shoppingList = List.of("milk", "eggs", "bread", "flour", "butter", "coffee", "tea");
     private Stream<String> shoppingListStream = shoppingList.stream();
