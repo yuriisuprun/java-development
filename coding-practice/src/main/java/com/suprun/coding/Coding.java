@@ -462,7 +462,7 @@ public class Coding {
      * @return a new string without the character at the specified index
      * @throws IllegalArgumentException if the index is out of bounds
      */
-    public static String removeCharAt(String originalString, int indexToRemove) {
+    public String removeCharAt(String originalString, int indexToRemove) {
         if (indexToRemove < 0 || indexToRemove >= originalString.length()) {
             throw new IllegalArgumentException("Index out of bounds: " + indexToRemove);
         }

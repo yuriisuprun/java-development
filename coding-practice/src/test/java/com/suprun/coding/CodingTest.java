@@ -585,6 +585,7 @@ public class CodingTest {
         assertFalse(actual);
     }
 
+    @Test
     @Order(69)
     void getSortedHashTagsOldStyle() {
         List<String> tweets = List.of("This JEP is #typescript for scientific #python",
@@ -594,5 +595,12 @@ public class CodingTest {
 
         List<String> hashTags = coding.getSortedHashTagsOldStyle(tweets);
         assertEquals(List.of("#java", "#python", "#typescript"), hashTags);
+    }
+
+    @Test
+    @Order(70)
+    void removeCharAt() {
+        String result = coding.removeCharAt("Kubernetes", 4);
+        assertEquals("Kubenetes", result);
     }
 }
