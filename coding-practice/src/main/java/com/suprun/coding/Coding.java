@@ -454,6 +454,25 @@ public class Coding {
         return letters;
     }
 
+    /**
+     * Removes the character at the specified index from the given string.
+     *
+     * @param originalString the original string
+     * @param indexToRemove  the index of the character to be removed
+     * @return a new string without the character at the specified index
+     * @throws IllegalArgumentException if the index is out of bounds
+     */
+    public static String removeCharAt(String originalString, int indexToRemove) {
+        if (indexToRemove < 0 || indexToRemove >= originalString.length()) {
+            throw new IllegalArgumentException("Index out of bounds: " + indexToRemove);
+        }
+        return IntStream.range(0, originalString.length())
+                .filter(i -> i != indexToRemove)
+                .mapToObj(originalString::charAt)
+                .map(String::valueOf)
+                .collect(Collectors.joining());
+    }
+
     public Set<String> filterUniqueHashtags() {
         List<String> list = List.of("This JEP is #mainly for scientific #applications",
                 "and it makes #floating-point operations consistently #strict.",
