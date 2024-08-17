@@ -25,6 +25,7 @@
         <module>threads</module>
         <module>web</module>
         <module>coding-practice</module>
+        <module>test-doubles</module>
     </modules>
 
     <dependencies>
