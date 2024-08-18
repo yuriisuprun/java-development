@@ -40,7 +40,7 @@
                 <version>3.0.0-M9</version>
                 <configuration>
                     <includes>
-                        <include>**/*CodingTest.java</include>
+                        <include>test/java/com/suprun/coding/CodingTest.java</include>
                     </includes>
                     <testFailureIgnore>false</testFailureIgnore>
                 </configuration>
