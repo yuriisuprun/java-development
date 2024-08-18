@@ -38,8 +38,9 @@ jobs:
         if: always()
         uses: actions/upload-artifact@v3
         with:
-          name: test-results
-          path: target/surefire-reports/
+            name: test-results
+            path: '**/target/surefire-reports/'
+            if-no-files-found: warn
 
       - name: Archive test reports
         if: failure()
