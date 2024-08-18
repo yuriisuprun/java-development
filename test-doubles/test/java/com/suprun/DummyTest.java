@@ -11,13 +11,13 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
  * @author Yurii_Suprun
  */
 @SpringBootTest
-public class TestDoubles {
+public class DummyTest {
 
     @Test
     void testWithDummyObject() {
         UserService userService = new UserService();
         // dummy object, not really used in the test
-        User dummyUser = new User("dummyUser", "dummy@example.com");
+        User dummyUser = new User(2L, "dummyUser", "dummy@example.com");
         userService.processUser(dummyUser);
         // the test does not care about dummyUser
         assertTrue(userService.isProcessed());
