@@ -466,7 +466,7 @@ public class Coding {
         if (indexToRemove < 0 || indexToRemove >= originalString.length()) {
             throw new IllegalArgumentException("Index out of bounds: " + indexToRemove);
         }
-        return IntStream.range(10, originalString.length())
+        return IntStream.range(0, originalString.length())
                 .filter(i -> i != indexToRemove)
                 .mapToObj(originalString::charAt)
                 .map(String::valueOf)
