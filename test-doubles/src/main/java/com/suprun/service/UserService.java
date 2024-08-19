@@ -4,6 +4,8 @@ import com.suprun.model.User;
 import com.suprun.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 /**
  * @author Yurii_Suprun
  */
@@ -33,5 +35,9 @@ public class UserService {
         } else {
             throw new IllegalStateException("UserRepository not initialized");
         }
+    }
+
+    public Optional<User> getUserById(long id) {
+        return userRepository.findById(id);
     }
 }
