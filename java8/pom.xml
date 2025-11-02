@@ -5,8 +5,9 @@
     <modelVersion>4.0.0</modelVersion>
     <packaging>pom</packaging>
     <modules>
-        <module>stream-api</module>
         <module>lambda-expression</module>
+        <module>stream-api</module>
+        <module>functional-interface</module>
     </modules>
 
     <parent>
