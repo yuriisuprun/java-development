@@ -6,9 +6,14 @@ package com.suprun.designpatterns.creational.singleton;
 public class SingletonMain {
     public static void main(String[] args) {
 
+        // testing classic Singleton
         Singleton instance = Singleton.getInstance();
         System.out.println(instance.toString());
 
-        System.out.println("Hello Singleton!");
+        // testing enum Singleton
+        EnumSingleton enumInstance = EnumSingleton.INSTANCE;
+        EnumSingleton enumInstance2 = EnumSingleton.INSTANCE;
+        System.out.println(enumInstance);
+        System.out.println(enumInstance2);
     }
 }
