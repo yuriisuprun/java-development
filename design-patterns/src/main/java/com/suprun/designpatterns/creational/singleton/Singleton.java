@@ -6,16 +6,21 @@ package com.suprun.designpatterns.creational.singleton;
 public class Singleton {
 
     private static Singleton instance = null;
-    private Singleton(){
+
+    private Singleton() {
 
         if (instance != null) {
             throw new IllegalStateException("Singleton instance already exists. Use getInstance() method.");
         }
     }
 
-    public static Singleton getInstance(){
-        if (instance == null){
-            instance = new Singleton();
+    public static Singleton getInstance() {
+        if (instance == null) {
+            synchronized (Singleton.class) {
+                if (instance == null) {
+                    instance = new Singleton();
+                }
+            }
         }
         return instance;
     }

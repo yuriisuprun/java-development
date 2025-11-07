@@ -27,6 +27,13 @@ public class ArrayTasks {
         System.out.println(Arrays.toString(namesReversed));
         System.out.println(Arrays.toString(numbersReversed2));
         System.out.println(Arrays.toString(findMaximumAndMinimumElement));
+        System.out.println("=====================");
+        System.out.println(Arrays.toString(ArrayTasks.bubbleSortArray(numbers2)));
+        System.out.println("=====================");
+        System.out.println("=====================");
+        int[] numbersReversed3 = ArrayTasks.reverseArray(numbers2);
+        System.out.println(Arrays.toString(numbersReversed3));
+        System.out.println("=====================");
     }
 
     private static <T> T[] reverseArray(T[] arr) {
@@ -59,5 +66,27 @@ public class ArrayTasks {
         minMaxArray[0] = min;
         minMaxArray[1] = max;
         return minMaxArray;
+    }
+
+    private static int[] bubbleSortArray(int[] array) {
+        for (int i = 0; i < array.length - 1; i++) {
+            for (int j = 0; j < array.length - i - 1; j++) {
+                if (array[j] > array[j + 1]) {
+                    int temp = array[j];
+                    array[j] = array[j + 1];
+                    array[j + 1] = temp;
+                }
+            }
+        }
+        return array;
+    }
+
+    private static int[] reverseArray(int[] array) {
+        for (int i = 0; i < array.length / 2; i++) {
+            int temp = array[i];
+            array[i] = array[array.length - i - 1];
+            array[array.length - i - 1] = temp;
+        }
+        return array;
     }
 }
