@@ -506,6 +506,40 @@ public class Coding {
         return result;
     }
 
+    public boolean isAnagram(String[] words) {
+        if (words == null || words.length != 2) {
+            throw new IllegalArgumentException("Input must contain exactly two strings.");
+        }
+
+        String str1 = words[0];
+        String str2 = words[1];
+
+        if (str1 == null || str2 == null) {
+            throw new IllegalArgumentException("Strings cannot be null.");
+        }
+
+        str1 = str1.replaceAll("\\s+", "").toLowerCase();
+        str2 = str2.replaceAll("\\s+", "").toLowerCase();
+
+        if (str1.length() != str2.length()) {
+            return false;
+        }
+
+        Map<Character, Integer> charCounts = new HashMap<>();
+
+        for (char c : str1.toCharArray()) {
+            charCounts.put(c, charCounts.getOrDefault(c, 0) + 1);
+        }
+
+        for (char c : str2.toCharArray()) {
+            if (!charCounts.containsKey(c)) return false;
+            charCounts.put(c, charCounts.get(c) - 1);
+            if (charCounts.get(c) == 0) charCounts.remove(c);
+        }
+
+        return charCounts.isEmpty();
+    }
+
 
 //        NIO package
 //        InputStream/OutputStream

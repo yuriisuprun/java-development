@@ -603,4 +603,20 @@ public class CodingTest {
         String result = coding.removeCharAt("Kubernetes", 4);
         assertEquals("Kubenetes", result);
     }
+
+    @Test
+    @Order(71)
+    void testAnagram() {
+        assertTrue(coding.isAnagram(new String[]{"listen", "silent"}));
+    }
+
+    @Test
+    @Order(72)
+    void testNotAnagram() {
+        String[] input = {"listen", "tetris"};
+        boolean result = coding.isAnagram(input);
+        assertFalse(result);
+    }
+
+
 }
