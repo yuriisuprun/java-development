@@ -606,7 +606,7 @@ public class CodingTest {
 
     @Test
     @Order(71)
-    void testAnagram() {
+    void testBasicAnagram() {
         assertTrue(coding.isAnagram(new String[]{"listen", "silent"}));
     }
 
@@ -618,5 +618,69 @@ public class CodingTest {
         assertFalse(result);
     }
 
+    @Test
+    @Order(73)
+    void testAnagramCaseInsensitive() {
+        String[] input = {"Listen", "Silent"};
+        boolean result = coding.isAnagram(input);
+        assertTrue(result);
+    }
 
+    @Test
+    @Order(74)
+    void testAnagramWithSpaces() {
+        String[] input = {"conversation", "voices rant on"};
+        boolean result = coding.isAnagram(input);
+        assertTrue(result);
+    }
+
+    @Test
+    @Order(75)
+    void testAnagramDifferentLengths() {
+        String[] input = {"abc", "ab"};
+        boolean result = coding.isAnagram(input);
+        assertFalse(result);
+    }
+
+    @Test
+    @Order(76)
+    void testAnagramEmptyStrings() {
+        String[] input = {"", ""};
+        boolean result = coding.isAnagram(input);
+        assertTrue(result);
+    }
+
+    @Test
+    @Order(77)
+    void testAnagramNullInput() {
+        assertThrows(IllegalArgumentException.class, () -> coding.isAnagram(null));
+    }
+
+    @Test
+    @Order(78)
+    void testAnagramNullElements() {
+        assertThrows(IllegalArgumentException.class, () -> coding.isAnagram(new String[]{"abc", null}));
+    }
+
+    @Test
+    @Order(79)
+    void testAnagramUnicodeCharacters() {
+        String[] input = {"deja", "ajed"};
+        boolean result = coding.isAnagram(input);
+        assertTrue(result);
+    }
+
+    @Test
+    @Order(80)
+    void testAnagramNonAlphabeticCharacters() {
+        String[] input = {"123!@#", "@#321!"};
+        boolean result = coding.isAnagram(input);
+        assertTrue(result);
+    }
+
+    @Test
+    @Order(81)
+    void testAnagramInputLengthNotTwo() {
+        assertThrows(IllegalArgumentException.class, () -> coding.isAnagram(new String[]{"one"}));
+    }
 }
