@@ -4,7 +4,7 @@ import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-public class FunctionalInterfaceImpl {
+public class FunctionalInterfaceImp {
 
     /**
      * Extracts all hashtags from text, removes duplicates, and sorts them

@@ -18,11 +18,11 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class FunctionalInterfaceTest {
 
-    private FunctionalInterfaceImpl functionalInterface;
+    private FunctionalInterfaceImp functionalInterface;
 
     @BeforeEach
     void setUp() {
-        functionalInterface = new FunctionalInterfaceImpl();
+        functionalInterface = new FunctionalInterfaceImp();
     }
 
     @Test
