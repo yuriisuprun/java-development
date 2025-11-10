@@ -31,13 +31,15 @@ jobs:
         if: success()
         run: mvn -B package -DskipTests
 
-      - name: Upload test results
+      - name: Upload test results (unit + integration)
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: surefire-reports
-          path: '**/target/surefire-reports/'
-          if-no-files-found: warn
+            name: test-reports
+            path: |
+              **/target/surefire-reports/*.xml
+              **/target/failsafe-reports/*.xml
+            if-no-files-found: warn
 
       - name: Upload build artifacts (optional)
         if: success()
