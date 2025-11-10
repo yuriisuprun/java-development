@@ -11,11 +11,15 @@ public class FunctionalInterfaceImp {
      * by natural order ignoring case.
      */
     public List<String> getSortedHashCodes(String text) {
-        return Arrays.stream(text.split("\\s+"))
+        Map<String, Long> frequencyMap = Arrays.stream(text.split("\\s+"))
                 .filter(word -> word.startsWith("#"))
                 .map(word -> word.replaceAll("[^#A-Za-z]", "")) // clean punctuation
-                .distinct()
-                .sorted(String.CASE_INSENSITIVE_ORDER)
+                .collect(Collectors.groupingBy(Function.identity(), Collectors.counting()));
+
+        return frequencyMap.entrySet().stream()
+                .sorted(Comparator.<Map.Entry<String, Long>>comparingLong(Map.Entry::getValue).reversed()
+                        .thenComparing(e -> e.getKey().toLowerCase()))
+                .map(Map.Entry::getKey)
                 .collect(Collectors.toList());
     }
 

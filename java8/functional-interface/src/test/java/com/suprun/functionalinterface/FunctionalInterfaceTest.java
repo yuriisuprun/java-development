@@ -35,7 +35,7 @@ public class FunctionalInterfaceTest {
             also my #MeTime So no matter how busy life gets, remember to create some space for #personalGrowth and
             never underestimate the power of a good #Workout Your #MentalHealth will thank you!""";
 
-        List<String> expectedList = List.of("#Workout", "#podcast", "#MentalHealth", "#SelfCare", "#personalGrowth", "#MeTime");
+        List<String> expectedList = List.of("#Workout", "#podcast", "#MentalHealth", "#MeTime", "#personalGrowth", "#SelfCare");
         List<String> actualList = functionalInterface.getSortedHashCodes(hashTagText);
 
         assertEquals(expectedList, actualList);
