@@ -17,13 +17,4 @@
     <artifactId>threads</artifactId>
     <packaging>pom</packaging>
 
-    <dependencies>
-        <dependency>
-            <groupId>com.suprun</groupId>
-            <artifactId>java-development</artifactId>
-            <version>1.0-SNAPSHOT</version>
-            <scope>compile</scope>
-        </dependency>
-    </dependencies>
-
 </project>
