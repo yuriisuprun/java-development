@@ -5,43 +5,24 @@ import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.Arguments;
-import org.junit.jupiter.params.provider.MethodSource;
 
-import java.math.BigDecimal;
-import java.time.LocalDate;
-import java.time.Month;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
-import java.util.Set;
-import java.util.stream.Stream;
-
-import static java.util.Arrays.asList;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.junit.jupiter.api.Assertions.fail;
-
-import static org.assertj.core.api.Assertions.assertThat;
 
 /**
- * A test class for {@link functionalInterface}
  *
  * @author Yurii_Suprun
  */
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class FunctionalInterfaceTest {
 
-    private FunctionalInterface functionalInterface;
+    private FunctionalInterfaceImpl functionalInterface;
 
     @BeforeEach
     void setUp() {
-        functionalInterface = new FunctionalInterface();
+        functionalInterface = new FunctionalInterfaceImpl();
     }
 
     @Test
