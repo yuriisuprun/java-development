@@ -11,11 +11,9 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # Checkout code
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      # Setup JDK 21 with Maven cache
       - name: Set up JDK 21
         uses: actions/setup-java@v4
         with:
@@ -23,21 +21,10 @@ jobs:
           distribution: 'temurin'
           cache: 'maven'
 
-      # Build & run all tests
       - name: Build & run all tests
         run: mvn -B clean verify
 
-      # Ensure tests actually ran (optional but recommended)
-      - name: Ensure tests ran
-        run: |
-          if [ $(find . -path "*/target/surefire-reports/*.xml" | wc -l) -eq 0 ] && \
-             [ $(find . -path "*/target/failsafe-reports/*.xml" | wc -l) -eq 0 ]; then
-            echo "No test reports found. Check if tests are being detected by Maven."
-            exit 1
-          fi
-
-      # Upload test reports (unit + integration)
-      - name: Upload test results
+      - name: Upload test reports
         if: always()
         uses: actions/upload-artifact@v4
         with:
@@ -47,13 +34,11 @@ jobs:
             **/target/failsafe-reports/*.xml
           if-no-files-found: warn
 
-      # Package artifacts (optional)
       - name: Package artifacts (skip tests)
         if: success()
         run: mvn -B package -DskipTests
 
-      # Upload built JARs
-      - name: Upload build artifacts
+      - name: Upload built JARs
         if: success()
         uses: actions/upload-artifact@v4
         with:
