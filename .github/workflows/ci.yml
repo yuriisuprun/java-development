@@ -32,7 +32,7 @@ jobs:
         run: |
           if [ $(find . -path "*/target/surefire-reports/*.xml" | wc -l) -eq 0 ] && \
              [ $(find . -path "*/target/failsafe-reports/*.xml" | wc -l) -eq 0 ]; then
-            echo "❌ No test reports found. Check if tests are being detected by Maven."
+            echo "No test reports found. Check if tests are being detected by Maven."
             exit 1
           fi
 
