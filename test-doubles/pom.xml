@@ -16,7 +16,7 @@
     </parent>
 
     <artifactId>test-doubles</artifactId>
-    <packaging>jar</packaging>
+    <packaging>pom</packaging>
 
     <dependencies>
         <dependency>
