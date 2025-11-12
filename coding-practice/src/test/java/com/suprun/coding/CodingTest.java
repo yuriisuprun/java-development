@@ -6,6 +6,8 @@ import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -690,5 +692,38 @@ public class CodingTest {
         String input = "MorNInG";
         String result = coding.toggleString(input);
         assertEquals("mORniNg", result);
+    }
+
+    @ParameterizedTest(name = "toggleString(\"{0}\") should return \"{1}\"")
+    @CsvSource({
+            "MorNInG, mORniNg",
+            "hello, HELLO",
+            "HELLO, hello",
+            "hElLo, HeLlO",
+            "12345, 12345",
+            "HeLLo123, hEllO123",
+            "'', ''"
+    })
+    void testToggleStringWithVariousInputs(String input, String expected) {
+        assertEquals(expected, coding.toggleString(input));
+    }
+
+    @Test
+    void testToggleStringWithNullInput() {
+        assertEquals("", coding.toggleString(null), "Should return empty string for null input");
+    }
+
+    @Test
+    void testToggleStringPreservesNonAlphabeticCharacters() {
+        String input = "Hi! How_are-you?";
+        String expected = "hI! hOW_ARE-YOU?";
+        assertEquals(expected, coding.toggleString(input));
+    }
+
+    @Test
+    void testToggleStringIsIdempotentAfterTwoApplications() {
+        String input = "Java123";
+        assertEquals(input, coding.toggleString(coding.toggleString(input)),
+                "Applying toggleString twice should return the original input");
     }
 }
