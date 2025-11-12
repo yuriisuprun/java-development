@@ -683,4 +683,12 @@ public class CodingTest {
     void testAnagramInputLengthNotTwo() {
         assertThrows(IllegalArgumentException.class, () -> coding.isAnagram(new String[]{"one"}));
     }
+
+    @Test
+    @Order(82)
+    void testStringToogle() {
+        String input = "MorNInG";
+        String result = coding.toogleString(input);
+        assertEquals("mORniNg", result);
+    }
 }

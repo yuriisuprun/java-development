@@ -540,6 +540,10 @@ public class Coding {
         return charCounts.isEmpty();
     }
 
+    public String toogleString(String input) {
+
+    }
+
 
 //        NIO package
 //        InputStream/OutputStream
