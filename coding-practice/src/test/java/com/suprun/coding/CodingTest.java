@@ -704,16 +704,19 @@ public class CodingTest {
             "HeLLo123, hEllO123",
             "'', ''"
     })
+    @Order(83)
     void testToggleStringWithVariousInputs(String input, String expected) {
         assertEquals(expected, coding.toggleString(input));
     }
 
     @Test
+    @Order(84)
     void testToggleStringWithNullInput() {
         assertEquals("", coding.toggleString(null), "Should return empty string for null input");
     }
 
     @Test
+    @Order(85)
     void testToggleStringPreservesNonAlphabeticCharacters() {
         String input = "Hi! How_are-you?";
         String expected = "hI! hOW_ARE-YOU?";
@@ -721,6 +724,7 @@ public class CodingTest {
     }
 
     @Test
+    @Order(86)
     void testToggleStringIsIdempotentAfterTwoApplications() {
         String input = "Java123";
         assertEquals(input, coding.toggleString(coding.toggleString(input)),
