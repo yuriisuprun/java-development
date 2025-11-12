@@ -540,7 +540,7 @@ public class Coding {
         return charCounts.isEmpty();
     }
 
-    public String toogleString(String input) {
+    public String toggleString(String input) {
         StringBuilder sb = new StringBuilder();
 
         for (int i = 0; i < input.length(); i++) {

@@ -686,9 +686,9 @@ public class CodingTest {
 
     @Test
     @Order(82)
-    void testStringToogle() {
+    void testStringToggle() {
         String input = "MorNInG";
-        String result = coding.toogleString(input);
+        String result = coding.toggleString(input);
         assertEquals("mORniNg", result);
     }
 }
