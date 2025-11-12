@@ -541,16 +541,18 @@ public class Coding {
     }
 
     public String toggleString(String input) {
-        StringBuilder sb = new StringBuilder();
+        if (input == null || input.isEmpty()) {
+            return "";
+        }
 
-        for (int i = 0; i < input.length(); i++) {
-            char currentChar = input.charAt(i);
-            if (Character.isLowerCase(currentChar)) {
-                sb.append(Character.toUpperCase(currentChar));
-            } else if (Character.isUpperCase(currentChar)) {
-                sb.append(Character.toLowerCase(currentChar));
+        StringBuilder sb = new StringBuilder(input.length());
+        for (char c : input.toCharArray()) {
+            if (Character.isLowerCase(c)) {
+                sb.append(Character.toUpperCase(c));
+            } else if (Character.isUpperCase(c)) {
+                sb.append(Character.toLowerCase(c));
             } else {
-                sb.append(currentChar);
+                sb.append(c);
             }
         }
         return sb.toString();
