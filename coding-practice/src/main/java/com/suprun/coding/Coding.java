@@ -541,7 +541,19 @@ public class Coding {
     }
 
     public String toogleString(String input) {
+        StringBuilder sb = new StringBuilder();
 
+        for (int i = 0; i < input.length(); i++) {
+            char currentChar = input.charAt(i);
+            if (Character.isLowerCase(currentChar)) {
+                sb.append(Character.toUpperCase(currentChar));
+            } else if (Character.isUpperCase(currentChar)) {
+                sb.append(Character.toLowerCase(currentChar));
+            } else {
+                sb.append(currentChar);
+            }
+        }
+        return sb.toString();
     }
 
 
