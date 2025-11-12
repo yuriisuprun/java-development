@@ -637,7 +637,7 @@ public class CodingTest {
     @Test
     @Order(75)
     void testAnagramDifferentLengths() {
-        String[] input = {"abc", "abc"};
+        String[] input = {"abc", "ab"};
         boolean result = coding.isAnagram(input);
         assertFalse(result);
     }
