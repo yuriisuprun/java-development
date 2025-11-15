@@ -571,8 +571,6 @@ public class Coding {
         return integers.stream().reduce(0, Integer::sum);
     }
 
-
-//    iursuprun@gmail.com
     
 //        NIO package
 //        InputStream/OutputStream
