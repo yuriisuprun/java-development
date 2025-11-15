@@ -27,6 +27,9 @@ public class Coding {
         int[] arr1 = {1, 5, 9};
         int[] arr2 = {4, 6, 7, 10};
         System.out.println(Arrays.toString(mergeSorted(arr1, arr2)));
+
+        System.out.println("count sum");
+        System.out.println(Coding.countSum(Arrays.asList(1, 2, 3, 4, 5)));
     }
 
     public String reverseString(String string) {
@@ -558,7 +561,18 @@ public class Coding {
         return sb.toString();
     }
 
+    public Map<String, Integer> returnPrefieldMap() {
+        return Map.of("Good", 1, "Better", 2, "Nice", 3, "Really", 4, "Day", 5,
+                "Weather", 6, "Moon", 7, "Home", 8, "White", 9, "Stone", 10);
+    }
 
+    public static int countSum(List<Integer> integers) {
+        return integers.stream().mapToInt(Integer::intValue).sum();
+    }
+
+
+//    iursuprun@gmail.com
+    
 //        NIO package
 //        InputStream/OutputStream
 //        factory pattern
