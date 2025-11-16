@@ -4,7 +4,8 @@ package com.suprun.designpatterns.structural.proxy;
  * @author Yurii_Suprun
  */
 public class SecureBankAccountProxy implements BankAccount {
-    private BankAccountImpl realAccount;
+
+    private final BankAccountImpl realAccount;
 
     public SecureBankAccountProxy(double initialBalance) {
         // The proxy controls access to the real account

@@ -5,6 +5,7 @@ package com.suprun.designpatterns.structural.proxy;
  */
 // Real Subject
 public class BankAccountImpl implements BankAccount {
+
     private double balance;
 
     public BankAccountImpl(double initialBalance) {
