@@ -6,7 +6,7 @@ package com.suprun.designpatterns.structural.proxy;
 public class ProxyMain {
 
     public static void main(String... args) {
-        
+
         BankAccount bankAccount = new SecureBankAccountProxy(1000.0);
 
         bankAccount.deposit(500.0); // Valid deposit
