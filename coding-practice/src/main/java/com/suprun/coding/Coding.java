@@ -567,8 +567,13 @@ public class Coding {
     }
 
     public static int countSum(List<Integer> integers) {
-//        return integers.stream().mapToInt(Integer::intValue).sum();
-        return integers.stream().reduce(0, Integer::sum);
+//        return integers.stream()
+//                .mapToInt(Integer::intValue)
+//                .sum();
+//        return integers.stream()
+//                .reduce(0, (a, b) -> a + b);
+        return integers.stream()
+                .reduce(0, Integer::sum);
     }
 
     
