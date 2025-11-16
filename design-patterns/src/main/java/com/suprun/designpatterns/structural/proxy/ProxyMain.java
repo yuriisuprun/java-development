@@ -4,6 +4,7 @@ package com.suprun.designpatterns.structural.proxy;
  * @author Yurii_Suprun
  */
 public class ProxyMain {
+
     public static void main(String... args) {
 
         // Using the secure proxy to interact with the bank account
