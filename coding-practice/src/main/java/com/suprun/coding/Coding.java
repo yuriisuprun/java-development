@@ -29,7 +29,7 @@ public class Coding {
         System.out.println(Arrays.toString(mergeSorted(arr1, arr2)));
 
         System.out.println("count sum");
-        System.out.println(Coding.countSum(Arrays.asList(1, 2, 3, 4, 5)));
+        System.out.println(Coding.countSum(1, 2, 3, 4, 5));
     }
 
     public String reverseString(String string) {
@@ -566,14 +566,15 @@ public class Coding {
                 "Weather", 6, "Moon", 7, "Home", 8, "White", 9, "Stone", 10);
     }
 
-    public static int countSum(List<Integer> integers) {
+    public static int countSum(int... integers) {
 //        return integers.stream()
 //                .mapToInt(Integer::intValue)
 //                .sum();
 //        return integers.stream()
 //                .reduce(0, (a, b) -> a + b);
-        return integers.stream()
-                .reduce(0, Integer::sum);
+//        return Arrays.stream(integers)
+//                .reduce(0, Integer::sum);
+        return Arrays.stream(integers).sum();
     }
 
     
