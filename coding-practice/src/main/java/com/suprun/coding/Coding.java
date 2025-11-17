@@ -581,11 +581,9 @@ public class Coding {
 //        NIO package
 //        InputStream/OutputStream
 //        factory pattern
-//        builder pattern
 //        strategy pattern
 //        decorator pattern
 //        concurrency
-//        observer pattern
 //        hibernate/spring Data
 //        JSON: read/write - Jackson, mapper
 //        RestController/RestTemplate
