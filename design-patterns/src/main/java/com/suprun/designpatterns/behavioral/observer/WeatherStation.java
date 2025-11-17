@@ -3,7 +3,7 @@ package com.suprun.designpatterns.behavioral.observer;
 import java.util.ArrayList;
 import java.util.List;
 
-class WeatherStation implements Subject {
+public class WeatherStation implements Subject {
 
     private List<Observer> observers = new ArrayList<>();
     private float temperature;
