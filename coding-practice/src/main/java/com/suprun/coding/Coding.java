@@ -581,7 +581,6 @@ public class Coding {
 //        NIO package
 //        InputStream/OutputStream
 //        factory pattern
-//        strategy pattern
 //        decorator pattern
 //        concurrency
 //        hibernate/spring Data
