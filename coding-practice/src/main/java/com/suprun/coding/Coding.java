@@ -580,7 +580,6 @@ public class Coding {
     
 //        NIO package
 //        InputStream/OutputStream
-//        factory pattern
 //        concurrency
 //        hibernate/spring Data
 //        JSON: read/write - Jackson, mapper
