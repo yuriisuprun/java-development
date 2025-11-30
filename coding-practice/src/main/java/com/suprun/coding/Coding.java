@@ -578,7 +578,6 @@ public class Coding {
     }
 
 
-//        InputStream/OutputStream
     //    create a submit form using java, Spring, AI, UI for job application
 //        concurrency
 //        hibernate/spring Data
