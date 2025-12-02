@@ -30,7 +30,7 @@ public class InputOutputStreamTasks {
         }
     }
 
-    private static void readWriteBytesBuffered(){
+    private static void readWriteBytesBuffered() {
         try (
                 InputStream in = new BufferedInputStream(new FileInputStream("input_output.txt"));
                 OutputStream out = new BufferedOutputStream(new FileOutputStream("input_output.txt"))
