@@ -1,13 +1,6 @@
 package com.suprun.coding;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -30,6 +23,9 @@ public class Coding {
 
         System.out.println("count sum");
         System.out.println(Coding.countSum(1, 2, 3, 4, 5));
+
+        String text = "Hello world! Hello Java, hello world.";
+        System.out.println(Coding.countUniqueStrings(text));
     }
 
     public String reverseString(String string) {
@@ -577,6 +573,27 @@ public class Coding {
         return Arrays.stream(integers).sum();
     }
 
+    private static int countUniqueStrings(String text) {
+        if (text == null || text.isBlank()) {
+            return 0;
+        }
+
+        String[] words = text
+                .toLowerCase()
+                .replaceAll("[^a-z0-9\\s]", "")
+                .split("\\s+");
+
+        Set<String> uniqueWords = new HashSet<>();
+
+        for (String word : words) {
+            if (!word.isEmpty()) {
+                uniqueWords.add(word);
+            }
+        }
+
+        return uniqueWords.size();
+    }
+
 
     //    create a submit form using java, Spring, AI, UI for job application
 //        concurrency
@@ -587,6 +604,5 @@ public class Coding {
 //        Tasks:
 //        Find substring in a String
 //        Find element in sorted list
-//        Count unique strings in a text
 //        Invert linkedList
 }
