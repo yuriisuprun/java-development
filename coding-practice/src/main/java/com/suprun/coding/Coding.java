@@ -26,6 +26,22 @@ public class Coding {
 
         String text = "Hello world! Hello Java, hello world.";
         System.out.println(Coding.countUniqueStrings(text));
+
+        List<Integer> integers = Arrays.asList(2, 4, 8, 8, 90, 20, 20);
+        List<Integer> duplicates = Coding.findDuplicates(integers);
+        System.out.println(duplicates);
+    }
+
+    public static List<Integer> findDuplicates(List<Integer> integers) {
+        if (integers == null || integers.isEmpty()) {
+            return Collections.emptyList();
+        }
+        return integers.stream()
+                .collect(Collectors.groupingBy(Function.identity(), Collectors.counting()))
+                .entrySet().stream()
+                .filter(entry -> entry.getValue() > 1)
+                .map(Map.Entry::getKey)
+                .collect(Collectors.toList());
     }
 
     public String reverseString(String string) {
