@@ -40,27 +40,9 @@ public class Coding {
         return integers.stream()
                 .collect(Collectors.groupingBy(Function.identity(), Collectors.counting()))
                 .entrySet().stream()
-                .filter(e -> e.getValue() > 1)
+                .filter(entry -> entry.getValue() > 1)
                 .map(Map.Entry::getKey)
                 .collect(Collectors.toList());
-
-
-
-
-
-
-
-
-
-
-
-
-//        return integers.stream()
-//                .collect(Collectors.groupingBy(Function.identity(), Collectors.counting()))
-//                .entrySet().stream()
-//                .filter(entry -> entry.getValue() > 1)
-//                .map(Map.Entry::getKey)
-//                .collect(Collectors.toList());
     }
 
     public String reverseString(String string) {
