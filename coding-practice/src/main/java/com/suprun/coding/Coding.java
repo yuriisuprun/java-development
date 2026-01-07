@@ -30,9 +30,19 @@ public class Coding {
         List<Integer> integers = Arrays.asList(2, 4, 8, 8, 90, 20, 20, 5, 5);
         List<Integer> duplicates = Coding.findDuplicates(integers);
         System.out.println(duplicates);
+
+        List<String> unsortedStrings = Arrays.asList("cat", "white", "my", "flower", "home");
+        List<String> sorted = Coding.sortStringsByLength(unsortedStrings);
+        System.out.println(sorted);
     }
 
-    public static List<Integer> findDuplicates(List<Integer> integers) {
+    private static List<String> sortStringsByLength(List<String> strings) {
+        return strings.stream()
+                .sorted(Comparator.comparingInt(String::length))
+                .collect(Collectors.toList());
+    }
+
+    private static List<Integer> findDuplicates(List<Integer> integers) {
         if (integers == null || integers.isEmpty()) {
             return Collections.emptyList();
         }
@@ -45,7 +55,7 @@ public class Coding {
                 .collect(Collectors.toList());
     }
 
-    public String reverseString(String string) {
+    private String reverseString(String string) {
         int length = string.length();
         char[] result = new char[length];
         for (int i = 0; i < length; i++) {
