@@ -37,6 +37,15 @@ public class Coding {
         List<String> separatedStrings = Arrays.asList("a", "b", "c", "d", "e");
         String joinedStrings = Coding.joinStrings(separatedStrings);
         System.out.println(joinedStrings);
+        List<String> words = List.of("the", "your", "background", "picture", "way");
+        String longestString = Coding.getLongestString(words);
+        System.out.println(longestString);
+    }
+
+    private static String getLongestString(List<String> strings) {
+        return strings.stream()
+                .max(Comparator.comparingInt(String::length))
+                .orElseThrow(() -> new IllegalArgumentException("List is empty"));
     }
 
     private static String joinStrings(List<String> strings) {
