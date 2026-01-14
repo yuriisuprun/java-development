@@ -34,6 +34,14 @@ public class Coding {
         List<String> unsortedStrings = Arrays.asList("cat", "white", "my", "flower", "home");
         List<String> sorted = Coding.sortStringsByLength(unsortedStrings);
         System.out.println(sorted);
+        List<String> separatedStrings = Arrays.asList("a", "b", "c", "d", "e");
+        String joinedStrings = Coding.joinStrings(separatedStrings);
+        System.out.println(joinedStrings);
+    }
+
+    private static String joinStrings(List<String> strings) {
+        return strings.stream()
+                .collect(Collectors.joining(", "));
     }
 
     private static List<String> sortStringsByLength(List<String> strings) {
