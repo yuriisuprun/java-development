@@ -40,6 +40,18 @@ public class Coding {
         List<String> words = List.of("the", "your", "background", "picture", "way");
         String longestString = Coding.getLongestString(words);
         System.out.println(longestString);
+
+        List<Integer> numbers = List.of(2, 3, 3, 3, 4, 4, 5);
+        Map<Integer, Long> collectedNumbers = Coding.collectNumbers(numbers);
+        System.out.println(collectedNumbers);
+    }
+
+    private static Map<Integer, Long> collectNumbers(List<Integer> numbers) {
+        return numbers.stream()
+                .collect(Collectors.groupingBy(Function.identity(), Collectors.counting()))
+                .entrySet().stream()
+                .filter(e -> e.getValue() > 1)
+                .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
     }
 
     private static String getLongestString(List<String> strings) {
