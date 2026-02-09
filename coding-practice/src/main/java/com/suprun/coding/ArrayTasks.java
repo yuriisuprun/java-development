@@ -2,6 +2,7 @@ package com.suprun.coding;
 
 import java.util.Arrays;
 import java.util.*;
+import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 public class ArrayTasks {
@@ -9,34 +10,34 @@ public class ArrayTasks {
     public static void main(String... args) {
         Integer[] numbers1 = {1, 2, 3, 4, 5};
 
-        int[] numbers2 = new int[6];
-        numbers2[0] = 6;
-        numbers2[1] = 7;
-        numbers2[2] = 8;
-        numbers2[3] = -3;
-        numbers2[4] = 110;
-        numbers2[5] = 11;
+        int[] numbers2 = {6, 7, 8, -3, 110, 11};
 
         String[] names = {"Alice", "Bob", "Charlie"};
 
-        Integer[] numbersReversed = reverseArray(numbers1);
-        int[] numbersReversed2 = reverseIntArrayWithStream(numbers2);
-        int[] findMaximumAndMinimumElement = findMaximumAndMinimumElement(numbers2);
-        String[] namesReversed = reverseArray(names);
-        System.out.println(Arrays.toString(numbersReversed));
-        System.out.println(Arrays.toString(namesReversed));
-        System.out.println(Arrays.toString(numbersReversed2));
-        System.out.println(Arrays.toString(findMaximumAndMinimumElement));
-        System.out.println("=====================");
-        System.out.println(Arrays.toString(ArrayTasks.bubbleSortArray(numbers2)));
-        System.out.println("=====================");
-        System.out.println("=====================");
-        int[] numbersReversed3 = ArrayTasks.reverseArray(numbers2);
-        System.out.println(Arrays.toString(numbersReversed3));
-        System.out.println("=====================");
+        // Test with numbers containing duplicates
+        Integer[] numbersWithDuplicates = {1, 2, 2, 3, 3, 3, 4, 5, 5};
+
+        System.out.println("=== Reverse Array ===");
+        System.out.println(Arrays.toString(reverseArray(numbers1)));
+        System.out.println(Arrays.toString(reverseArray(names)));
+
+        System.out.println("\n=== Min/Max Elements ===");
+        System.out.println(Arrays.toString(findMaximumAndMinimumElement(numbers2)));
+
+        System.out.println("\n=== Bubble Sort ===");
+        System.out.println(Arrays.toString(bubbleSortArray(numbers2.clone())));
+
+        System.out.println("\n=== Unique Numbers ===");
+        System.out.println(getUniqueNumbers(numbersWithDuplicates));
+
+        System.out.println("\n=== Duplicate Numbers ===");
+        System.out.println(getDuplicateNumbers(numbersWithDuplicates));
     }
 
     private static <T> T[] reverseArray(T[] arr) {
+        if (arr == null || arr.length == 0) {
+            throw new IllegalArgumentException("Array cannot be null or empty");
+        }
         for (int i = 0; i < arr.length / 2; i++) {
             T temp = arr[i];
             arr[i] = arr[arr.length - 1 - i];
@@ -46,12 +47,18 @@ public class ArrayTasks {
     }
 
     private static int[] reverseIntArrayWithStream(int[] array) {
+        if (array == null || array.length == 0) {
+            throw new IllegalArgumentException("Array cannot be null or empty");
+        }
         return IntStream.rangeClosed(1, array.length)
                 .map(i -> array[array.length - i])
                 .toArray();
     }
 
     private static int[] findMaximumAndMinimumElement(int[] array) {
+        if (array == null || array.length == 0) {
+            throw new IllegalArgumentException("Array cannot be null or empty");
+        }
         int[] minMaxArray = new int[2];
         int min = array[0];
         int max = array[0];
@@ -69,6 +76,9 @@ public class ArrayTasks {
     }
 
     private static int[] bubbleSortArray(int[] array) {
+        if (array == null || array.length == 0) {
+            throw new IllegalArgumentException("Array cannot be null or empty");
+        }
         for (int i = 0; i < array.length - 1; i++) {
             for (int j = 0; j < array.length - i - 1; j++) {
                 if (array[j] > array[j + 1]) {
@@ -81,12 +91,29 @@ public class ArrayTasks {
         return array;
     }
 
-    private static int[] reverseArray(int[] array) {
-        for (int i = 0; i < array.length / 2; i++) {
-            int temp = array[i];
-            array[i] = array[array.length - i - 1];
-            array[array.length - i - 1] = temp;
+    private static List<Integer> getUniqueNumbers(Integer[] numbers) {
+        if (numbers == null) {
+            throw new IllegalArgumentException("Array cannot be null");
         }
-        return array;
+        return Arrays.stream(numbers)
+                .collect(Collectors.groupingBy(n -> n, Collectors.counting()))
+                .entrySet()
+                .stream()
+                .filter(entry -> entry.getValue() == 1)
+                .map(Map.Entry::getKey)
+                .collect(Collectors.toList());
+    }
+
+    private static List<Integer> getDuplicateNumbers(Integer[] numbers) {
+        if (numbers == null) {
+            throw new IllegalArgumentException("Array cannot be null");
+        }
+        return Arrays.stream(numbers)
+                .collect(Collectors.groupingBy(n -> n, Collectors.counting()))
+                .entrySet()
+                .stream()
+                .filter(entry -> entry.getValue() > 1)
+                .map(Map.Entry::getKey)
+                .collect(Collectors.toList());
     }
 }
