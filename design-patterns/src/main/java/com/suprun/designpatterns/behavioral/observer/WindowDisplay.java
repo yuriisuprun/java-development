@@ -1,16 +1,16 @@
 package com.suprun.designpatterns.behavioral.observer;
 
 /**
- * PhoneDisplay is an observer that displays temperature updates on a phone screen.
+ * WindowDisplay is an observer that displays temperature updates on a window display.
  * Implements the Observer interface to receive updates from a Subject.
  *
  * @author Yurii_Suprun
  */
-public class PhoneDisplay implements Observer {
+public class WindowDisplay implements Observer {
 
     @Override
     public void update(float temperature) {
-        System.out.println("Phone Display: Temperature updated to " + temperature + "°C");
+        System.out.println("Window Display: Temperature updated to " + temperature + "°C");
     }
 }
 
