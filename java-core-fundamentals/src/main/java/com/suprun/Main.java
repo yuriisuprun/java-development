@@ -5,9 +5,22 @@ import com.suprun.interfaces.MyClass;
 import com.suprun.interfaces.MyInterface;
 
 /**
+ * Main class demonstrating core Java fundamentals concepts.
+ * This class showcases:
+ * - Abstract classes and interfaces implementation
+ * - Default methods in interfaces
+ * - Static methods in interfaces
+ * - Nested interfaces and classes
+ * - Enum usage and switching
+ *
  * @author Yurii_Suprun
  */
 public class Main {
+    /**
+     * Main entry point demonstrating various Java fundamentals.
+     *
+     * @param args command line arguments (not used)
+     */
     public static void main(String[] args) {
         System.out.println("Java Fundamentals!");
 

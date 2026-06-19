@@ -1,24 +1,35 @@
 package com.suprun.list_implementations;
 
-
-import com.suprun.util.ExerciseNotCompletedException;
-
 import java.util.NoSuchElementException;
 import java.util.Objects;
 
 /**
- * {@link LinkedList} is a list implementation that is based on singly linked generic nodes. A node is implemented as
- * inner static class {@link Node<T>}.
+ * {@link LinkedList} is a list implementation based on singly linked generic nodes.
+ * A node is implemented as a static inner class {@link Node}.
  *
- * @param <T> generic type parameter
+ * Features:
+ * - O(1) insertion and deletion at the beginning or end
+ * - O(n) access time to elements by index
+ * - Dynamic memory allocation
+ *
+ * @param <T> the type of elements in this list
  * @author Yurii_Suprun
  */
 public class LinkedList<T> implements List<T> {
+    /**
+     * Node represents a single element in the linked list.
+     *
+     * @param <T> the type of element
+     */
     static class Node<T> {
-
         T element;
         Node<T> next;
 
+        /**
+         * Creates a node with the specified element.
+         *
+         * @param element the element to store
+         */
         public Node(T element) {
             this.element = element;
         }
@@ -29,11 +40,11 @@ public class LinkedList<T> implements List<T> {
     private int size;
 
     /**
-     * This method creates a list of provided elements
+     * Creates a LinkedList with the provided elements.
      *
-     * @param elements elements to add
-     * @param <T>      generic type
-     * @return a new list of elements that were passed as method parameters
+     * @param <T> the type of elements
+     * @param elements the elements to add to the list
+     * @return a new LinkedList containing all provided elements
      */
     public static <T> LinkedList<T> of(T... elements) {
         LinkedList<T> list = new LinkedList<>();
@@ -46,7 +57,7 @@ public class LinkedList<T> implements List<T> {
     /**
      * Adds an element to the end of the list.
      *
-     * @param element element to add
+     * @param element the element to add
      */
     @Override
     public void add(T element) {
@@ -61,11 +72,11 @@ public class LinkedList<T> implements List<T> {
     }
 
     /**
-     * Adds a new element to the specific position in the list. In case provided index in out of the list bounds it
-     * throws {@link IndexOutOfBoundsException}
+     * Adds an element at a specific index.
      *
-     * @param index   an index of new element
-     * @param element element to add
+     * @param index the index where the element should be inserted
+     * @param element the element to add
+     * @throws IndexOutOfBoundsException if the index is out of range
      */
     @Override
     public void add(int index, T element) {
@@ -87,6 +98,12 @@ public class LinkedList<T> implements List<T> {
         size++;
     }
 
+    /**
+     * Retrieves the node at a specific index.
+     *
+     * @param index the index of the node
+     * @return the node at the specified index
+     */
     private Node<T> getNodeByIndex(int index) {
         Node<T> current = first;
         for (int i = 0; i < index; i++) {
@@ -96,11 +113,11 @@ public class LinkedList<T> implements List<T> {
     }
 
     /**
-     * Changes the value of a list element at specific position. In case provided index in out of the list bounds it
-     * throws {@link IndexOutOfBoundsException}
+     * Replaces the element at a specific index.
      *
-     * @param index   a position of element to change
-     * @param element a new element value
+     * @param index the index of the element to replace
+     * @param element the new element value
+     * @throws IndexOutOfBoundsException if the index is out of range
      */
     @Override
     public void set(int index, T element) {
@@ -110,11 +127,11 @@ public class LinkedList<T> implements List<T> {
     }
 
     /**
-     * Retrieves an elements by its position index. In case provided index in out of the list bounds it
-     * throws {@link IndexOutOfBoundsException}
+     * Retrieves an element by index.
      *
-     * @param index element index
-     * @return an element value
+     * @param index the index of the element
+     * @return the element at the specified index
+     * @throws IndexOutOfBoundsException if the index is out of range
      */
     @Override
     public T get(int index) {
@@ -123,39 +140,39 @@ public class LinkedList<T> implements List<T> {
     }
 
     /**
-     * Returns the first element of the list. Operation is performed in constant time O(1)
+     * Returns the first element of the list in O(1) time.
      *
-     * @return the first element of the list
-     * @throws java.util.NoSuchElementException if list is empty
+     * @return the first element
+     * @throws NoSuchElementException if the list is empty
      */
     @Override
     public T getFirst() {
         if (isEmpty()) {
-            throw new NoSuchElementException();
+            throw new NoSuchElementException("List is empty");
         }
         return get(0);
     }
 
     /**
-     * Returns the last element of the list. Operation is performed in constant time O(1)
+     * Returns the last element of the list in O(1) time.
      *
-     * @return the last element of the list
-     * @throws java.util.NoSuchElementException if list is empty
+     * @return the last element
+     * @throws NoSuchElementException if the list is empty
      */
     @Override
     public T getLast() {
         if (isEmpty()) {
-            throw new NoSuchElementException();
+            throw new NoSuchElementException("List is empty");
         }
         return get(size - 1);
     }
 
     /**
-     * Removes an elements by its position index. In case provided index in out of the list bounds it
-     * throws {@link IndexOutOfBoundsException}
+     * Removes and returns the element at a specific index.
      *
-     * @param index element index
-     * @return deleted element
+     * @param index the index of the element to remove
+     * @return the removed element
+     * @throws IndexOutOfBoundsException if the index is out of range
      */
     @Override
     public T remove(int index) {
@@ -179,28 +196,38 @@ public class LinkedList<T> implements List<T> {
         return removedElement;
     }
 
-
     /**
-     * Checks if a specific exists in he list
+     * Checks if the list contains a specific element.
+     * Handles null values correctly.
      *
-     * @return {@code true} if element exist, {@code false} otherwise
+     * @param element the element to search for
+     * @return {@code true} if the element exists, {@code false} otherwise
      */
     @Override
     public boolean contains(T element) {
         Node<T> current = first;
-        for (int i = 0; i < size; i++) {
-            if (current.element.equals(element)) {
-                return true;
+        if (element == null) {
+            for (int i = 0; i < size; i++) {
+                if (current.element == null) {
+                    return true;
+                }
+                current = current.next;
             }
-            current = current.next;
+        } else {
+            for (int i = 0; i < size; i++) {
+                if (current.element != null && current.element.equals(element)) {
+                    return true;
+                }
+                current = current.next;
+            }
         }
         return false;
     }
 
     /**
-     * Checks if a list is empty
+     * Checks if the list is empty.
      *
-     * @return {@code true} if list is empty, {@code false} otherwise
+     * @return {@code true} if the list is empty, {@code false} otherwise
      */
     @Override
     public boolean isEmpty() {
@@ -208,9 +235,9 @@ public class LinkedList<T> implements List<T> {
     }
 
     /**
-     * Returns the number of elements in the list
+     * Returns the number of elements in the list.
      *
-     * @return number of elements
+     * @return the size of the list
      */
     @Override
     public int size() {
@@ -218,7 +245,7 @@ public class LinkedList<T> implements List<T> {
     }
 
     /**
-     * Removes all list elements
+     * Removes all elements from the list.
      */
     @Override
     public void clear() {

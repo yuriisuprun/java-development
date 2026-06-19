@@ -5,9 +5,16 @@ import java.util.Objects;
 import java.util.stream.Stream;
 
 /**
- * {@link ArrayList} is an implementation of {@link List} interface. This resizable data structure
- * based on an array and is simplified version of {@link java.util.ArrayList}.
+ * {@link ArrayList} is an implementation of {@link List} interface based on dynamic arrays.
+ * This resizable data structure automatically grows when needed and is a simplified version
+ * of {@link java.util.ArrayList}.
  *
+ * Features:
+ * - O(1) access time to elements by index
+ * - O(n) insertion and deletion time (amortized O(1) for append)
+ * - Automatic capacity expansion when needed
+ *
+ * @param <T> the type of elements in this list
  * @author Yurii_Suprun
  */
 public class ArrayList<T> implements List<T> {
@@ -17,32 +24,31 @@ public class ArrayList<T> implements List<T> {
     private int size;
 
     /**
-     * This constructor creates an instance of {@link ArrayList} with a specific capacity of an array inside.
+     * Creates an ArrayList with a specific initial capacity.
      *
-     * @param initCapacity - the initial capacity of the list
-     * @throws IllegalArgumentException – if the specified initial capacity is negative or 0.
+     * @param initCapacity the initial capacity of the internal array
+     * @throws IllegalArgumentException if the specified initial capacity is not positive
      */
     public ArrayList(int initCapacity) {
         if (initCapacity <= 0) {
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException("Initial capacity must be positive");
         }
         elements = new Object[initCapacity];
     }
 
     /**
-     * This constructor creates an instance of {@link ArrayList} with a default capacity of an array inside.
-     * A default size of inner array is 5;
+     * Creates an ArrayList with a default capacity of 5 elements.
      */
     public ArrayList() {
         this(DEFAULT_CAPACITY);
     }
 
     /**
-     * Creates and returns an instance of {@link ArrayList} with provided elements
-     * -
+     * Creates and returns a new ArrayList containing the provided elements.
      *
-     * @param elements to add
-     * @return new instance
+     * @param <T> the type of elements
+     * @param elements the elements to add to the list
+     * @return a new ArrayList containing all provided elements
      */
     public static <T> List<T> of(T... elements) {
         List<T> list = new ArrayList<>();
@@ -52,9 +58,9 @@ public class ArrayList<T> implements List<T> {
     }
 
     /**
-     * Adds an element to the array.
+     * Adds an element to the end of the list.
      *
-     * @param element element to add
+     * @param element the element to add
      */
     @Override
     public void add(T element) {
@@ -63,6 +69,10 @@ public class ArrayList<T> implements List<T> {
         size++;
     }
 
+    /**
+     * Resizes the internal array if the current capacity is exceeded.
+     * The new capacity is double the current capacity.
+     */
     private void resizeIfNeeded() {
         if (size == elements.length) {
             Object[] newArray = new Object[elements.length * 2];
@@ -72,10 +82,11 @@ public class ArrayList<T> implements List<T> {
     }
 
     /**
-     * Adds an element to the specific position in the array where
+     * Adds an element at a specific index, shifting elements if necessary.
      *
-     * @param index   index of position
-     * @param element element to add
+     * @param index the index where the element should be inserted
+     * @param element the element to add
+     * @throws IndexOutOfBoundsException if the index is out of range
      */
     @Override
     public void add(int index, T element) {
@@ -87,11 +98,11 @@ public class ArrayList<T> implements List<T> {
     }
 
     /**
-     * Retrieves an element by its position index. In case provided index in out of the list bounds it
-     * throws {@link IndexOutOfBoundsException}
+     * Retrieves an element by index.
      *
-     * @param index index of element
-     * @return en element
+     * @param index the index of the element
+     * @return the element at the specified index
+     * @throws IndexOutOfBoundsException if the index is out of range
      */
     @Override
     @SuppressWarnings("unchecked")
@@ -101,39 +112,39 @@ public class ArrayList<T> implements List<T> {
     }
 
     /**
-     * Returns the first element of the list. Operation is performed in constant time O(1)
+     * Returns the first element of the list in O(1) time.
      *
-     * @return the first element of the list
-     * @throws java.util.NoSuchElementException if list is empty
+     * @return the first element
+     * @throws NoSuchElementException if the list is empty
      */
     @Override
     public T getFirst() {
         if (isEmpty()) {
-            throw new NoSuchElementException();
+            throw new NoSuchElementException("List is empty");
         }
         return get(0);
     }
 
     /**
-     * Returns the last element of the list. Operation is performed in constant time O(1)
+     * Returns the last element of the list in O(1) time.
      *
-     * @return the last element of the list
-     * @throws java.util.NoSuchElementException if list is empty
+     * @return the last element
+     * @throws NoSuchElementException if the list is empty
      */
     @Override
     public T getLast() {
         if (isEmpty()) {
-            throw new NoSuchElementException();
+            throw new NoSuchElementException("List is empty");
         }
         return get(size - 1);
     }
 
     /**
-     * Changes the value of array at specific position. In case provided index in out of the list bounds it
-     * throws {@link IndexOutOfBoundsException}
+     * Replaces the element at a specific index.
      *
-     * @param index   position of value
-     * @param element a new value
+     * @param index the index of the element to replace
+     * @param element the new element value
+     * @throws IndexOutOfBoundsException if the index is out of range
      */
     @Override
     public void set(int index, T element) {
@@ -142,11 +153,11 @@ public class ArrayList<T> implements List<T> {
     }
 
     /**
-     * Removes an elements by its position index. In case provided index in out of the list bounds it
-     * throws {@link IndexOutOfBoundsException}
+     * Removes and returns the element at a specific index.
      *
-     * @param index element index
-     * @return deleted element
+     * @param index the index of the element to remove
+     * @return the removed element
+     * @throws IndexOutOfBoundsException if the index is out of range
      */
     @Override
     @SuppressWarnings("unchecked")
@@ -159,25 +170,34 @@ public class ArrayList<T> implements List<T> {
     }
 
     /**
-     * Checks for existing of a specific element in the list.
+     * Checks if the list contains a specific element.
+     * Handles null values correctly.
      *
-     * @param element is element
-     * @return If element exists method returns true, otherwise it returns false
+     * @param element the element to search for
+     * @return {@code true} if the element exists, {@code false} otherwise
      */
     @Override
     public boolean contains(T element) {
-        for (Object o : elements) {
-            if (element.equals(o)) {
-                return true;
+        if (element == null) {
+            for (int i = 0; i < size; i++) {
+                if (elements[i] == null) {
+                    return true;
+                }
+            }
+        } else {
+            for (int i = 0; i < size; i++) {
+                if (element.equals(elements[i])) {
+                    return true;
+                }
             }
         }
         return false;
     }
 
     /**
-     * Checks if a list is empty
+     * Checks if the list is empty.
      *
-     * @return {@code true} if list is empty, {@code false} otherwise
+     * @return {@code true} if the list is empty, {@code false} otherwise
      */
     @Override
     public boolean isEmpty() {
@@ -185,7 +205,9 @@ public class ArrayList<T> implements List<T> {
     }
 
     /**
-     * @return amount of saved elements
+     * Returns the number of elements in the list.
+     *
+     * @return the size of the list
      */
     @Override
     public int size() {
@@ -193,7 +215,7 @@ public class ArrayList<T> implements List<T> {
     }
 
     /**
-     * Removes all list elements
+     * Removes all elements from the list and resets to default capacity.
      */
     @Override
     public void clear() {

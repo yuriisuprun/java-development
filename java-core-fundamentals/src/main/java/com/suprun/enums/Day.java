@@ -1,6 +1,9 @@
 package com.suprun.enums;
 
 /**
+ * Day enum representing days of the week.
+ * Each day has a display name that can be retrieved using {@link #getDisplayName()}.
+ *
  * @author Yurii_Suprun
  */
 public enum Day {
@@ -12,14 +15,22 @@ public enum Day {
     SATURDAY("Saturday"),
     SUNDAY("Sunday");
 
-    private String displayName;
+    private final String displayName;
 
-    // Private constructor
-    private Day(String displayName){
+    /**
+     * Private constructor for Day enum.
+     *
+     * @param displayName the display name for this day
+     */
+    Day(String displayName) {
         this.displayName = displayName;
     }
 
-    // Getter method for displayName
+    /**
+     * Gets the display name of the day.
+     *
+     * @return the display name
+     */
     public String getDisplayName() {
         return displayName;
     }
