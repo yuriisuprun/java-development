@@ -5,36 +5,24 @@ import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
+/**
+ * Utility class for array manipulation operations.
+ * Provides algorithms for sorting, searching, reversing, and filtering arrays.
+ *
+ * @author Yurii_Suprun
+ */
 public class ArrayTasks {
 
-    public static void main(String... args) {
-        Integer[] numbers1 = {1, 2, 3, 4, 5};
-
-        int[] numbers2 = {6, 7, 8, -3, 110, 11};
-
-        String[] names = {"Alice", "Bob", "Charlie"};
-
-        // Test with numbers containing duplicates
-        Integer[] numbersWithDuplicates = {1, 2, 2, 3, 3, 3, 4, 5, 5};
-
-        System.out.println("=== Reverse Array ===");
-        System.out.println(Arrays.toString(reverseArray(numbers1)));
-        System.out.println(Arrays.toString(reverseArray(names)));
-
-        System.out.println("\n=== Min/Max Elements ===");
-        System.out.println(Arrays.toString(findMaximumAndMinimumElement(numbers2)));
-
-        System.out.println("\n=== Bubble Sort ===");
-        System.out.println(Arrays.toString(bubbleSortArray(numbers2.clone())));
-
-        System.out.println("\n=== Unique Numbers ===");
-        System.out.println(getUniqueNumbers(numbersWithDuplicates));
-
-        System.out.println("\n=== Duplicate Numbers ===");
-        System.out.println(getDuplicateNumbers(numbersWithDuplicates));
-    }
-
-    private static <T> T[] reverseArray(T[] arr) {
+    /**
+     * Reverses an array of any type using generics.
+     * Modifies the array in-place.
+     *
+     * @param <T> the type of array elements
+     * @param arr the array to reverse
+     * @return the reversed array
+     * @throws IllegalArgumentException if array is null or empty
+     */
+    public static <T> T[] reverseArray(T[] arr) {
         if (arr == null || arr.length == 0) {
             throw new IllegalArgumentException("Array cannot be null or empty");
         }
@@ -46,7 +34,14 @@ public class ArrayTasks {
         return arr;
     }
 
-    private static int[] reverseIntArrayWithStream(int[] array) {
+    /**
+     * Reverses an int array using Stream API.
+     *
+     * @param array the array to reverse
+     * @return the reversed array
+     * @throws IllegalArgumentException if array is null or empty
+     */
+    public static int[] reverseIntArrayWithStream(int[] array) {
         if (array == null || array.length == 0) {
             throw new IllegalArgumentException("Array cannot be null or empty");
         }
@@ -55,7 +50,31 @@ public class ArrayTasks {
                 .toArray();
     }
 
-    private static int[] findMaximumAndMinimumElement(int[] array) {
+    /**
+     * Reverses an int array in-place.
+     * Modifies the array directly.
+     *
+     * @param numbers the array to reverse
+     * @return the reversed array
+     */
+    public static int[] reverseIntArray(int[] numbers) {
+        int temp;
+        for (int i = 0; i < numbers.length / 2; i++) {
+            temp = numbers[i];
+            numbers[i] = numbers[numbers.length - i - 1];
+            numbers[numbers.length - i - 1] = temp;
+        }
+        return numbers;
+    }
+
+    /**
+     * Finds the minimum and maximum elements in an array.
+     *
+     * @param array the array to search
+     * @return array containing [min, max]
+     * @throws IllegalArgumentException if array is null or empty
+     */
+    public static int[] findMaximumAndMinimumElement(int[] array) {
         if (array == null || array.length == 0) {
             throw new IllegalArgumentException("Array cannot be null or empty");
         }
@@ -75,9 +94,16 @@ public class ArrayTasks {
         return minMaxArray;
     }
 
-    private static int[] bubbleSortArray(int[] array) {
+    /**
+     * Sorts an array using bubble sort algorithm.
+     * Time Complexity: O(n²), Space Complexity: O(1)
+     *
+     * @param array the array to sort
+     * @return the sorted array (returns as-is if empty)
+     */
+    public static int[] bubbleSortArray(int[] array) {
         if (array == null || array.length == 0) {
-            throw new IllegalArgumentException("Array cannot be null or empty");
+            return array; // Return as-is for null or empty
         }
         for (int i = 0; i < array.length - 1; i++) {
             for (int j = 0; j < array.length - i - 1; j++) {
@@ -91,7 +117,14 @@ public class ArrayTasks {
         return array;
     }
 
-    private static List<Integer> getUniqueNumbers(Integer[] numbers) {
+    /**
+     * Finds all unique numbers (appearing exactly once) in an array.
+     *
+     * @param numbers the array of integers
+     * @return list of unique numbers
+     * @throws IllegalArgumentException if array is null
+     */
+    public static List<Integer> getUniqueNumbers(Integer[] numbers) {
         if (numbers == null) {
             throw new IllegalArgumentException("Array cannot be null");
         }
@@ -104,7 +137,14 @@ public class ArrayTasks {
                 .collect(Collectors.toList());
     }
 
-    private static List<Integer> getDuplicateNumbers(Integer[] numbers) {
+    /**
+     * Finds all duplicate numbers (appearing more than once) in an array.
+     *
+     * @param numbers the array of integers
+     * @return list of duplicate numbers
+     * @throws IllegalArgumentException if array is null
+     */
+    public static List<Integer> getDuplicateNumbers(Integer[] numbers) {
         if (numbers == null) {
             throw new IllegalArgumentException("Array cannot be null");
         }

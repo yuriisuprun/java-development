@@ -2,38 +2,56 @@ package com.suprun.coding;
 
 import java.io.*;
 
+/**
+ * Utility class for Java I/O Stream operations.
+ * Provides methods for reading and writing bytes using InputStream and OutputStream.
+ *
+ * @author Yurii_Suprun
+ */
 public class InputOutputStreamTasks {
 
-    public static void main(String[] args) {
-        writeBytesToFile();
-        readBytesFromFile();
-        readWriteBytesBuffered();
-    }
-
-    private static void writeBytesToFile() {
-        String text = "Hello Input Output Stream!";
-        try (OutputStream out = new FileOutputStream("input_output.txt")) {
+    /**
+     * Writes text to a file using FileOutputStream.
+     *
+     * @param filename the path to the output file
+     * @param text the text to write
+     * @throws IOException if an I/O error occurs
+     */
+    public static void writeBytesToFile(String filename, String text) throws IOException {
+        try (OutputStream out = new FileOutputStream(filename)) {
             out.write(text.getBytes());
-        } catch (IOException e) {
-            e.printStackTrace();
         }
     }
 
-    private static void readBytesFromFile() {
-        try (InputStream in = new FileInputStream("input_output.txt")) {
+    /**
+     * Reads bytes from a file using FileInputStream.
+     *
+     * @param filename the path to the input file
+     * @return the file contents as a string
+     * @throws IOException if an I/O error occurs
+     */
+    public static String readBytesFromFile(String filename) throws IOException {
+        StringBuilder content = new StringBuilder();
+        try (InputStream in = new FileInputStream(filename)) {
             int data;
             while ((data = in.read()) != -1) {
-                System.out.print((char) data);
+                content.append((char) data);
             }
-        } catch (IOException e) {
-            e.printStackTrace();
         }
+        return content.toString();
     }
 
-    private static void readWriteBytesBuffered() {
+    /**
+     * Reads and writes bytes using buffered streams for better performance.
+     *
+     * @param inputFile the input file path
+     * @param outputFile the output file path
+     * @throws IOException if an I/O error occurs
+     */
+    public static void readWriteBytesBuffered(String inputFile, String outputFile) throws IOException {
         try (
-                InputStream in = new BufferedInputStream(new FileInputStream("input_output.txt"));
-                OutputStream out = new BufferedOutputStream(new FileOutputStream("input_output.txt"))
+                InputStream in = new BufferedInputStream(new FileInputStream(inputFile));
+                OutputStream out = new BufferedOutputStream(new FileOutputStream(outputFile))
         ) {
             byte[] buffer = new byte[1024];
             int length;
@@ -41,8 +59,6 @@ public class InputOutputStreamTasks {
             while ((length = in.read(buffer)) != -1) {
                 out.write(buffer, 0, length);
             }
-        } catch (IOException e) {
-            e.printStackTrace();
         }
     }
 }
