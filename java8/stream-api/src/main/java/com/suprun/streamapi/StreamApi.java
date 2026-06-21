@@ -1,16 +1,12 @@
 package com.suprun.streamapi;
 
-import lombok.AllArgsConstructor;
-
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.OptionalInt;
 import java.util.function.Function;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import static java.util.stream.Collectors.counting;
 import static java.util.stream.Collectors.groupingBy;
@@ -19,18 +15,7 @@ import static java.util.stream.Collectors.partitioningBy;
 /**
  * @author Yurii_Suprun
  */
-@AllArgsConstructor
 public class StreamApi {
-
-    private Stream<String> shoppingStream = Stream.of("milk", "eggs", "bread", "flour", "butter", "coffee", "tea");
-
-    private String[] shoppingArray = new String[]{"milk", "eggs", "bread", "flour", "butter"};
-    private Stream<String> shoppingArrayStream = Arrays.stream(shoppingArray);
-
-    private List<String> shoppingList = List.of("milk", "eggs", "bread", "flour", "butter", "coffee", "tea");
-    private Stream<String> shoppingListStream = shoppingList.stream();
-
-    public StreamApi() {}
 
     /**
      * Returns a {@link List} of strings with sorted strings by frequency
@@ -45,7 +30,7 @@ public class StreamApi {
                 .entrySet().stream()
                 .sorted(Map.Entry.comparingByValue(Comparator.reverseOrder()))
                 .map(Map.Entry::getKey)
-                .toList();
+                .collect(Collectors.toList());
     }
 
     /**
@@ -55,14 +40,10 @@ public class StreamApi {
      * @return a string length
      */
     public int getLongestStringLength(List<String> list) {
-        OptionalInt response = list.stream()
+        return list.stream()
                 .mapToInt(String::length)
-                .max();
-        if (response.isPresent()) {
-            return response.getAsInt();
-        } else {
-            return 0;
-        }
+                .max()
+                .orElse(0);
     }
 
 
@@ -76,7 +57,7 @@ public class StreamApi {
         return list.stream()
                 .map(string -> string.substring(1))
                 .sorted(Comparator.reverseOrder())
-                .toList();
+                .collect(Collectors.toList());
     }
 
     /**
@@ -88,14 +69,9 @@ public class StreamApi {
      */
     public int countLettersForStringsLongerThan(List<String> list, int wordLengthToCount) {
         return list.stream()
-                .map(String::length)
+                .mapToInt(String::length)
                 .filter(length -> length > wordLengthToCount)
-                .reduce(0, Integer::sum);
-
-//        return originalList.stream()
-//                .mapToInt(String::length)
-//                .filter(length -> length > wordLengthToCount)
-//                .sum();
+                .sum();
     }
 
     /**
@@ -106,8 +82,8 @@ public class StreamApi {
      */
     public Person findOldestPerson(List<Person> people) {
         return people.stream()
-                .sorted(Comparator.comparing(Person::getAge, Comparator.reverseOrder()))
-                .findFirst().get();
+                .max(Comparator.comparingInt(Person::getAge))
+                .orElseThrow(() -> new IllegalArgumentException("people must not be empty"));
     }
 
     /**
@@ -141,15 +117,9 @@ public class StreamApi {
      * @return a Map with Character and Long as key and value
      */
     public Map<Character, Long> countLettersInWordOldStyle(String word) {
-        char[] chars = word.toCharArray();
         Map<Character, Long> charactersByFrequency = new HashMap<>();
-        for (char c : chars) {
-            if (!charactersByFrequency.containsKey(c)) {
-                charactersByFrequency.put(c, 0L);
-            }
-            long frequency = charactersByFrequency.get(c);
-            frequency++;
-            charactersByFrequency.put(c, frequency);
+        for (char c : word.toCharArray()) {
+            charactersByFrequency.put(c, charactersByFrequency.getOrDefault(c, 0L) + 1L);
         }
         return charactersByFrequency;
     }
@@ -159,14 +129,18 @@ public class StreamApi {
         list.parallelStream().forEachOrdered(System.out::println);
     }
 
-    public void printEmployees() {
+    public Map<Long, List<Employee>> groupEmployeesBySalaryRemainder() {
         List<Employee> employees = Arrays.asList(
                 new Employee(8, "Robert", "manager", 590L),
                 new Employee(2, "Rob", "manager", 790L),
                 new Employee(3, "Joshua", "dev", 1200L),
                 new Employee(5, "Bill", "hr", 2300L)
         );
-        System.out.println(employees.stream()
-                .collect(Collectors.groupingBy(employee -> employee.getSalary() % 1000)));
+        return employees.stream()
+                .collect(Collectors.groupingBy(employee -> employee.getSalary() % 1000));
+    }
+
+    public void printEmployees() {
+        System.out.println(groupEmployeesBySalaryRemainder());
     }
 }

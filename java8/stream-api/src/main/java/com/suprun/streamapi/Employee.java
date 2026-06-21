@@ -6,10 +6,10 @@ import java.util.Objects;
  * @author Yurii_Suprun
  */
 public class Employee {
-    private int id;
-    private String name;
-    private String position;
-    private Long salary;
+    private final int id;
+    private final String name;
+    private final String position;
+    private final Long salary;
 
     public Employee(int id, String name, String position, Long salary) {
         this.id = id;
@@ -22,32 +22,16 @@ public class Employee {
         return id;
     }
 
-    public void setId(int id) {
-        this.id = id;
-    }
-
     public String getName() {
         return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public String getPosition() {
         return position;
     }
 
-    public void setPosition(String position) {
-        this.position = position;
-    }
-
     public Long getSalary() {
         return salary;
-    }
-
-    public void setSalary(Long salary) {
-        this.salary = salary;
     }
 
     @Override

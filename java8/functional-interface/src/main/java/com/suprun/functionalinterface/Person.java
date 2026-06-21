@@ -1,7 +1,5 @@
 package com.suprun.functionalinterface;
 
-import lombok.Getter;
-
 import java.util.Objects;
 
 /**
@@ -9,7 +7,6 @@ import java.util.Objects;
  *
  * @author Yurii_Suprun
  */
-@Getter
 public class Person {
 
     private final String name;
@@ -20,10 +17,19 @@ public class Person {
         this.age = age;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public int getAge() {
+        return age;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof Person person)) return false;
+        if (!(o instanceof Person)) return false;
+        Person person = (Person) o;
         return age == person.age &&
                 Objects.equals(name, person.name);
     }
