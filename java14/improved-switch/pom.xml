@@ -12,4 +12,8 @@
     </parent>
     <artifactId>improved-switch</artifactId>
 
+    <properties>
+        <maven.compiler.release>14</maven.compiler.release>
+    </properties>
+
 </project>
