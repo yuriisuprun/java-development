@@ -1,15 +1,62 @@
+# Maven
 target/
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
 !**/src/test/**/target/
 
-### IntelliJ IDEA ###
-.idea/libraries/
-.idea/.gitignore
-.idea
+# Java
+*.class
+*.jar
+*.war
+*.ear
+*.nar
+*.log
+hs_err_pid*
+replay_pid*
+
+# IntelliJ IDEA
+.idea/
 *.iws
 *.iml
 *.ipr
+out/
 
-### VS Code ###
+# VS Code
 .vscode/
+
+# Eclipse / STS
+.classpath
+.project
+.settings/
+.springBeans
+.sts4-cache/
+bin/
+
+# NetBeans
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+
+# Gradle, in case a module is added later
+.gradle/
+build/
+!gradle/wrapper/gradle-wrapper.jar
+
+# Local environment and secrets
+.env
+.env.*
+!.env.example
+*.local
+
+# OS and tool noise
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Temporary files
+*.tmp
+*.temp
+*.swp
+*~
