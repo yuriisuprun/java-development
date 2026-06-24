@@ -99,11 +99,12 @@ public class ArrayTasks {
      * Time Complexity: O(n²), Space Complexity: O(1)
      *
      * @param array the array to sort
-     * @return the sorted array (returns as-is if empty)
+     * @return the sorted array
+     * @throws IllegalArgumentException if array is null
      */
     public static int[] bubbleSortArray(int[] array) {
-        if (array == null || array.length == 0) {
-            return array; // Return as-is for null or empty
+        if (array == null) {
+            throw new IllegalArgumentException("Array cannot be null");
         }
         for (int i = 0; i < array.length - 1; i++) {
             for (int j = 0; j < array.length - i - 1; j++) {
