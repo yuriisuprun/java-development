@@ -2,7 +2,6 @@ package com.suprun.list_implementations;
 
 import java.util.NoSuchElementException;
 import java.util.Objects;
-import java.util.stream.Stream;
 
 /**
  * {@link ArrayList} is an implementation of {@link List} interface based on dynamic arrays.
@@ -50,10 +49,12 @@ public class ArrayList<T> implements List<T> {
      * @param elements the elements to add to the list
      * @return a new ArrayList containing all provided elements
      */
+    @SafeVarargs
     public static <T> List<T> of(T... elements) {
         List<T> list = new ArrayList<>();
-        Stream.of(elements)
-                .forEach(list::add);
+        for (T element : Objects.requireNonNull(elements, "elements")) {
+            list.add(element);
+        }
         return list;
     }
 
@@ -107,8 +108,7 @@ public class ArrayList<T> implements List<T> {
     @Override
     @SuppressWarnings("unchecked")
     public T get(int index) {
-        Objects.checkIndex(index, size);
-        return (T) elements[index];
+        return elementAt(index);
     }
 
     /**
@@ -122,7 +122,7 @@ public class ArrayList<T> implements List<T> {
         if (isEmpty()) {
             throw new NoSuchElementException("List is empty");
         }
-        return get(0);
+        return elementAt(0);
     }
 
     /**
@@ -136,7 +136,7 @@ public class ArrayList<T> implements List<T> {
         if (isEmpty()) {
             throw new NoSuchElementException("List is empty");
         }
-        return get(size - 1);
+        return elementAt(size - 1);
     }
 
     /**
@@ -166,6 +166,7 @@ public class ArrayList<T> implements List<T> {
         T element = (T) elements[index];
         System.arraycopy(elements, index + 1, elements, index, size - index - 1);
         size--;
+        elements[size] = null;
         return element;
     }
 
@@ -178,20 +179,18 @@ public class ArrayList<T> implements List<T> {
      */
     @Override
     public boolean contains(T element) {
-        if (element == null) {
-            for (int i = 0; i < size; i++) {
-                if (elements[i] == null) {
-                    return true;
-                }
-            }
-        } else {
-            for (int i = 0; i < size; i++) {
-                if (element.equals(elements[i])) {
-                    return true;
-                }
+        for (int i = 0; i < size; i++) {
+            if (Objects.equals(element, elements[i])) {
+                return true;
             }
         }
         return false;
+    }
+
+    @SuppressWarnings("unchecked")
+    private T elementAt(int index) {
+        Objects.checkIndex(index, size);
+        return (T) elements[index];
     }
 
     /**

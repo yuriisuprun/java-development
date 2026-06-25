@@ -46,6 +46,7 @@ public class LinkedList<T> implements List<T> {
      * @param elements the elements to add to the list
      * @return a new LinkedList containing all provided elements
      */
+    @SafeVarargs
     public static <T> LinkedList<T> of(T... elements) {
         LinkedList<T> list = new LinkedList<>();
         for (T element : elements) {
@@ -61,13 +62,7 @@ public class LinkedList<T> implements List<T> {
      */
     @Override
     public void add(T element) {
-        Node<T> newNode = new Node<>(element);
-        if (first == null) {
-            first = this.last = newNode;
-        } else {
-            this.last.next = newNode;
-            last = newNode;
-        }
+        linkLast(element);
         size++;
     }
 
@@ -81,16 +76,12 @@ public class LinkedList<T> implements List<T> {
     @Override
     public void add(int index, T element) {
         Objects.checkIndex(index, size + 1);
-        Node<T> newNode = new Node<>(element);
-        if (first == null) {
-            first = last = newNode;
-        } else if (index == 0) {
-            newNode.next = first;
-            first = newNode;
+        if (index == 0) {
+            linkFirst(element);
         } else if (index == size) {
-            last.next = newNode;
-            last = newNode;
+            linkLast(element);
         } else {
+            Node<T> newNode = new Node<>(element);
             Node<T> previous = getNodeByIndex(index - 1);
             newNode.next = previous.next;
             previous.next = newNode;
@@ -150,7 +141,7 @@ public class LinkedList<T> implements List<T> {
         if (isEmpty()) {
             throw new NoSuchElementException("List is empty");
         }
-        return get(0);
+        return first.element;
     }
 
     /**
@@ -164,7 +155,7 @@ public class LinkedList<T> implements List<T> {
         if (isEmpty()) {
             throw new NoSuchElementException("List is empty");
         }
-        return get(size - 1);
+        return last.element;
     }
 
     /**
@@ -206,20 +197,11 @@ public class LinkedList<T> implements List<T> {
     @Override
     public boolean contains(T element) {
         Node<T> current = first;
-        if (element == null) {
-            for (int i = 0; i < size; i++) {
-                if (current.element == null) {
-                    return true;
-                }
-                current = current.next;
+        while (current != null) {
+            if (Objects.equals(element, current.element)) {
+                return true;
             }
-        } else {
-            for (int i = 0; i < size; i++) {
-                if (current.element != null && current.element.equals(element)) {
-                    return true;
-                }
-                current = current.next;
-            }
+            current = current.next;
         }
         return false;
     }
@@ -231,7 +213,7 @@ public class LinkedList<T> implements List<T> {
      */
     @Override
     public boolean isEmpty() {
-        return first == null;
+        return size == 0;
     }
 
     /**
@@ -251,5 +233,24 @@ public class LinkedList<T> implements List<T> {
     public void clear() {
         first = last = null;
         size = 0;
+    }
+
+    private void linkFirst(T element) {
+        Node<T> newNode = new Node<>(element);
+        newNode.next = first;
+        first = newNode;
+        if (last == null) {
+            last = newNode;
+        }
+    }
+
+    private void linkLast(T element) {
+        Node<T> newNode = new Node<>(element);
+        if (last == null) {
+            first = newNode;
+        } else {
+            last.next = newNode;
+        }
+        last = newNode;
     }
 }
