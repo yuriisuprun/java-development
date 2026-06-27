@@ -1,17 +1,27 @@
 package com.suprun.threads;
 
+import java.util.concurrent.atomic.AtomicLong;
+
 /**
+ * Thread-safe counter backed by {@link AtomicLong}.
+ *
  * @author Yurii_Suprun
  */
-public class Stats {
+public final class Stats {
 
-    private long counter = 0L;
+    private final AtomicLong counter = new AtomicLong();
 
-    public void increment(){
-        counter++;
+    /**
+     * Increments the counter atomically.
+     */
+    public void increment() {
+        counter.incrementAndGet();
     }
 
-    public long getCounter(){
-        return counter;
+    /**
+     * @return the current counter value
+     */
+    public long getCounter() {
+        return counter.get();
     }
 }
