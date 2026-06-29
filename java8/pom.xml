@@ -8,6 +8,7 @@
         <module>lambda-expression</module>
         <module>stream-api</module>
         <module>functional-interface</module>
+        <module>method-references</module>
     </modules>
 
     <parent>
