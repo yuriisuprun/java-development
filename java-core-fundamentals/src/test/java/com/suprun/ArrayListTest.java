@@ -2,7 +2,6 @@ package com.suprun;
 
 import com.suprun.list_implementations.ArrayList;
 import com.suprun.list_implementations.List;
-import lombok.SneakyThrows;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
@@ -362,25 +361,28 @@ class ArrayListTest {
                 .isThrownBy(() -> arrayList.get(0));
     }
 
-    @SneakyThrows
     private void setTestSize(int size) {
-        Field sizeField = arrayList.getClass().getDeclaredField("size");
-        sizeField.setAccessible(true);
-        sizeField.set(arrayList, size);
+        ReflectionTestSupport.run(() -> {
+            Field sizeField = arrayList.getClass().getDeclaredField("size");
+            sizeField.setAccessible(true);
+            sizeField.set(arrayList, size);
+        });
     }
 
-    @SneakyThrows
     private int getTestSize() {
-        Field testSize = arrayList.getClass().getDeclaredField("size");
-        testSize.setAccessible(true);
-        return (int) testSize.get(arrayList);
+        return ReflectionTestSupport.get(() -> {
+            Field testSize = arrayList.getClass().getDeclaredField("size");
+            testSize.setAccessible(true);
+            return (int) testSize.get(arrayList);
+        });
     }
 
-    @SneakyThrows
     private Object[] getTestArray() {
-        Field field = arrayList.getClass().getDeclaredField(getTestArrayName());
-        field.setAccessible(true);
-        return (Object[]) field.get(arrayList);
+        return ReflectionTestSupport.get(() -> {
+            Field field = arrayList.getClass().getDeclaredField(getTestArrayName());
+            field.setAccessible(true);
+            return (Object[]) field.get(arrayList);
+        });
     }
 
     private String getTestArrayName() {
@@ -395,14 +397,15 @@ class ArrayListTest {
         return name;
     }
 
-    @SneakyThrows
     private void fillTestArray(Object... elements) {
-        Field arrayField = arrayList.getClass().getDeclaredField(getTestArrayName());
-        Field sizeField = arrayList.getClass().getDeclaredField("size");
-        arrayField.setAccessible(true);
-        sizeField.setAccessible(true);
-        arrayField.set(arrayList, elements);
-        sizeField.set(arrayList, elements.length);
+        ReflectionTestSupport.run(() -> {
+            Field arrayField = arrayList.getClass().getDeclaredField(getTestArrayName());
+            Field sizeField = arrayList.getClass().getDeclaredField("size");
+            arrayField.setAccessible(true);
+            sizeField.setAccessible(true);
+            arrayField.set(arrayList, elements);
+            sizeField.set(arrayList, elements.length);
+        });
     }
 }
 

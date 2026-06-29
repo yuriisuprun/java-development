@@ -1,7 +1,6 @@
 package com.suprun;
 
 
-import lombok.SneakyThrows;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
@@ -519,40 +518,41 @@ public class LinkedListTest {
                 .isThrownBy(() -> getInternalElement(0));
     }
 
-    @SneakyThrows
     private int getInternalElement(int index) {
+        return ReflectionTestSupport.get(() -> {
+            Object head = getAccessibleFieldByPredicate(intList, HEAD_NODE_FIELD).get(intList);
 
-        Object head = getAccessibleFieldByPredicate(intList, HEAD_NODE_FIELD).get(intList);
-
-        for (int j = 0; j < index; j++) {
-            head = getAccessibleFieldByPredicate(head, NODE_FIELD).get(head);
-        }
-        return (int) getAccessibleFieldByPredicate(head, ELEMENT_FIELD).get(head);
+            for (int j = 0; j < index; j++) {
+                head = getAccessibleFieldByPredicate(head, NODE_FIELD).get(head);
+            }
+            return (int) getAccessibleFieldByPredicate(head, ELEMENT_FIELD).get(head);
+        });
     }
 
-    @SneakyThrows
     private int getInternalSize() {
-        return (int) getAccessibleFieldByPredicate(intList, SIZE_FIELD).get(intList);
+        return ReflectionTestSupport.get(() ->
+                (int) getAccessibleFieldByPredicate(intList, SIZE_FIELD).get(intList));
     }
 
-    @SneakyThrows
     private void addInternalElements(int... elements) {
-        Field nodeField = getInternalHeadField();
-        Field tailNode = getInternalTailField();
-        Class<?> nodeType = nodeField.getType();
+        ReflectionTestSupport.run(() -> {
+            Field nodeField = getInternalHeadField();
+            Field tailNode = getInternalTailField();
+            Class<?> nodeType = nodeField.getType();
 
-        Object previousObject = intList;
-        Object nodeObject = null;
+            Object previousObject = intList;
+            Object nodeObject = null;
 
-        for (int element : elements) {
-            nodeObject = createNodeObjectWithInternalElement(nodeType, element);
-            nodeField.set(previousObject, nodeObject);
-            nodeField = getAccessibleFieldByPredicate(nodeObject, NODE_FIELD);
-            previousObject = nodeObject;
-        }
+            for (int element : elements) {
+                nodeObject = createNodeObjectWithInternalElement(nodeType, element);
+                nodeField.set(previousObject, nodeObject);
+                nodeField = getAccessibleFieldByPredicate(nodeObject, NODE_FIELD);
+                previousObject = nodeObject;
+            }
 
-        tailNode.set(intList, nodeObject);
-        setInternalSize(elements.length);
+            tailNode.set(intList, nodeObject);
+            setInternalSize(elements.length);
+        });
     }
 
     private Field getInternalHeadField() {
@@ -563,35 +563,32 @@ public class LinkedListTest {
         return getAccessibleFieldByPredicate(intList, TAIL_NODE_FIELD);
     }
 
-    @SneakyThrows
     private void setInternalSize(int size) {
-        Field sizeField = getAccessibleFieldByPredicate(intList, SIZE_FIELD);
-        sizeField.setInt(intList, size);
+        ReflectionTestSupport.run(() -> {
+            Field sizeField = getAccessibleFieldByPredicate(intList, SIZE_FIELD);
+            sizeField.setInt(intList, size);
+        });
     }
 
-    @SneakyThrows
     private Object createNodeObjectWithInternalElement(Class<?> nodeClass, int element) {
-        Object nodeObject;
-        Constructor<?>[] declaredConstructors = nodeClass.getDeclaredConstructors();
-        Constructor<?> constructor;
-
-        constructor = declaredConstructors[0];
-        constructor.setAccessible(true);
-        if (constructor.getParameterTypes().length == 1) {
-            nodeObject = constructor.newInstance(element);
-        } else {
-            nodeObject = createNodeByConstructorWithoutParameters(element, constructor);
-        }
-        return nodeObject;
+        return ReflectionTestSupport.get(() -> {
+            Constructor<?>[] declaredConstructors = nodeClass.getDeclaredConstructors();
+            Constructor<?> constructor = declaredConstructors[0];
+            constructor.setAccessible(true);
+            if (constructor.getParameterTypes().length == 1) {
+                return constructor.newInstance(element);
+            }
+            return createNodeByConstructorWithoutParameters(element, constructor);
+        });
     }
 
-    @SneakyThrows
     private Object createNodeByConstructorWithoutParameters(int element, Constructor<?> constructor) {
-        Object nodeObject;
-        nodeObject = constructor.newInstance();
-        Field nodeElement = getAccessibleFieldByPredicate(nodeObject, ELEMENT_FIELD);
-        nodeElement.set(nodeObject, element);
-        return nodeObject;
+        return ReflectionTestSupport.get(() -> {
+            Object nodeObject = constructor.newInstance();
+            Field nodeElement = getAccessibleFieldByPredicate(nodeObject, ELEMENT_FIELD);
+            nodeElement.set(nodeObject, element);
+            return nodeObject;
+        });
     }
 
     private Field getAccessibleFieldByPredicate(Object object, Predicate<Field> predicate) {
@@ -603,11 +600,12 @@ public class LinkedListTest {
         return field;
     }
 
-    @SneakyThrows
     private Object getNodeValue(Predicate<Field> predicate) {
-        Object field = getAccessibleFieldByPredicate(intList, predicate).get(intList);
-        final Field value = getAccessibleFieldByPredicate(field, ELEMENT_FIELD);
-        value.setAccessible(true);
-        return value.get(field);
+        return ReflectionTestSupport.get(() -> {
+            Object field = getAccessibleFieldByPredicate(intList, predicate).get(intList);
+            final Field value = getAccessibleFieldByPredicate(field, ELEMENT_FIELD);
+            value.setAccessible(true);
+            return value.get(field);
+        });
     }
 }
