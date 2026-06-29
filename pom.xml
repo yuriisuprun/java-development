@@ -23,7 +23,6 @@
         <module>java14</module>
         <module>java16</module>
         <module>java21</module>
-        <module>java25</module>
         <module>design-patterns</module>
         <module>java-core-fundamentals</module>
         <module>threads</module>
@@ -146,5 +145,17 @@
             </plugin>
         </plugins>
     </build>
+
+    <profiles>
+        <profile>
+            <id>java25</id>
+            <activation>
+                <jdk>[25,)</jdk>
+            </activation>
+            <modules>
+                <module>java25</module>
+            </modules>
+        </profile>
+    </profiles>
 
 </project>
