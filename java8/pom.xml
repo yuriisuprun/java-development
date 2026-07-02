@@ -9,6 +9,7 @@
         <module>stream-api</module>
         <module>functional-interface</module>
         <module>method-references</module>
+        <module>date-time-api</module>
     </modules>
 
     <parent>
