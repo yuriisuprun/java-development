@@ -10,6 +10,7 @@
         <module>functional-interface</module>
         <module>method-references</module>
         <module>date-time-api</module>
+        <module>optional-class</module>
     </modules>
 
     <parent>
