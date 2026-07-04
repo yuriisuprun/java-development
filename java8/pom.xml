@@ -11,6 +11,7 @@
         <module>method-references</module>
         <module>date-time-api</module>
         <module>optional-class</module>
+        <module>comparable-comparator</module>
     </modules>
 
     <parent>
