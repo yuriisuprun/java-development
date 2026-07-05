@@ -12,6 +12,7 @@
         <module>date-time-api</module>
         <module>optional-class</module>
         <module>comparable-comparator</module>
+        <module>other-features-of-java8</module>
     </modules>
 
     <parent>
