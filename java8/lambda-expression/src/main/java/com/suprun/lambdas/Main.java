@@ -2,9 +2,6 @@ package com.suprun.lambdas;
 
 import com.suprun.lambdas.functionalinterface.MyFunctionalInterface;
 
-/**
- * @author Yurii_Suprun
- */
 public class Main {
     public static void main(String[] args) {
         MyFunctionalInterface<String, Integer> mfi1 = Integer::parseInt;
