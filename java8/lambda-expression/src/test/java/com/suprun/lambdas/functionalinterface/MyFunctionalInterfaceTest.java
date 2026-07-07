@@ -15,10 +15,12 @@ import static org.junit.jupiter.api.Assertions.*;
  *   <li>Function composition with compose</li>
  *   <li>Null pointer handling</li>
  *   <li>Chained compositions</li>
+ *   <li>Identity function</li>
+ *   <li>Factory method</li>
  * </ul>
  *
  * @author Yurii_Suprun
- * @version 1.0
+ * @version 2.0
  */
 class MyFunctionalInterfaceTest {
 
@@ -144,5 +146,64 @@ class MyFunctionalInterfaceTest {
         MyFunctionalInterface<String, Integer> parseAndSquare = parseInteger.andThen(x -> x * x);
 
         assertThrows(NumberFormatException.class, () -> parseAndSquare.apply("not a number"));
+    }
+
+    @Test
+    @DisplayName("Identity function should return the same input value")
+    void testIdentityFunction() {
+        MyFunctionalInterface<Integer, Integer> identity = MyFunctionalInterface.identity();
+        assertEquals(42, identity.apply(42));
+        assertEquals(-1, identity.apply(-1));
+        assertEquals(0, identity.apply(0));
+    }
+
+    @Test
+    @DisplayName("Identity function should work with different types")
+    void testIdentityFunctionWithDifferentTypes() {
+        MyFunctionalInterface<String, String> stringIdentity = MyFunctionalInterface.identity();
+        assertEquals("hello", stringIdentity.apply("hello"));
+
+        MyFunctionalInterface<Boolean, Boolean> booleanIdentity = MyFunctionalInterface.identity();
+        assertEquals(true, booleanIdentity.apply(true));
+    }
+
+    @Test
+    @DisplayName("Identity function can be used in compositions")
+    void testIdentityInComposition() {
+        MyFunctionalInterface<Integer, Integer> identity = MyFunctionalInterface.identity();
+        MyFunctionalInterface<Integer, Integer> addTen = identity.andThen(x -> x + 10);
+
+        assertEquals(25, addTen.apply(15));
+    }
+
+    @Test
+    @DisplayName("Factory method should create a functional interface from existing implementation")
+    void testFactoryMethod() {
+        MyFunctionalInterface<Integer, Integer> square = x -> x * x;
+        MyFunctionalInterface<Integer, Integer> wrappedSquare = MyFunctionalInterface.of(square);
+
+        assertEquals(25, wrappedSquare.apply(5));
+    }
+
+    @Test
+    @DisplayName("Factory method should preserve function behavior")
+    void testFactoryMethodPreservesBehavior() {
+        MyFunctionalInterface<String, Integer> parseInteger = s -> Integer.parseInt(s);
+        MyFunctionalInterface<String, Integer> wrapped = MyFunctionalInterface.of(parseInteger);
+
+        assertEquals(42, wrapped.apply("42"));
+    }
+
+    @Test
+    @DisplayName("Factory method should throw NullPointerException for null function")
+    void testFactoryMethodWithNull() {
+        assertThrows(NullPointerException.class, () -> MyFunctionalInterface.of(null));
+    }
+
+    @Test
+    @DisplayName("Factory method should work with lambda expressions")
+    void testFactoryMethodWithLambda() {
+        MyFunctionalInterface<Integer, String> toString = MyFunctionalInterface.of(Object::toString);
+        assertEquals("123", toString.apply(123));
     }
 }
