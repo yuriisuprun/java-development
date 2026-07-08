@@ -1,198 +1,191 @@
 package com.suprun.methodreferences;
 
-import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
-import java.util.function.Consumer;
+import java.util.Objects;
+import java.util.function.BiFunction;
 import java.util.function.Function;
+import java.util.function.IntBinaryOperator;
 import java.util.function.Predicate;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
 /**
- * Method References in Java 8
+ * Method References in Java 8+
  * 
- * Method references provide a way to refer to methods without invoking them.
+ * <p>Method references provide a way to refer to methods without invoking them.
  * They are a shorthand for lambda expressions that call a specific method.
  * 
- * Types of Method References:
- * 1. Reference to a static method: ClassName::staticMethodName
- * 2. Reference to an instance method of a particular object: object::instanceMethodName
- * 3. Reference to an instance method of an arbitrary object: ClassName::instanceMethodName
- * 4. Reference to a constructor: ClassName::new
+ * <p><b>Types of Method References:</b>
+ * <ol>
+ *   <li>Reference to a static method: {@code ClassName::staticMethodName}</li>
+ *   <li>Reference to an instance method of a particular object: {@code object::instanceMethodName}</li>
+ *   <li>Reference to an instance method of an arbitrary object: {@code ClassName::instanceMethodName}</li>
+ *   <li>Reference to a constructor: {@code ClassName::new}</li>
+ * </ol>
+ * 
+ * @author Yurii_Suprun
+ * @version 2.0
  */
 public class MethodReferences {
 
     /**
-     * 1. Static Method Reference
-     * References a static method from a class
+     * Static method for adding two integers.
+     * Demonstrates static method references.
+     * 
+     * @param a first operand
+     * @param b second operand
+     * @return sum of a and b
      */
     public static int add(int a, int b) {
         return a + b;
     }
 
+    /**
+     * Static method for multiplying two integers.
+     * 
+     * @param a first operand
+     * @param b second operand
+     * @return product of a and b
+     */
     public static int multiply(int a, int b) {
         return a * b;
     }
 
+    /**
+     * Static method for converting string to uppercase.
+     * 
+     * @param str the input string
+     * @return uppercase string
+     */
     public static String toUpperCase(String str) {
-        return str.toUpperCase();
+        return Objects.requireNonNull(str, "str cannot be null").toUpperCase();
     }
 
     /**
-     * 2. Instance Method References
-     * References a method on a specific object instance
+     * Prints a name with a prefix.
+     * Used for demonstrating instance method references.
+     * 
+     * @param name the name to print
      */
-    private List<String> names;
-
-    public MethodReferences() {
-        this.names = new ArrayList<>();
-    }
-
     public void printName(String name) {
         System.out.println("Name: " + name);
     }
 
+    /**
+     * Formats a name with decorative brackets.
+     * 
+     * @param name the name to format
+     * @return formatted name
+     */
     public String formatName(String name) {
-        return ">> " + name + " <<";
+        return ">> " + Objects.requireNonNull(name, "name cannot be null") + " <<";
     }
 
     /**
-     * 3. Arbitrary Object Instance Method Reference
-     * References a method that will be called on different objects
-     */
-    public static class Calculator {
-        public int getValue() {
-            return 42;
-        }
-
-        public boolean isPositive(int number) {
-            return number > 0;
-        }
-
-        public String toString() {
-            return "Calculator";
-        }
-    }
-
-    /**
-     * 4. Constructor Reference
-     * References a constructor to create new instances
-     */
-    public static class Person {
-        private String name;
-        private int age;
-
-        public Person() {
-            this.name = "Unknown";
-            this.age = 0;
-        }
-
-        public Person(String name) {
-            this.name = name;
-            this.age = 0;
-        }
-
-        public Person(String name, int age) {
-            this.name = name;
-            this.age = age;
-        }
-
-        public String getName() {
-            return name;
-        }
-
-        public int getAge() {
-            return age;
-        }
-
-        @Override
-        public String toString() {
-            return "Person{" +
-                    "name='" + name + '\'' +
-                    ", age=" + age +
-                    '}';
-        }
-    }
-
-    /**
-     * Demonstrates static method references
+     * Demonstrates static method references.
+     * Example: {@code String::toUpperCase}
+     * 
+     * @return list of uppercase strings
      */
     public List<String> demonstrateStaticMethodReference() {
         List<String> words = Arrays.asList("hello", "world", "java", "method");
         
-        // Using lambda expression
-        // words.stream().map(word -> word.toUpperCase()).collect(Collectors.toList());
-        
-        // Using method reference to String::toUpperCase (static-like)
+        // Lambda: words.stream().map(word -> word.toUpperCase())
+        // Method reference is more concise
         return words.stream()
                     .map(String::toUpperCase)
                     .collect(Collectors.toList());
     }
 
     /**
-     * Demonstrates instance method reference of a particular object
+     * Demonstrates instance method reference of a particular object.
+     * Example: {@code this::printName}
      */
     public void demonstrateInstanceMethodReference() {
         List<String> names = Arrays.asList("Alice", "Bob", "Charlie");
         
-        // Using lambda expression
-        // names.forEach(name -> this.printName(name));
-        
-        // Using method reference to instance method
+        // Lambda: names.forEach(name -> this.printName(name))
+        // Method reference: this::printName
         names.forEach(this::printName);
     }
 
     /**
-     * Demonstrates arbitrary object instance method reference
+     * Demonstrates arbitrary object instance method reference.
+     * Example: {@code String::valueOf}
+     * 
+     * @return list of string values
      */
     public List<String> demonstrateArbitraryObjectMethodReference() {
         List<String> words = Arrays.asList("hello", "world", "java");
         
-        // Using method reference to arbitrary object's method
-        // This calls compareTo on each String object
+        // Method reference calls the method on each object in the stream
         return words.stream()
                     .map(String::valueOf)
                     .collect(Collectors.toList());
     }
 
     /**
-     * Demonstrates constructor references
+     * Demonstrates constructor references.
+     * Example: {@code Person::new}
+     * 
+     * @return list of Person objects
      */
     public List<Person> demonstrateConstructorReference() {
         List<String> names = Arrays.asList("John", "Jane", "Jack");
         
-        // Using constructor reference Person::new
+        // Lambda: names.stream().map(name -> new Person(name))
+        // Method reference: Person::new
         return names.stream()
                     .map(Person::new)
                     .collect(Collectors.toList());
     }
 
     /**
-     * More advanced constructor reference example
+     * Creates a person using a constructor.
+     * 
+     * @param name the person's name
+     * @return a new Person instance
      */
     public Person createPerson(String name) {
-        // Using constructor reference with a Supplier-like interface
-        // This would be a custom functional interface that takes two arguments
         return new Person(name, 25);
     }
 
     /**
-     * Demonstrates static method reference with primitive operations
+     * Demonstrates static method reference with custom operations.
+     * Example: {@code MethodReferences::add}
+     * 
+     * @param a first operand
+     * @param b second operand
+     * @return result of the operation
      */
     public int performOperation(int a, int b) {
-        // Method reference to static method
         return applyOperation(a, b, MethodReferences::add);
     }
 
-    private int applyOperation(int a, int b, java.util.function.IntBinaryOperator operator) {
+    /**
+     * Applies a binary operation to two integers.
+     * 
+     * @param a first operand
+     * @param b second operand
+     * @param operator the operation to apply
+     * @return result of the operation
+     */
+    private int applyOperation(int a, int b, IntBinaryOperator operator) {
+        Objects.requireNonNull(operator, "operator cannot be null");
         return operator.applyAsInt(a, b);
     }
 
     /**
-     * Complex example: filtering and transforming with method references
+     * Demonstrates chaining multiple method references in a pipeline.
+     * Uses: {@code String::isEmpty}, {@code String::trim}, {@code String::toUpperCase}
+     * 
+     * @param names list of names to process
+     * @return processed list of names
      */
     public List<String> processNames(List<String> names) {
+        Objects.requireNonNull(names, "names cannot be null");
         return names.stream()
                     .filter(Predicate.not(String::isEmpty))  // Method reference to isEmpty
                     .map(String::trim)                       // Method reference to trim
@@ -201,19 +194,82 @@ public class MethodReferences {
     }
 
     /**
-     * Example with custom functional interface
+     * Executes a string operation using the provided operation.
+     * 
+     * @param input the input string
+     * @param operation the operation to apply
+     * @return the result of the operation
      */
-    @FunctionalInterface
-    public interface StringOperation {
-        String apply(String input);
-    }
-
     public String executeStringOperation(String input, StringOperation operation) {
+        Objects.requireNonNull(input, "input cannot be null");
+        Objects.requireNonNull(operation, "operation cannot be null");
         return operation.apply(input);
     }
 
+    /**
+     * Demonstrates using method reference with custom functional interface.
+     * Example: {@code String::toUpperCase}
+     * 
+     * @param input the input string
+     * @return uppercase string
+     */
     public String executeWithMethodReference(String input) {
-        // Using method reference instead of lambda
         return executeStringOperation(input, String::toUpperCase);
+    }
+
+    /**
+     * Demonstrates using supplier with constructor reference.
+     * Example: {@code Person::new}
+     * 
+     * @param supplier the person supplier
+     * @return a new Person instance
+     */
+    public Person createPersonFromSupplier(Supplier<Person> supplier) {
+        Objects.requireNonNull(supplier, "supplier cannot be null");
+        return supplier.get();
+    }
+
+    /**
+     * Demonstrates using function with method reference for type conversion.
+     * Example: {@code Integer::parseInt}
+     * 
+     * @param strings list of numeric strings
+     * @param parser the parsing function
+     * @return list of integers
+     */
+    public List<Integer> parseNumbers(List<String> strings, Function<String, Integer> parser) {
+        Objects.requireNonNull(strings, "strings cannot be null");
+        Objects.requireNonNull(parser, "parser cannot be null");
+        return strings.stream()
+                      .map(parser)
+                      .collect(Collectors.toList());
+    }
+
+    /**
+     * Demonstrates method reference with comparator.
+     * Example: {@code String::compareTo}
+     * 
+     * @param strings list of strings to sort
+     * @return sorted list
+     */
+    public List<String> sortStrings(List<String> strings) {
+        Objects.requireNonNull(strings, "strings cannot be null");
+        return strings.stream()
+                      .sorted(String::compareTo)
+                      .collect(Collectors.toList());
+    }
+
+    /**
+     * Demonstrates method reference with BiFunction.
+     * Example: {@code Math::max}
+     * 
+     * @param a first number
+     * @param b second number
+     * @param function the function to apply
+     * @return the result
+     */
+    public int applyBiFunction(int a, int b, BiFunction<Integer, Integer, Integer> function) {
+        Objects.requireNonNull(function, "function cannot be null");
+        return function.apply(a, b);
     }
 }

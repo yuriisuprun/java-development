@@ -8,12 +8,20 @@ import org.junit.jupiter.params.provider.ValueSource;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.function.BiFunction;
 import java.util.function.Consumer;
 import java.util.function.Function;
+import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * Comprehensive test suite for Method References.
+ * 
+ * @author Yurii_Suprun
+ * @version 2.0
+ */
 @DisplayName("Method References Tests")
 class MethodReferencesTest {
 
@@ -39,7 +47,6 @@ class MethodReferencesTest {
     @Test
     @DisplayName("Instance method reference using this::printName")
     void testInstanceMethodReference() {
-        // This test verifies that the method can be called without throwing an exception
         assertDoesNotThrow(() -> methodReferences.demonstrateInstanceMethodReference());
     }
 
@@ -57,7 +64,7 @@ class MethodReferencesTest {
     @Test
     @DisplayName("Constructor reference Person::new")
     void testConstructorReference() {
-        List<MethodReferences.Person> persons = methodReferences.demonstrateConstructorReference();
+        List<Person> persons = methodReferences.demonstrateConstructorReference();
         
         assertEquals(3, persons.size());
         assertEquals("John", persons.get(0).getName());
@@ -100,10 +107,7 @@ class MethodReferencesTest {
     void testCustomFunctionalInterfaceLambdaVsMethodReference() {
         String input = "test";
         
-        // Using lambda expression
         String lambdaResult = methodReferences.executeStringOperation(input, str -> str.toUpperCase());
-        
-        // Using method reference
         String methodRefResult = methodReferences.executeWithMethodReference(input);
         
         assertEquals(lambdaResult, methodRefResult);
@@ -114,8 +118,6 @@ class MethodReferencesTest {
     @DisplayName("Method reference with Consumer functional interface")
     void testMethodReferenceWithConsumer() {
         List<String> names = Arrays.asList("Alice", "Bob");
-        
-        // Using method reference with Consumer
         Consumer<String> printer = System.out::println;
         
         assertDoesNotThrow(() -> names.forEach(printer));
@@ -126,7 +128,6 @@ class MethodReferencesTest {
     void testMethodReferenceWithFunction() {
         List<String> words = Arrays.asList("a", "ab", "abc");
         
-        // Using method reference to String::length
         List<Integer> lengths = words.stream()
                                        .map(String::length)
                                        .collect(Collectors.toList());
@@ -163,7 +164,6 @@ class MethodReferencesTest {
     void testMethodReferenceToEquals() {
         List<String> names = Arrays.asList("Alice", "Bob", "Alice", "Charlie");
         
-        // Count how many names equal "Alice"
         long count = names.stream()
                           .filter("Alice"::equals)
                           .count();
@@ -177,8 +177,8 @@ class MethodReferencesTest {
         List<String> words = Arrays.asList("hello", "world", "java");
         
         List<String> result = words.stream()
-                                    .map(String::toUpperCase)      // Method reference 1
-                                    .map(String::trim)             // Method reference 2
+                                    .map(String::toUpperCase)
+                                    .map(String::trim)
                                     .collect(Collectors.toList());
         
         assertEquals(3, result.size());
@@ -190,9 +190,9 @@ class MethodReferencesTest {
     @Test
     @DisplayName("Constructor reference with no-arg constructor")
     void testConstructorReferenceNoArg() {
-        java.util.function.Supplier<MethodReferences.Person> personSupplier = MethodReferences.Person::new;
+        Supplier<Person> personSupplier = Person::new;
         
-        MethodReferences.Person person = personSupplier.get();
+        Person person = personSupplier.get();
         
         assertNotNull(person);
         assertEquals("Unknown", person.getName());
@@ -227,17 +227,127 @@ class MethodReferencesTest {
     void testMethodReferenceVsLambda() {
         List<String> words = Arrays.asList("a", "bb", "ccc");
         
-        // Using lambda
         List<Integer> lambdaResult = words.stream()
                                           .map(s -> s.length())
                                           .collect(Collectors.toList());
         
-        // Using method reference
         List<Integer> methodRefResult = words.stream()
                                              .map(String::length)
                                              .collect(Collectors.toList());
         
         assertEquals(lambdaResult, methodRefResult);
         assertEquals(Arrays.asList(1, 2, 3), methodRefResult);
+    }
+
+    @Test
+    @DisplayName("Person isAdult method reference with filter")
+    void testPersonIsAdultMethodReference() {
+        List<Person> people = Arrays.asList(
+            new Person("John", 25),
+            new Person("Jane", 17),
+            new Person("Jack", 30)
+        );
+        
+        List<Person> adults = people.stream()
+                                    .filter(Person::isAdult)
+                                    .collect(Collectors.toList());
+        
+        assertEquals(2, adults.size());
+        assertTrue(adults.stream().allMatch(p -> p.getAge() >= 18));
+    }
+
+    @Test
+    @DisplayName("Calculator static method reference")
+    void testCalculatorStaticMethodReference() {
+        int result = Calculator.applyOperation(5, 3, Calculator::sum);
+        assertEquals(8, result);
+        
+        int product = Calculator.applyOperation(5, 3, Calculator::product);
+        assertEquals(15, product);
+    }
+
+    @Test
+    @DisplayName("Calculator instance method reference")
+    void testCalculatorInstanceMethodReference() {
+        Calculator calc = new Calculator(10);
+        
+        List<Integer> numbers = Arrays.asList(1, 2, 3, 4, 5);
+        boolean allPositive = numbers.stream()
+                                     .allMatch(calc::isPositive);
+        
+        assertTrue(allPositive);
+    }
+
+    @Test
+    @DisplayName("StringOperation composition with method references")
+    void testStringOperationComposition() {
+        StringOperation trim = String::trim;
+        StringOperation upper = String::toUpperCase;
+        StringOperation composed = trim.andThen(upper);
+        
+        String result = composed.apply("  hello  ");
+        assertEquals("HELLO", result);
+    }
+
+    @Test
+    @DisplayName("Create person from supplier with constructor reference")
+    void testCreatePersonFromSupplier() {
+        Person person = methodReferences.createPersonFromSupplier(Person::new);
+        
+        assertNotNull(person);
+        assertEquals("Unknown", person.getName());
+    }
+
+    @Test
+    @DisplayName("Parse numbers with method reference")
+    void testParseNumbersWithMethodReference() {
+        List<String> strings = Arrays.asList("1", "2", "3");
+        List<Integer> numbers = methodReferences.parseNumbers(strings, Integer::parseInt);
+        
+        assertEquals(Arrays.asList(1, 2, 3), numbers);
+    }
+
+    @Test
+    @DisplayName("Sort strings with method reference")
+    void testSortStringsWithMethodReference() {
+        List<String> words = Arrays.asList("zebra", "apple", "banana");
+        List<String> sorted = methodReferences.sortStrings(words);
+        
+        assertEquals(Arrays.asList("apple", "banana", "zebra"), sorted);
+    }
+
+    @Test
+    @DisplayName("Apply BiFunction with method reference")
+    void testApplyBiFunctionWithMethodReference() {
+        int result = methodReferences.applyBiFunction(10, 20, Math::max);
+        assertEquals(20, result);
+        
+        int min = methodReferences.applyBiFunction(10, 20, Math::min);
+        assertEquals(10, min);
+    }
+
+    @Test
+    @DisplayName("Person equals and hashCode work correctly")
+    void testPersonEqualsAndHashCode() {
+        Person p1 = new Person("John", 25);
+        Person p2 = new Person("John", 25);
+        Person p3 = new Person("Jane", 25);
+        
+        assertEquals(p1, p2);
+        assertNotEquals(p1, p3);
+        assertEquals(p1.hashCode(), p2.hashCode());
+    }
+
+    @Test
+    @DisplayName("Null safety in MethodReferences methods")
+    void testNullSafety() {
+        assertThrows(NullPointerException.class, 
+            () -> methodReferences.processNames(null));
+        
+        assertThrows(NullPointerException.class, 
+            () -> methodReferences.executeStringOperation(null, String::toUpperCase));
+        
+        assertThrows(NullPointerException.class, 
+            () -> methodReferences.executeStringOperation("test", null));
     }
 }
