@@ -2,9 +2,9 @@ package com.suprun.streamapi;
 
 import java.util.Arrays;
 import java.util.Comparator;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -13,122 +13,149 @@ import static java.util.stream.Collectors.groupingBy;
 import static java.util.stream.Collectors.partitioningBy;
 
 /**
+ * Comprehensive Stream API demonstrations and utilities.
+ * 
+ * <p>This class provides various stream operations for strings, people, and employees,
+ * demonstrating common patterns and best practices with Java 8+ streams.
+ * 
  * @author Yurii_Suprun
+ * @version 2.0
  */
 public class StreamApi {
 
     /**
-     * Returns a {@link List} of strings with sorted strings by frequency
-     *
-     * @param textWithHashtags a text with hashtags
-     * @return list of strings
+     * Extracts hashtags from text and returns them sorted by frequency (descending).
+     * 
+     * @param textWithHashtags a text containing hashtags
+     * @return list of unique hashtags sorted by frequency
      */
     public List<String> getSortedHashCodes(String textWithHashtags) {
+        Objects.requireNonNull(textWithHashtags, "textWithHashtags cannot be null");
         return Arrays.stream(textWithHashtags.split(" "))
-                .filter(word -> word.startsWith("#"))
-                .collect(groupingBy(Function.identity(), counting()))
-                .entrySet().stream()
-                .sorted(Map.Entry.comparingByValue(Comparator.reverseOrder()))
-                .map(Map.Entry::getKey)
-                .collect(Collectors.toList());
+                     .filter(word -> word.startsWith("#"))
+                     .collect(groupingBy(Function.identity(), counting()))
+                     .entrySet().stream()
+                     .sorted(Map.Entry.comparingByValue(Comparator.reverseOrder()))
+                     .map(Map.Entry::getKey)
+                     .collect(Collectors.toList());
     }
 
     /**
-     * Returns a length of the longest string in provided list
-     *
+     * Returns the length of the longest string in a list.
+     * 
      * @param list a list of strings
-     * @return a string length
+     * @return the length of the longest string, or 0 if empty
      */
     public int getLongestStringLength(List<String> list) {
-        return list.stream()
-                .mapToInt(String::length)
-                .max()
-                .orElse(0);
+        return StreamUtils.getLongestStringLength(list);
     }
 
-
     /**
-     * Returns a sorted {@link List} of strings without first letters
-     *
+     * Returns a list of strings with the first character removed, sorted in reverse order.
+     * 
      * @param list a list of strings
-     * @return a list of strings
+     * @return transformed list sorted reverse
      */
     public List<String> deleteFirstLetterFromStrings(List<String> list) {
+        Objects.requireNonNull(list, "list cannot be null");
         return list.stream()
-                .map(string -> string.substring(1))
-                .sorted(Comparator.reverseOrder())
-                .collect(Collectors.toList());
+                   .filter(s -> !s.isEmpty())
+                   .map(string -> string.substring(1))
+                   .sorted(Comparator.reverseOrder())
+                   .collect(Collectors.toList());
     }
 
     /**
-     * Returns a letters sum of string which length is more than @param wordLengthToCount
-     *
-     * @param list              a list of strings
-     * @param wordLengthToCount a list of strings
-     * @return a string length
+     * Counts the total letters in strings longer than a specified length.
+     * 
+     * @param list a list of strings
+     * @param wordLengthToCount the minimum length threshold
+     * @return total letter count of strings exceeding threshold
      */
     public int countLettersForStringsLongerThan(List<String> list, int wordLengthToCount) {
+        Objects.requireNonNull(list, "list cannot be null");
         return list.stream()
-                .mapToInt(String::length)
-                .filter(length -> length > wordLengthToCount)
-                .sum();
+                   .mapToInt(String::length)
+                   .filter(length -> length > wordLengthToCount)
+                   .sum();
     }
 
     /**
-     * Returns the oldest Person
-     *
-     * @param people a list of People objects
-     * @return a Person object
+     * Finds the oldest person in a list.
+     * 
+     * @param people a list of people
+     * @return the oldest person
+     * @throws IllegalArgumentException if list is empty
      */
     public Person findOldestPerson(List<Person> people) {
-        return people.stream()
-                .max(Comparator.comparingInt(Person::getAge))
-                .orElseThrow(() -> new IllegalArgumentException("people must not be empty"));
+        return PersonUtils.findOldest(people);
     }
 
     /**
-     * Returns a map where key is true if a person is older than @param age
-     *
-     * @param people a list of People objects
-     * @param age    an age of people to divide on 2 groups
-     * @return a Map with Boolean and List of Person as key and value
+     * Finds the youngest person in a list.
+     * 
+     * @param people a list of people
+     * @return the youngest person
+     * @throws IllegalArgumentException if list is empty
+     */
+    public Person findYoungestPerson(List<Person> people) {
+        return PersonUtils.findYoungest(people);
+    }
+
+    /**
+     * Partitions people by age threshold.
+     * 
+     * @param people a list of people
+     * @param age the age threshold
+     * @return map with true/false keys indicating older/younger
      */
     public Map<Boolean, List<Person>> partitionPeopleByAge(List<Person> people, int age) {
+        Objects.requireNonNull(people, "people cannot be null");
         return people.stream()
-                .collect(partitioningBy(person -> person.getAge() > age));
+                     .collect(partitioningBy(person -> person.getAge() > age));
     }
 
     /**
-     * Returns a map where key is a character and value is the frequency of the letter in the word
-     *
-     * @param word an incoming word to count the letters in it
-     * @return a Map with Character and Long as key and value
+     * Counts character frequencies in a word.
+     * 
+     * @param word the word to analyze
+     * @return map with character and frequency
      */
     public Map<Character, Long> countLettersInWord(String word) {
+        Objects.requireNonNull(word, "word cannot be null");
         return word.chars()
-                .mapToObj(c -> (char) c)
-                .collect(groupingBy(Function.identity(), counting()));
+                   .mapToObj(c -> (char) c)
+                   .collect(groupingBy(Function.identity(), counting()));
     }
 
     /**
-     * Returns a map where key is a character and value is the frequency of the letter in the word
-     *
-     * @param word an incoming word to count the letters in it
-     * @return a Map with Character and Long as key and value
+     * Counts character frequencies in a word using traditional iteration.
+     * 
+     * @param word the word to analyze
+     * @return map with character and frequency
      */
     public Map<Character, Long> countLettersInWordOldStyle(String word) {
-        Map<Character, Long> charactersByFrequency = new HashMap<>();
+        Objects.requireNonNull(word, "word cannot be null");
+        Map<Character, Long> charactersByFrequency = new java.util.HashMap<>();
         for (char c : word.toCharArray()) {
             charactersByFrequency.put(c, charactersByFrequency.getOrDefault(c, 0L) + 1L);
         }
         return charactersByFrequency;
     }
 
+    /**
+     * Demonstrates parallel stream with ordered output.
+     */
     public void printParallelStreamListWithOrder() {
         List<String> list = Arrays.asList("A", "B", "C", "D");
         list.parallelStream().forEachOrdered(System.out::println);
     }
 
+    /**
+     * Groups employees by salary remainder (for categorization).
+     * 
+     * @return map with remainder and employee list
+     */
     public Map<Long, List<Employee>> groupEmployeesBySalaryRemainder() {
         List<Employee> employees = Arrays.asList(
                 new Employee(8, "Robert", "manager", 590L),
@@ -136,10 +163,12 @@ public class StreamApi {
                 new Employee(3, "Joshua", "dev", 1200L),
                 new Employee(5, "Bill", "hr", 2300L)
         );
-        return employees.stream()
-                .collect(Collectors.groupingBy(employee -> employee.getSalary() % 1000));
+        return EmployeeUtils.groupBySalaryRemainder(employees, 1000);
     }
 
+    /**
+     * Prints grouped employees by salary remainder.
+     */
     public void printEmployees() {
         System.out.println(groupEmployeesBySalaryRemainder());
     }

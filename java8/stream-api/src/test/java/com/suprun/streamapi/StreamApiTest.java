@@ -1,6 +1,7 @@
 package com.suprun.streamapi;
 
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
@@ -8,13 +9,16 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
- * A test class for {@link StreamApi}
- *
+ * Comprehensive test suite for Stream API module.
+ * Tests StreamApi, StreamUtils, PersonUtils, and EmployeeUtils.
+ * 
  * @author Yurii_Suprun
+ * @version 2.0
  */
+@DisplayName("Stream API Tests")
 public class StreamApiTest {
 
     private StreamApi streamApi;
@@ -24,7 +28,10 @@ public class StreamApiTest {
         streamApi = new StreamApi();
     }
 
+    // ===== StreamApi Tests =====
+
     @Test
+    @DisplayName("Get sorted hashtags by frequency")
     void testGetSortedHashStringsList() {
         List<String> expectedList = Arrays.asList(
                 "#Workout", "#podcast", "#MentalHealth", "#SelfCare", "#personalGrowth", "#MeTime"
@@ -36,6 +43,7 @@ public class StreamApiTest {
     }
 
     @Test
+    @DisplayName("Get length of longest string")
     void testGetLengthOfLongestString() {
         List<String> list = Arrays.asList("air", "grass", "road", "buildings");
 
@@ -45,6 +53,7 @@ public class StreamApiTest {
     }
 
     @Test
+    @DisplayName("Delete first letter from strings")
     void testDeleteFirstLetterFromStrings() {
         List<String> originalList = Arrays.asList("air", "grass", "road", "buildings");
         List<String> expectedList = Arrays.asList("uildings", "rass", "oad", "ir");
@@ -55,6 +64,7 @@ public class StreamApiTest {
     }
 
     @Test
+    @DisplayName("Count letters for strings longer than threshold")
     void testCountLettersForStringsLongerThan() {
         List<String> originalList = Arrays.asList("Bill", "Tom", "Ronny", "Michelangelo", "Alexander");
 
@@ -64,6 +74,7 @@ public class StreamApiTest {
     }
 
     @Test
+    @DisplayName("Find oldest person")
     void testFindOldestPerson() {
         List<Person> people = Arrays.asList(new Person("Sara", 4), new Person("Viktor", 40), new Person("Eva", 42));
         Person expectedPerson = new Person("Eva", 42);
@@ -74,6 +85,7 @@ public class StreamApiTest {
     }
 
     @Test
+    @DisplayName("Partition people by age")
     void testPartitionPeopleByAge() {
         List<Person> people = Arrays.asList(
                 new Person("Sara", 4),
@@ -91,6 +103,7 @@ public class StreamApiTest {
     }
 
     @Test
+    @DisplayName("Count letters in word with stream")
     void testCountLettersInWord() {
         Map<Character, Long> actualMap = streamApi.countLettersInWord("Discussion");
 
@@ -98,6 +111,7 @@ public class StreamApiTest {
     }
 
     @Test
+    @DisplayName("Count letters in word old style")
     void testCountLettersInWordOldStyle() {
         Map<Character, Long> actualMap = streamApi.countLettersInWordOldStyle("Discussion");
 
@@ -105,6 +119,7 @@ public class StreamApiTest {
     }
 
     @Test
+    @DisplayName("Group employees by salary remainder")
     void testGroupEmployeesBySalaryRemainder() {
         Map<Long, List<Employee>> groupedEmployees = streamApi.groupEmployeesBySalaryRemainder();
 
@@ -114,6 +129,215 @@ public class StreamApiTest {
         assertEquals("Robert", groupedEmployees.get(590L).get(0).getName());
         assertEquals("Rob", groupedEmployees.get(790L).get(0).getName());
     }
+
+    // ===== StreamUtils Tests =====
+
+    @Test
+    @DisplayName("StreamUtils: Find longest string")
+    void testStreamUtilsFindLongestString() {
+        List<String> strings = Arrays.asList("a", "bb", "ccc", "dd");
+        assertEquals("ccc", StreamUtils.findLongestString(strings));
+    }
+
+    @Test
+    @DisplayName("StreamUtils: Find shortest string")
+    void testStreamUtilsFindShortestString() {
+        List<String> strings = Arrays.asList("apple", "b", "cat");
+        assertEquals("b", StreamUtils.findShortestString(strings));
+    }
+
+    @Test
+    @DisplayName("StreamUtils: Sum string lengths")
+    void testStreamUtilsSumStringLengths() {
+        List<String> strings = Arrays.asList("a", "bb", "ccc");
+        assertEquals(6, StreamUtils.sumStringLengths(strings));
+    }
+
+    @Test
+    @DisplayName("StreamUtils: Average string length")
+    void testStreamUtilsAverageStringLength() {
+        List<String> strings = Arrays.asList("a", "bb", "ccc");
+        assertEquals(2.0, StreamUtils.averageStringLength(strings));
+    }
+
+    @Test
+    @DisplayName("StreamUtils: Filter by min length")
+    void testStreamUtilsFilterByMinLength() {
+        List<String> strings = Arrays.asList("a", "bb", "ccc", "dd");
+        List<String> result = StreamUtils.filterByMinLength(strings, 2);
+        assertEquals(Arrays.asList("bb", "ccc", "dd"), result);
+    }
+
+    // ===== PersonUtils Tests =====
+
+    @Test
+    @DisplayName("PersonUtils: Find oldest")
+    void testPersonUtilsFindOldest() {
+        List<Person> people = Arrays.asList(
+            new Person("John", 25),
+            new Person("Jane", 35),
+            new Person("Jack", 20)
+        );
+        Person oldest = PersonUtils.findOldest(people);
+        assertEquals("Jane", oldest.getName());
+        assertEquals(35, oldest.getAge());
+    }
+
+    @Test
+    @DisplayName("PersonUtils: Find youngest")
+    void testPersonUtilsFindYoungest() {
+        List<Person> people = Arrays.asList(
+            new Person("John", 25),
+            new Person("Jane", 35),
+            new Person("Jack", 20)
+        );
+        Person youngest = PersonUtils.findYoungest(people);
+        assertEquals("Jack", youngest.getName());
+        assertEquals(20, youngest.getAge());
+    }
+
+    @Test
+    @DisplayName("PersonUtils: Sort by age ascending")
+    void testPersonUtilsSortByAgeAscending() {
+        List<Person> people = Arrays.asList(
+            new Person("John", 30),
+            new Person("Jane", 20),
+            new Person("Jack", 40)
+        );
+        List<Person> sorted = PersonUtils.sortByAgeAscending(people);
+        assertEquals(20, sorted.get(0).getAge());
+        assertEquals(30, sorted.get(1).getAge());
+        assertEquals(40, sorted.get(2).getAge());
+    }
+
+    @Test
+    @DisplayName("PersonUtils: Count adults")
+    void testPersonUtilsCountAdults() {
+        List<Person> people = Arrays.asList(
+            new Person("John", 25),
+            new Person("Jane", 17),
+            new Person("Jack", 30)
+        );
+        assertEquals(2, PersonUtils.countAdults(people));
+    }
+
+    @Test
+    @DisplayName("PersonUtils: Average age")
+    void testPersonUtilsAverageAge() {
+        List<Person> people = Arrays.asList(
+            new Person("John", 20),
+            new Person("Jane", 30),
+            new Person("Jack", 40)
+        );
+        assertEquals(30.0, PersonUtils.getAverageAge(people));
+    }
+
+    @Test
+    @DisplayName("PersonUtils: Extract names")
+    void testPersonUtilsExtractNames() {
+        List<Person> people = Arrays.asList(
+            new Person("John", 25),
+            new Person("Jane", 30)
+        );
+        List<String> names = PersonUtils.extractNames(people);
+        assertEquals(Arrays.asList("John", "Jane"), names);
+    }
+
+    // ===== EmployeeUtils Tests =====
+
+    @Test
+    @DisplayName("EmployeeUtils: Find highest paid")
+    void testEmployeeUtilsFindHighestPaid() {
+        List<Employee> employees = Arrays.asList(
+            new Employee(1, "John", "dev", 50000L),
+            new Employee(2, "Jane", "manager", 80000L),
+            new Employee(3, "Jack", "dev", 60000L)
+        );
+        Employee highest = EmployeeUtils.findHighestPaid(employees);
+        assertEquals("Jane", highest.getName());
+        assertEquals(80000L, highest.getSalary());
+    }
+
+    @Test
+    @DisplayName("EmployeeUtils: Total salary")
+    void testEmployeeUtilsTotalSalary() {
+        List<Employee> employees = Arrays.asList(
+            new Employee(1, "John", "dev", 50000L),
+            new Employee(2, "Jane", "manager", 80000L)
+        );
+        assertEquals(130000L, EmployeeUtils.getTotalSalary(employees));
+    }
+
+    @Test
+    @DisplayName("EmployeeUtils: Average salary")
+    void testEmployeeUtilsAverageSalary() {
+        List<Employee> employees = Arrays.asList(
+            new Employee(1, "John", "dev", 50000L),
+            new Employee(2, "Jane", "manager", 80000L),
+            new Employee(3, "Jack", "dev", 60000L)
+        );
+        assertEquals(63333.33, EmployeeUtils.getAverageSalary(employees), 0.01);
+    }
+
+    @Test
+    @DisplayName("EmployeeUtils: Group by position")
+    void testEmployeeUtilsGroupByPosition() {
+        List<Employee> employees = Arrays.asList(
+            new Employee(1, "John", "dev", 50000L),
+            new Employee(2, "Jane", "manager", 80000L),
+            new Employee(3, "Jack", "dev", 60000L)
+        );
+        Map<String, List<Employee>> grouped = EmployeeUtils.groupByPosition(employees);
+        assertEquals(2, grouped.get("dev").size());
+        assertEquals(1, grouped.get("manager").size());
+    }
+
+    @Test
+    @DisplayName("EmployeeUtils: Sort by salary descending")
+    void testEmployeeUtilsSortBySalaryDescending() {
+        List<Employee> employees = Arrays.asList(
+            new Employee(1, "John", "dev", 50000L),
+            new Employee(2, "Jane", "manager", 80000L),
+            new Employee(3, "Jack", "dev", 60000L)
+        );
+        List<Employee> sorted = EmployeeUtils.sortBySalaryDescending(employees);
+        assertEquals(80000L, sorted.get(0).getSalary());
+        assertEquals(60000L, sorted.get(1).getSalary());
+        assertEquals(50000L, sorted.get(2).getSalary());
+    }
+
+    @Test
+    @DisplayName("EmployeeUtils: Filter by position")
+    void testEmployeeUtilsFilterByPosition() {
+        List<Employee> employees = Arrays.asList(
+            new Employee(1, "John", "dev", 50000L),
+            new Employee(2, "Jane", "manager", 80000L),
+            new Employee(3, "Jack", "dev", 60000L)
+        );
+        List<Employee> devs = EmployeeUtils.filterByPosition(employees, "dev");
+        assertEquals(2, devs.size());
+        assertTrue(devs.stream().allMatch(e -> "dev".equals(e.getPosition())));
+    }
+
+    @Test
+    @DisplayName("Person: isAdult method")
+    void testPersonIsAdult() {
+        Person adult = new Person("John", 25);
+        Person minor = new Person("Jane", 17);
+        assertTrue(adult.isAdult());
+        assertFalse(minor.isAdult());
+    }
+
+    @Test
+    @DisplayName("Employee: isManager method")
+    void testEmployeeIsManager() {
+        Employee manager = new Employee(1, "John", "manager", 80000L);
+        Employee dev = new Employee(2, "Jane", "dev", 60000L);
+        assertTrue(manager.isManager());
+        assertFalse(dev.isManager());
+    }
+
+    // Helper methods
 
     private static Map<Character, Long> expectedLetterFrequency() {
         Map<Character, Long> expectedMap = new HashMap<>();
