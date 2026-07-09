@@ -2,27 +2,41 @@ package com.suprun.coding;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.function.Consumer;
+import java.util.function.Function;
+import java.util.function.Predicate;
+import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
 /**
- * Java 8 Optional operations and best practices.
- * Demonstrates handling null values with Optional API.
+ * Java 8+ Optional operations and best practices.
+ * Demonstrates idiomatic handling of null values with the Optional API.
+ *
+ * <p>Key principles:
+ * <ul>
+ *   <li>Use Optional to avoid null pointer exceptions</li>
+ *   <li>Prefer functional transformations over imperative checking</li>
+ *   <li>Use lazy evaluation where appropriate (orElseGet vs orElse)</li>
+ *   <li>Chain operations fluently rather than nested conditionals</li>
+ * </ul>
  */
 public class OptionalOperations {
 
+    // ==================== Wrapping and Unwrapping ====================
+
     /**
-     * Convert a potentially null value into an Optional.
+     * Wraps a potentially null value into an Optional.
      *
-     * @param value the value to wrap
-     * @param <T>   the type of the value
-     * @return Optional containing the value or Optional.empty() if null
+     * @param value the value to wrap (may be null)
+     * @param <T> the type of the value
+     * @return Optional containing the value, or empty if null
      */
     public <T> Optional<T> wrapValue(T value) {
         return Optional.ofNullable(value);
     }
 
     /**
-     * Get value from Optional with a default value.
+     * Retrieves value from Optional with a static default.
      *
      * @param optional the Optional to process
      * @param defaultValue the default value if Optional is empty
@@ -34,84 +48,104 @@ public class OptionalOperations {
     }
 
     /**
-     * Get value from Optional with a supplier for lazy evaluation.
+     * Retrieves value from Optional with lazy-evaluated default.
+     * Prefer this over orElse when the default is expensive to compute.
      *
      * @param optional the Optional to process
-     * @param supplier the supplier to provide default value
+     * @param supplier the supplier providing the default value
      * @param <T> the type of the value
-     * @return the value or default from supplier if empty
+     * @return the value or supplier result if empty
      */
-    public <T> T getOrSupply(Optional<T> optional, java.util.function.Supplier<T> supplier) {
+    public <T> T getOrSupply(Optional<T> optional, Supplier<T> supplier) {
         return optional.orElseGet(supplier);
     }
 
+    // ==================== Transformations ====================
+
     /**
-     * Transform Optional value using a mapping function.
+     * Transforms an Optional value using a mapping function.
      *
      * @param optional the Optional to process
      * @param transformer the transformation function
      * @param <T> the input type
      * @param <R> the output type
-     * @return Optional of transformed value or empty
+     * @return Optional containing transformed value, or empty if input was empty
      */
-    public <T, R> Optional<R> transformValue(Optional<T> optional, java.util.function.Function<T, R> transformer) {
+    public <T, R> Optional<R> transformValue(Optional<T> optional, Function<T, R> transformer) {
         return optional.map(transformer);
     }
 
     /**
-     * Chain Optional operations using flatMap.
+     * Chains Optional operations using flatMap.
+     * Use this when the transformer itself returns an Optional.
      *
      * @param optional the Optional to process
-     * @param chain the chaining function returning Optional
+     * @param chain the chaining function that returns an Optional
      * @param <T> the input type
      * @param <R> the output type
-     * @return Optional result of chained operation
+     * @return the result of chaining, or empty if any step was empty
      */
-    public <T, R> Optional<R> chainOperations(Optional<T> optional, java.util.function.Function<T, Optional<R>> chain) {
+    public <T, R> Optional<R> chainOperations(Optional<T> optional, Function<T, Optional<R>> chain) {
         return optional.flatMap(chain);
     }
 
     /**
-     * Filter Optional value based on a predicate.
+     * Filters an Optional value based on a predicate.
      *
      * @param optional the Optional to filter
-     * @param predicate the condition to check
+     * @param predicate the condition to test
      * @param <T> the type of the value
-     * @return Optional of value if predicate is true, otherwise empty
+     * @return Optional containing value if predicate is true, otherwise empty
      */
-    public <T> Optional<T> filterValue(Optional<T> optional, java.util.function.Predicate<T> predicate) {
+    public <T> Optional<T> filterValue(Optional<T> optional, Predicate<T> predicate) {
         return optional.filter(predicate);
     }
 
     /**
-     * Check if Optional is present and perform action.
+     * Combines two Optional values into a single Optional.
+     *
+     * @param opt1 first Optional
+     * @param opt2 second Optional
+     * @return Optional containing concatenated values, or empty if either input is empty
+     */
+    public Optional<String> combineOptionals(Optional<String> opt1, Optional<String> opt2) {
+        return opt1.flatMap(first -> opt2.map(second -> first + " " + second));
+    }
+
+    // ==================== Side Effects ====================
+
+    /**
+     * Performs an action if the Optional is present.
      *
      * @param optional the Optional to check
      * @param action the action to perform if present
      * @param <T> the type of the value
      */
-    public <T> void ifPresentAction(Optional<T> optional, java.util.function.Consumer<T> action) {
+    public <T> void ifPresentAction(Optional<T> optional, Consumer<T> action) {
         optional.ifPresent(action);
     }
 
     /**
-     * Perform different actions based on Optional presence.
+     * Performs different actions based on Optional presence.
+     * Available in Java 9+.
      *
      * @param optional the Optional to check
-     * @param presentAction action if present
-     * @param emptyAction action if empty
+     * @param presentAction action to perform if present
+     * @param emptyAction action to perform if empty
      * @param <T> the type of the value
      */
-    public <T> void ifPresentOrElse(Optional<T> optional, java.util.function.Consumer<T> presentAction, Runnable emptyAction) {
+    public <T> void ifPresentOrElse(Optional<T> optional, Consumer<T> presentAction, Runnable emptyAction) {
         optional.ifPresentOrElse(presentAction, emptyAction);
     }
 
+    // ==================== Domain-Specific Operations ====================
+
     /**
-     * Find a user by name from a list, returning Optional.
+     * Finds a user by name (case-insensitive) from a list.
      *
-     * @param users the list of users
+     * @param users the list of users to search
      * @param name the name to search for
-     * @return Optional of the user if found
+     * @return Optional containing the user if found
      */
     public Optional<User> findUserByName(List<User> users, String name) {
         return users.stream()
@@ -120,11 +154,11 @@ public class OptionalOperations {
     }
 
     /**
-     * Get user email with default value.
+     * Retrieves a user's email address with a default fallback.
      *
      * @param users the list of users
-     * @param name the name to search for
-     * @return email or "unknown@example.com" if not found
+     * @param name the user's name to search for
+     * @return the user's email, or default if not found or email is absent
      */
     public String getUserEmailOrDefault(List<User> users, String name) {
         return findUserByName(users, name)
@@ -133,38 +167,36 @@ public class OptionalOperations {
     }
 
     /**
-     * Get all email addresses from users, filtering out nulls gracefully.
+     * Collects all email addresses from users, gracefully handling absent emails.
+     * Uses flatMap to unwrap Optional values elegantly.
      *
      * @param users the list of users
-     * @return list of non-null email addresses
+     * @return list of email addresses (empty emails are excluded)
      */
     public List<String> getAllUserEmails(List<User> users) {
         return users.stream()
-                .map(u -> u.getEmail())
-                .filter(Optional::isPresent)
-                .map(Optional::get)
+                .flatMap(user -> user.getEmail().stream())
                 .collect(Collectors.toList());
     }
 
-    /**
-     * Combine multiple Optional values.
-     *
-     * @param opt1 first Optional
-     * @param opt2 second Optional
-     * @return combined result or empty
-     */
-    public Optional<String> combineOptionals(Optional<String> opt1, Optional<String> opt2) {
-        return opt1.flatMap(first -> opt2.map(second -> first + " " + second));
-    }
+    // ==================== User Domain Model ====================
 
     /**
-     * User data class for demonstration.
+     * User data class for demonstration purposes.
+     * Demonstrates practical use of Optional for optional fields.
      */
     public static class User {
-        private String name;
-        private Optional<String> email;
-        private Optional<Integer> age;
+        private final String name;
+        private final Optional<String> email;
+        private final Optional<Integer> age;
 
+        /**
+         * Creates a new User.
+         *
+         * @param name the user's name (required)
+         * @param email the user's email (optional)
+         * @param age the user's age (optional)
+         */
         public User(String name, Optional<String> email, Optional<Integer> age) {
             this.name = name;
             this.email = email;
