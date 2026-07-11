@@ -9,6 +9,7 @@ import java.util.stream.Collectors;
 
 /**
  * Utility class for Employee stream operations.
+ * Demonstrates domain-specific stream patterns using generic CollectionUtils.
  * 
  * @author Yurii_Suprun
  * @version 2.0
@@ -21,30 +22,26 @@ public final class EmployeeUtils {
 
     /**
      * Finds the highest paid employee.
+     * Delegates to generic CollectionUtils.findMax().
      * 
      * @param employees a collection of employees
      * @return the employee with highest salary
      * @throws IllegalArgumentException if collection is empty
      */
     public static Employee findHighestPaid(Collection<Employee> employees) {
-        Objects.requireNonNull(employees, "employees cannot be null");
-        return employees.stream()
-                        .max(Comparator.comparingLong(Employee::getSalary))
-                        .orElseThrow(() -> new IllegalArgumentException("employees collection cannot be empty"));
+        return CollectionUtils.findMax(employees, Comparator.comparingLong(Employee::getSalary));
     }
 
     /**
      * Finds the lowest paid employee.
+     * Delegates to generic CollectionUtils.findMin().
      * 
      * @param employees a collection of employees
      * @return the employee with lowest salary
      * @throws IllegalArgumentException if collection is empty
      */
     public static Employee findLowestPaid(Collection<Employee> employees) {
-        Objects.requireNonNull(employees, "employees cannot be null");
-        return employees.stream()
-                        .min(Comparator.comparingLong(Employee::getSalary))
-                        .orElseThrow(() -> new IllegalArgumentException("employees collection cannot be empty"));
+        return CollectionUtils.findMin(employees, Comparator.comparingLong(Employee::getSalary));
     }
 
     /**
@@ -76,14 +73,13 @@ public final class EmployeeUtils {
 
     /**
      * Groups employees by position.
+     * Delegates to generic CollectionUtils.groupBy().
      * 
      * @param employees a collection of employees
      * @return map with position as key and employee list as value
      */
     public static Map<String, List<Employee>> groupByPosition(Collection<Employee> employees) {
-        Objects.requireNonNull(employees, "employees cannot be null");
-        return employees.stream()
-                        .collect(Collectors.groupingBy(Employee::getPosition));
+        return CollectionUtils.groupBy(employees, Employee::getPosition);
     }
 
     /**
@@ -101,58 +97,52 @@ public final class EmployeeUtils {
 
     /**
      * Partitions employees by salary threshold.
+     * Delegates to generic CollectionUtils.partition().
      * 
      * @param employees a collection of employees
      * @param salaryThreshold the salary threshold
      * @return map with Boolean (higher/lower) as key and employee list as value
      */
     public static Map<Boolean, List<Employee>> partitionBySalary(Collection<Employee> employees, long salaryThreshold) {
-        Objects.requireNonNull(employees, "employees cannot be null");
-        return employees.stream()
-                        .collect(Collectors.partitioningBy(e -> e.getSalary() > salaryThreshold));
+        return CollectionUtils.partition(employees, e -> e.getSalary() > salaryThreshold);
     }
 
     /**
      * Sorts employees by salary in ascending order.
+     * Delegates to generic CollectionUtils.sortAscending().
      * 
      * @param employees a collection of employees
      * @return sorted list by salary
      */
     public static List<Employee> sortBySalaryAscending(Collection<Employee> employees) {
-        Objects.requireNonNull(employees, "employees cannot be null");
-        return employees.stream()
-                        .sorted(Comparator.comparingLong(Employee::getSalary))
-                        .collect(Collectors.toList());
+        return CollectionUtils.sortAscending(employees, Comparator.comparingLong(Employee::getSalary));
     }
 
     /**
      * Sorts employees by salary in descending order.
+     * Delegates to generic CollectionUtils.sortDescending().
      * 
      * @param employees a collection of employees
      * @return sorted list by salary descending
      */
     public static List<Employee> sortBySalaryDescending(Collection<Employee> employees) {
-        Objects.requireNonNull(employees, "employees cannot be null");
-        return employees.stream()
-                        .sorted(Comparator.comparingLong(Employee::getSalary).reversed())
-                        .collect(Collectors.toList());
+        return CollectionUtils.sortDescending(employees, Comparator.comparingLong(Employee::getSalary));
     }
 
     /**
      * Sorts employees by name.
+     * Delegates to generic CollectionUtils.sortAscending().
      * 
      * @param employees a collection of employees
      * @return sorted list by name
      */
     public static List<Employee> sortByName(Collection<Employee> employees) {
-        Objects.requireNonNull(employees, "employees cannot be null");
-        return employees.stream()
-                        .sorted(Comparator.comparing(Employee::getName))
-                        .collect(Collectors.toList());
+        return CollectionUtils.sortAscending(employees, Comparator.comparing(Employee::getName));
     }
 
     /**
      * Filters employees by minimum salary.
+     * Delegates to generic CollectionUtils.filterByMinValue().
      * 
      * @param employees a collection of employees
      * @param minSalary the minimum salary threshold
@@ -167,6 +157,7 @@ public final class EmployeeUtils {
 
     /**
      * Filters employees by maximum salary.
+     * Delegates to generic CollectionUtils.filterByMaxValue().
      * 
      * @param employees a collection of employees
      * @param maxSalary the maximum salary threshold
@@ -196,14 +187,13 @@ public final class EmployeeUtils {
 
     /**
      * Extracts employee names.
+     * Delegates to generic CollectionUtils.map().
      * 
      * @param employees a collection of employees
      * @return list of names
      */
     public static List<String> extractNames(Collection<Employee> employees) {
-        Objects.requireNonNull(employees, "employees cannot be null");
-        return employees.stream()
-                        .map(Employee::getName)
-                        .collect(Collectors.toList());
+        return CollectionUtils.map(employees, Employee::getName);
     }
 }
+
