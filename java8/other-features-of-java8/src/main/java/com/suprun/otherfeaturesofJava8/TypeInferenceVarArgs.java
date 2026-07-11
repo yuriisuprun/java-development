@@ -6,6 +6,7 @@ import java.util.List;
 /**
  * Demonstrates type inference and variable arguments (var-args) in Java 8.
  * Java 8 improves type inference for generic types and lambda expressions.
+ * This class showcases practical var-args usage patterns with proper type inference.
  */
 public class TypeInferenceVarArgs {
 
@@ -21,9 +22,10 @@ public class TypeInferenceVarArgs {
 
     /**
      * Variable arguments for generic types.
+     * Demonstrates type inference with generic varargs.
      *
      * @param items variable number of items
-     * @param <T>   the type of items
+     * @param <T>   the type of items (inferred from arguments)
      * @return list of the provided items
      */
     @SafeVarargs
@@ -32,32 +34,28 @@ public class TypeInferenceVarArgs {
     }
 
     /**
-     * Variable arguments with mixed types - demonstrates unsafe varargs.
-     * Note: This is marked as unsafe because we're mixing types.
+     * Variable arguments with mixed types - demonstrates varargs with Object types.
+     * Type inference works across different object types.
      *
      * @param objects variable number of objects
      * @return string representation of all objects
      */
     public String varArgsObjects(Object... objects) {
-        StringBuilder sb = new StringBuilder();
-        for (Object obj : objects) {
-            sb.append(obj).append(" ");
-        }
-        return sb.toString().trim();
+        return String.join(" ", 
+            Arrays.stream(objects)
+                  .map(Object::toString)
+                  .toArray(String[]::new));
     }
 
     /**
-     * Calculate sum of variable number of integers.
+     * Calculate sum of variable number of integers using stream.
+     * Demonstrates functional approach with varargs.
      *
      * @param numbers variable number of integers
      * @return sum of all numbers
      */
     public int sumVarArgs(int... numbers) {
-        int sum = 0;
-        for (int num : numbers) {
-            sum += num;
-        }
-        return sum;
+        return Arrays.stream(numbers).sum();
     }
 
     /**
@@ -68,14 +66,8 @@ public class TypeInferenceVarArgs {
      * @throws IllegalArgumentException if no numbers provided
      */
     public int productVarArgs(int... numbers) {
-        if (numbers.length == 0) {
-            throw new IllegalArgumentException("At least one number is required");
-        }
-        int product = 1;
-        for (int num : numbers) {
-            product *= num;
-        }
-        return product;
+        VarArgsValidator.requireNonEmpty(numbers, "At least one number is required");
+        return Arrays.stream(numbers).reduce(1, (a, b) -> a * b);
     }
 
     /**
@@ -86,9 +78,7 @@ public class TypeInferenceVarArgs {
      * @throws IllegalArgumentException if no numbers provided
      */
     public int maxVarArgs(int... numbers) {
-        if (numbers.length == 0) {
-            throw new IllegalArgumentException("At least one number is required");
-        }
+        VarArgsValidator.requireNonEmpty(numbers, "At least one number is required");
         return Arrays.stream(numbers).max().orElseThrow();
     }
 
@@ -100,9 +90,7 @@ public class TypeInferenceVarArgs {
      * @throws IllegalArgumentException if no numbers provided
      */
     public int minVarArgs(int... numbers) {
-        if (numbers.length == 0) {
-            throw new IllegalArgumentException("At least one number is required");
-        }
+        VarArgsValidator.requireNonEmpty(numbers, "At least one number is required");
         return Arrays.stream(numbers).min().orElseThrow();
     }
 
@@ -146,6 +134,7 @@ public class TypeInferenceVarArgs {
 
     /**
      * Type inference with complex generic types.
+     * Demonstrates bounded type parameter inference.
      *
      * @param values variable number of comparable values
      * @param <T>    the type extending Comparable (inferred)
@@ -166,6 +155,7 @@ public class TypeInferenceVarArgs {
 
     /**
      * Flatten multiple arrays using var-args.
+     * Optimized with System.arraycopy for better performance.
      *
      * @param arrays variable number of integer arrays
      * @return single flattened array
@@ -179,16 +169,15 @@ public class TypeInferenceVarArgs {
         int[] result = new int[totalLength];
         int index = 0;
         for (int[] array : arrays) {
-            for (int value : array) {
-                result[index++] = value;
-            }
+            System.arraycopy(array, 0, result, index, array.length);
+            index += array.length;
         }
         return result;
     }
 
     /**
      * Type inference in generics - demonstrating how Java 8 improves type inference.
-     * Without explicit type parameters.
+     * Without explicit type parameters, the compiler infers them from context.
      *
      * @param first  first item
      * @param second second item
@@ -201,13 +190,14 @@ public class TypeInferenceVarArgs {
 
     /**
      * Simple Pair class for demonstration.
+     * Showcases generic type inference with a simple data holder.
      *
      * @param <A> first type
      * @param <B> second type
      */
     public static class Pair<A, B> {
-        private A first;
-        private B second;
+        private final A first;
+        private final B second;
 
         public Pair(A first, B second) {
             this.first = first;
@@ -225,6 +215,19 @@ public class TypeInferenceVarArgs {
         @Override
         public String toString() {
             return "Pair{" + first + ", " + second + "}";
+        }
+
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) return true;
+            if (!(o instanceof Pair)) return false;
+            Pair<?, ?> pair = (Pair<?, ?>) o;
+            return first.equals(pair.first) && second.equals(pair.second);
+        }
+
+        @Override
+        public int hashCode() {
+            return 31 * first.hashCode() + second.hashCode();
         }
     }
 }

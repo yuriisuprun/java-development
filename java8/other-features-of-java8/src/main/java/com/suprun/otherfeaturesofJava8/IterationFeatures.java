@@ -2,14 +2,15 @@ package com.suprun.otherfeaturesofJava8;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * Demonstrates iteration features in Java 8.
- * Includes forEach, forEach on collections and maps, Iterable enhancements.
+ * Includes forEach method on collections, functional iteration patterns,
+ * and modern Stream API usage for data transformation.
  */
 public class IterationFeatures {
 
@@ -46,6 +47,7 @@ public class IterationFeatures {
 
     /**
      * Iterate over list with index information using traditional loop.
+     * Index-based iteration for cases where position matters.
      *
      * @param items the list of items
      * @return list of formatted strings with index and value
@@ -61,6 +63,7 @@ public class IterationFeatures {
 
     /**
      * Iterate over map entries using forEach.
+     * Demonstrates forEach with BiConsumer for key-value pairs.
      *
      * @param map the map to iterate
      * @param <K> the type of keys
@@ -94,63 +97,60 @@ public class IterationFeatures {
 
     /**
      * Create a list containing formatted strings from items.
+     * Demonstrates stream-based transformation.
      *
      * @param items the items to format
      * @param <T>   the type of items
      * @return list of formatted strings
      */
     public <T> List<String> formatListItems(List<T> items) {
-        List<String> formatted = new ArrayList<>();
-        items.forEach(item -> formatted.add(item.toString().toUpperCase()));
-        return formatted;
+        return items.stream()
+                    .map(item -> item.toString().toUpperCase())
+                    .collect(Collectors.toList());
     }
 
     /**
      * Count total characters in all strings in a list.
+     * Uses Stream API for functional aggregation instead of side effects.
      *
      * @param strings the list of strings
      * @return total character count
      */
     public int countTotalCharacters(List<String> strings) {
-        java.util.concurrent.atomic.AtomicInteger count = new java.util.concurrent.atomic.AtomicInteger(0);
-        strings.forEach(s -> count.addAndGet(s.length()));
-        return count.get();
+        return strings.stream()
+                      .mapToInt(String::length)
+                      .sum();
     }
 
     /**
-     * Filter and process list items in a single forEach.
+     * Filter and process list items.
+     * Demonstrates stream-based filtering.
      *
      * @param numbers the list of numbers
      * @param threshold the threshold value
      * @return list of numbers greater than threshold
      */
     public List<Integer> filterAndCollect(List<Integer> numbers, int threshold) {
-        List<Integer> result = new ArrayList<>();
-        numbers.forEach(n -> {
-            if (n > threshold) {
-                result.add(n);
-            }
-        });
-        return result;
+        return numbers.stream()
+                      .filter(n -> n > threshold)
+                      .collect(Collectors.toList());
     }
 
     /**
-     * Group items by their string length using forEach and map.
+     * Group items by their string length using Stream.groupingBy.
+     * More efficient and functional than forEach with side effects.
      *
      * @param strings the list of strings
      * @return map with string length as key and list of strings as value
      */
     public Map<Integer, List<String>> groupByLength(List<String> strings) {
-        Map<Integer, List<String>> grouped = new HashMap<>();
-        strings.forEach(s -> {
-            int length = s.length();
-            grouped.computeIfAbsent(length, k -> new ArrayList<>()).add(s);
-        });
-        return grouped;
+        return strings.stream()
+                      .collect(Collectors.groupingBy(String::length));
     }
 
     /**
      * Remove items matching a predicate using removeIf.
+     * In-place removal using Iterable.removeIf method.
      *
      * @param items     the list of items
      * @param predicate the predicate to match items for removal
@@ -162,6 +162,7 @@ public class IterationFeatures {
 
     /**
      * Replace all items matching an operation.
+     * Uses replaceAll with UnaryOperator for in-place transformation.
      *
      * @param numbers the list of numbers
      * @param mapper  the function to map each element
@@ -172,6 +173,7 @@ public class IterationFeatures {
 
     /**
      * Iterate using Iterator with remove capability.
+     * Traditional iterator approach for cases where removal is needed.
      *
      * @param items the list of items
      * @param <T>   the type of items
@@ -188,7 +190,8 @@ public class IterationFeatures {
     }
 
     /**
-     * Demonstrate spliterator usage (Java 8 parallel processing support).
+     * Count items using Stream API.
+     * Modern approach to counting items in a collection.
      *
      * @param items the list of items
      * @param <T>   the type of items
@@ -199,19 +202,20 @@ public class IterationFeatures {
     }
 
     /**
-     * Accumulate values using forEach with side effects.
+     * Accumulate values using Stream.reduce.
+     * Functional approach to sum calculation without side effects.
      *
      * @param numbers the list of numbers
      * @return sum of all numbers
      */
     public int sumUsingForEach(List<Integer> numbers) {
-        java.util.concurrent.atomic.AtomicInteger sum = new java.util.concurrent.atomic.AtomicInteger(0);
-        numbers.forEach(sum::addAndGet);
-        return sum.get();
+        return numbers.stream()
+                      .reduce(0, Integer::sum);
     }
 
     /**
      * Conditional iteration - execute action only for matching items.
+     * Combines filtering and action execution in a functional way.
      *
      * @param items     the list of items
      * @param predicate condition to match
@@ -220,10 +224,8 @@ public class IterationFeatures {
      */
     public <T> void conditionalForEach(List<T> items, java.util.function.Predicate<T> predicate,
                                         java.util.function.Consumer<T> action) {
-        items.forEach(item -> {
-            if (predicate.test(item)) {
-                action.accept(item);
-            }
-        });
+        items.stream()
+             .filter(predicate)
+             .forEach(action);
     }
 }

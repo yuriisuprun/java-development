@@ -2,13 +2,23 @@ package com.suprun.otherfeaturesofJava8;
 
 /**
  * Interface demonstrating default and static methods in Java 8.
- * Default methods allow interfaces to provide method implementations.
- * Static methods allow utility methods at the interface level.
+ * 
+ * Key features:
+ * - Default methods: Allow interfaces to provide method implementations
+ * - Static methods: Provide utility methods at the interface level
+ * - Abstract methods: Define contracts that implementations must fulfill
+ * 
+ * This interface showcases:
+ * 1. Contract definition through abstract method
+ * 2. Reusable implementations via default methods
+ * 3. Utility functions through static methods
+ * 4. How implementations can override defaults selectively
  */
 public interface Calculator {
 
     /**
      * Abstract method - must be implemented by classes.
+     * Each implementation defines its own calculation strategy.
      *
      * @param a first number
      * @param b second number
@@ -18,7 +28,8 @@ public interface Calculator {
 
     /**
      * Default method - provides default implementation.
-     * Can be overridden by implementing classes.
+     * Can be overridden by implementing classes, or used as-is.
+     * Demonstrates how interfaces can now provide concrete behavior.
      *
      * @param a first number
      * @param b second number
@@ -30,6 +41,7 @@ public interface Calculator {
 
     /**
      * Default method for subtraction.
+     * Shared implementation across all Calculator implementations.
      *
      * @param a first number
      * @param b second number
@@ -52,6 +64,7 @@ public interface Calculator {
 
     /**
      * Default method for division with error handling.
+     * Demonstrates how default methods can include complex logic and validation.
      *
      * @param a dividend
      * @param b divisor
@@ -68,6 +81,7 @@ public interface Calculator {
     /**
      * Static method - utility method at interface level.
      * Cannot be overridden, belongs to the interface itself.
+     * Static methods are useful for utility operations.
      *
      * @param a first number
      * @param b second number
@@ -79,6 +93,7 @@ public interface Calculator {
 
     /**
      * Static method for power calculation.
+     * Provides mathematical utility without requiring an instance.
      *
      * @param base base number
      * @param exponent exponent
