@@ -8,11 +8,12 @@ import java.net.http.HttpResponse;
 import java.util.Objects;
 
 /**
- * Thin wrapper around {@link HttpClient} for GET requests.
+ * Default implementation of HTTP client for making GET requests using Java's built-in {@link HttpClient}.
+ * This class implements the {@link HttpClientInterface} for dependency injection and testability.
  *
  * @author Yurii_Suprun
  */
-public final class HttpGetClient {
+public final class HttpGetClient implements HttpClientInterface {
 
     private final HttpClient httpClient;
 
@@ -28,19 +29,23 @@ public final class HttpGetClient {
      * Sends a GET request to the given URL.
      *
      * @param url target URL
-     * @return status code and response body
-     * @throws IOException          if the request fails
-     * @throws InterruptedException if the request is interrupted
+     * @return HTTP result containing status code and response body
+     * @throws HttpClientException if the request fails
      */
-    public HttpResult get(String url) throws IOException, InterruptedException {
+    @Override
+    public HttpResult get(String url) throws HttpClientException {
         Objects.requireNonNull(url, "url must not be null");
 
-        HttpRequest request = HttpRequest.newBuilder()
-                .uri(URI.create(url))
-                .GET()
-                .build();
+        try {
+            HttpRequest request = HttpRequest.newBuilder()
+                    .uri(URI.create(url))
+                    .GET()
+                    .build();
 
-        HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
-        return new HttpResult(response.statusCode(), response.body());
+            HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
+            return new HttpResult(response.statusCode(), response.body());
+        } catch (IOException | InterruptedException e) {
+            throw new HttpClientException("Failed to execute GET request to: " + url, e);
+        }
     }
 }

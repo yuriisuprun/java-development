@@ -1,40 +1,34 @@
 package com.suprun.web;
 
-import java.io.IOException;
 import java.util.Objects;
 
 /**
  * Client for NASA's Astronomy Picture of the Day (APOD) API.
+ * Extends {@link ApiClient} to provide specialized access to the APOD endpoint.
  *
  * @author Yurii_Suprun
  */
-public final class NasaApodClient {
+public final class NasaApodClient extends ApiClient {
 
     static final String DEFAULT_BASE_URL = "https://api.nasa.gov/planetary/apod";
     static final String DEMO_API_KEY = "DEMO_KEY";
 
-    private final HttpGetClient httpClient;
-    private final String apiKey;
-    private final String baseUrl;
-
     public NasaApodClient() {
-        this(new HttpGetClient(), DEMO_API_KEY, DEFAULT_BASE_URL);
+        this(new HttpGetClient(), DEFAULT_BASE_URL, DEMO_API_KEY);
     }
 
-    NasaApodClient(HttpGetClient httpClient, String apiKey, String baseUrl) {
-        this.httpClient = Objects.requireNonNull(httpClient, "httpClient must not be null");
-        this.apiKey = Objects.requireNonNull(apiKey, "apiKey must not be null");
-        this.baseUrl = Objects.requireNonNull(baseUrl, "baseUrl must not be null");
+    NasaApodClient(HttpClientInterface httpClient, String baseUrl, String apiKey) {
+        super(httpClient, baseUrl, apiKey);
     }
 
     /**
      * Fetches today's APOD entry from the NASA API.
      *
-     * @return HTTP status code and JSON response body
-     * @throws IOException          if the request fails
-     * @throws InterruptedException if the request is interrupted
+     * @return HTTP result containing status code and JSON response body
+     * @throws HttpClientException if the request fails
      */
-    public HttpResult fetchApod() throws IOException, InterruptedException {
-        return httpClient.get(baseUrl + "?api_key=" + apiKey);
+    public HttpResult fetchApod() throws HttpClientException {
+        String url = buildUrl("", "api_key=" + apiKey);
+        return executeGet(url);
     }
 }

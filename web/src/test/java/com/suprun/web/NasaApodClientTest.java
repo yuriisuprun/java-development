@@ -26,7 +26,7 @@ class NasaApodClientTest {
         try {
             int port = server.getAddress().getPort();
             String baseUrl = "http://localhost:" + port + "/planetary/apod";
-            HttpResult result = new NasaApodClient(new HttpGetClient(), NasaApodClient.DEMO_API_KEY, baseUrl)
+            HttpResult result = new NasaApodClient(new HttpGetClient(), baseUrl, NasaApodClient.DEMO_API_KEY)
                     .fetchApod();
 
             assertThat(result.statusCode()).isEqualTo(200);

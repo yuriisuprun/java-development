@@ -39,4 +39,11 @@ class HttpGetClientTest {
                 .isInstanceOf(NullPointerException.class)
                 .hasMessage("url must not be null");
     }
+
+    @Test
+    void throwsHttpClientExceptionOnFailure() {
+        HttpGetClient client = new HttpGetClient();
+        assertThatThrownBy(() -> client.get("http://invalid-url-that-does-not-exist.local"))
+                .isInstanceOf(HttpClientException.class);
+    }
 }
