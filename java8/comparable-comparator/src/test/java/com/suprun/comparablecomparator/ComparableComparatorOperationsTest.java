@@ -322,4 +322,187 @@ class ComparableComparatorOperationsTest {
 
         assertNull(min);
     }
+
+    @Test
+    @DisplayName("Sort single element list")
+    void testSortSingleElement() {
+        List<Integer> single = Arrays.asList(42);
+        List<Integer> sorted = operations.sortNatural(single);
+
+        assertEquals(1, sorted.size());
+        assertEquals(42, sorted.get(0));
+    }
+
+    @Test
+    @DisplayName("Sort already sorted list")
+    void testSortAlreadySorted() {
+        List<Integer> sorted = Arrays.asList(1, 2, 3, 4, 5);
+        List<Integer> result = operations.sortNatural(sorted);
+
+        assertEquals(Arrays.asList(1, 2, 3, 4, 5), result);
+    }
+
+    @Test
+    @DisplayName("Sort list with duplicates")
+    void testSortWithDuplicates() {
+        List<Integer> numbers = Arrays.asList(3, 1, 4, 1, 5, 9, 2, 6, 5);
+        List<Integer> sorted = operations.sortNatural(numbers);
+
+        assertEquals(Arrays.asList(1, 1, 2, 3, 4, 5, 5, 6, 9), sorted);
+    }
+
+    @Test
+    @DisplayName("Sort people with same age but different names")
+    void testSortPeopleNameComparison() {
+        List<Person> samAgePeople = Arrays.asList(
+                new Person("Zoe", 30, 75000),
+                new Person("Alice", 30, 80000),
+                new Person("Mike", 30, 70000)
+        );
+
+        List<Person> sorted = operations.sortPeopleByName(samAgePeople);
+
+        assertEquals("Alice", sorted.get(0).getName());
+        assertEquals("Mike", sorted.get(1).getName());
+        assertEquals("Zoe", sorted.get(2).getName());
+    }
+
+    @Test
+    @DisplayName("Sort products with same price")
+    void testSortProductsSamePrice() {
+        List<Product> samePriceProducts = Arrays.asList(
+                new Product("Zebra", 100.0, 5),
+                new Product("Apple", 100.0, 20),
+                new Product("Banana", 100.0, 15)
+        );
+
+        List<Product> sorted = operations.sortProductsByName(samePriceProducts);
+
+        assertEquals("Apple", sorted.get(0).getName());
+        assertEquals("Banana", sorted.get(1).getName());
+        assertEquals("Zebra", sorted.get(2).getName());
+    }
+
+    @Test
+    @DisplayName("Find max with negative numbers")
+    void testFindMaxNegative() {
+        List<Integer> numbers = Arrays.asList(-5, -2, -8, -1, -9, -3);
+        Integer max = operations.findMax(numbers);
+
+        assertEquals(-1, max);
+    }
+
+    @Test
+    @DisplayName("Find min with mixed positive and negative")
+    void testFindMinMixed() {
+        List<Integer> numbers = Arrays.asList(5, -2, 8, -1, 9, 3);
+        Integer min = operations.findMin(numbers);
+
+        assertEquals(-2, min);
+    }
+    @Test
+    @DisplayName("Sort strings case-sensitive")
+    void testSortStringsCaseSensitive() {
+        List<String> strings = Arrays.asList("zebra", "Apple", "banana", "MANGO");
+        List<String> sorted = strings.stream()
+                .sorted()
+                .collect(java.util.stream.Collectors.toList());
+
+        // Capital letters come before lowercase in ASCII order
+        assertEquals("Apple", sorted.get(0));
+        assertEquals("MANGO", sorted.get(1));
+        assertEquals("banana", sorted.get(2));
+        assertEquals("zebra", sorted.get(3));
+    }
+
+    @Test
+    @DisplayName("Sort products by price then quantity")
+    void testSortProductsComplex() {
+        List<Product> testProducts = Arrays.asList(
+                new Product("A", 100.0, 50),
+                new Product("B", 100.0, 30),
+                new Product("C", 50.0, 100)
+        );
+
+        List<Product> sorted = operations.sortProductsByPrice(testProducts);
+
+        // Should be sorted by price ascending
+        assertEquals("C", sorted.get(0).getName()); // 50.0
+        assertEquals("A", sorted.get(1).getName()); // 100.0
+        assertEquals("B", sorted.get(2).getName()); // 100.0
+    }
+
+    @Test
+    @DisplayName("Find oldest person with multiple same age")
+    void testFindOldestPersonTied() {
+        List<Person> testPeople = Arrays.asList(
+                new Person("Alice", 35, 75000),
+                new Person("Bob", 35, 65000),
+                new Person("Charlie", 30, 85000)
+        );
+
+        Person oldest = operations.findOldestPerson(testPeople);
+        assertEquals(35, oldest.getAge());
+        // Should return first one found
+        assertEquals("Alice", oldest.getName());
+    }
+
+    @Test
+    @DisplayName("Find cheapest product with inventory")
+    void testFindCheapestWithHighInventory() {
+        List<Product> testProducts = Arrays.asList(
+                new Product("A", 50.0, 100),
+                new Product("B", 25.0, 5),
+                new Product("C", 75.0, 50)
+        );
+
+        Product cheapest = operations.findCheapestProduct(testProducts);
+        assertEquals("B", cheapest.getName());
+        assertEquals(25.0, cheapest.getPrice());
+    }
+
+    @Test
+    @DisplayName("Check if list with one element is sorted")
+    void testIsSortedSingleElement() {
+        List<Integer> single = Arrays.asList(42);
+        assertTrue(operations.isSorted(single));
+    }
+
+    @Test
+    @DisplayName("Check empty list is sorted")
+    void testIsSortedEmpty() {
+        List<Integer> empty = new ArrayList<>();
+        assertTrue(operations.isSorted(empty));
+    }
+
+    @Test
+    @DisplayName("Person equality and compareTo consistency")
+    void testPersonEqualityConsistency() {
+        Person p1 = new Person("Alice", 30, 75000);
+        Person p2 = new Person("Alice", 30, 75000);
+        Person p3 = new Person("Alice", 30, 80000);
+
+        assertEquals(0, p1.compareTo(p2)); // Same age
+        assertTrue(p1.compareTo(p3) <= 0); // Same age, different salary doesn't matter for age comparison
+    }
+
+    @Test
+    @DisplayName("Sort list of strings with special characters")
+    void testSortStringsWithSpecialChars() {
+        List<String> strings = Arrays.asList("zebra!", "apple@", "Banana#", "_mouse");
+        List<String> sorted = operations.sortStringsCaseInsensitive(strings);
+
+        assertNotNull(sorted);
+        assertEquals(4, sorted.size());
+    }
+
+    @Test
+    @DisplayName("Reverse sort large list")
+    void testSortNaturalReverseMany() {
+        List<Integer> numbers = Arrays.asList(50, 25, 75, 12, 88, 33, 100, 1);
+        List<Integer> sorted = operations.sortNaturalReverse(numbers);
+
+        assertEquals(100, sorted.get(0));
+        assertEquals(1, sorted.get(sorted.size() - 1));
+    }
 }

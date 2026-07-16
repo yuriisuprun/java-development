@@ -119,4 +119,113 @@ class LambdaExpressionExamplesTest {
         Integer result = LambdaExpressionExamples.chainedTransformationExample("-2");
         assertEquals(4, result); // (-2 * 3) + 10 = 4
     }
+
+    @Test
+    @DisplayName("Single-line lambda with empty string")
+    void testSingleLineLambdaEmptyString() {
+        String result = LambdaExpressionExamples.singleLineLambdaExample("");
+        assertEquals("", result);
+    }
+
+    @Test
+    @DisplayName("Single-line lambda with numbers")
+    void testSingleLineLambdaNumbers() {
+        String result = LambdaExpressionExamples.singleLineLambdaExample("123abc");
+        assertEquals("123ABC", result);
+    }
+
+    @Test
+    @DisplayName("Multi-line lambda with negative even number")
+    void testMultiLineLambdaNegativeEven() {
+        String result = LambdaExpressionExamples.multiLineLambdaExample(-4);
+        assertEquals("Even", result);
+    }
+
+    @Test
+    @DisplayName("Multi-line lambda with negative odd number")
+    void testMultiLineLambdaNegativeOdd() {
+        String result = LambdaExpressionExamples.multiLineLambdaExample(-3);
+        assertEquals("Odd", result);
+    }
+
+    @Test
+    @DisplayName("Method reference with negative number")
+    void testMethodReferenceNegative() {
+        Integer result = LambdaExpressionExamples.methodReferenceExample("-50");
+        assertEquals(-50, result);
+    }
+
+    @Test
+    @DisplayName("Method reference with zero")
+    void testMethodReferenceZero() {
+        Integer result = LambdaExpressionExamples.methodReferenceExample("0");
+        assertEquals(0, result);
+    }
+
+    @Test
+    @DisplayName("Composed function edge case with one")
+    void testComposeFunctionOne() {
+        Integer result = LambdaExpressionExamples.composeFunctionExample("1");
+        assertEquals(1, result);
+    }
+
+    @Test
+    @DisplayName("Compose reverse with negative number")
+    void testComposeReverseNegative() {
+        String result = LambdaExpressionExamples.composeReverseExample(-5);
+        assertEquals("Result: 25", result);
+    }
+
+    @Test
+    @DisplayName("Chained transformation with large input")
+    void testChainedTransformationLarge() {
+        Integer result = LambdaExpressionExamples.chainedTransformationExample("100");
+        assertEquals(310, result); // (100 * 3) + 10 = 310
+    }
+
+    @Test
+    @DisplayName("Multiple lambda applications in sequence")
+    void testMultipleLambdaApplications() {
+        String intermediate = LambdaExpressionExamples.singleLineLambdaExample("test");
+        assertEquals("TEST", intermediate);
+        
+        String again = LambdaExpressionExamples.singleLineLambdaExample(intermediate);
+        assertEquals("TEST", again);
+    }
+
+    @Test
+    @DisplayName("Compose function with boundary value")
+    void testComposeFunctionBoundary() {
+        Integer result = LambdaExpressionExamples.composeFunctionExample("10");
+        assertEquals(100, result);
+    }
+
+    @Test
+    @DisplayName("Method reference with decimal string should throw exception")
+    void testMethodReferenceInvalidNumber() {
+        org.junit.jupiter.api.Assertions.assertThrows(NumberFormatException.class,
+                () -> LambdaExpressionExamples.methodReferenceExample("12.5"));
+    }
+
+    @Test
+    @DisplayName("Method reference with non-numeric string should throw exception")
+    void testMethodReferenceNonNumeric() {
+        org.junit.jupiter.api.Assertions.assertThrows(NumberFormatException.class,
+                () -> LambdaExpressionExamples.methodReferenceExample("abc"));
+    }
+
+    @Test
+    @DisplayName("Lambda with string containing spaces")
+    void testSingleLineLambdaWithSpaces() {
+        String result = LambdaExpressionExamples.singleLineLambdaExample("hello world");
+        assertEquals("HELLO WORLD", result);
+    }
+
+    @Test
+    @DisplayName("Chained transformation consistency")
+    void testChainedTransformationConsistency() {
+        Integer result1 = LambdaExpressionExamples.chainedTransformationExample("5");
+        Integer result2 = LambdaExpressionExamples.chainedTransformationExample("5");
+        assertEquals(result1, result2);
+    }
 }

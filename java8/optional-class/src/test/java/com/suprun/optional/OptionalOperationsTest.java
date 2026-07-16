@@ -201,4 +201,136 @@ class OptionalOperationsTest {
         Optional<String> otherEmptyResult = optionalOperations.combineOptionals(emptyOpt, opt2);
         assertTrue(otherEmptyResult.isEmpty());
     }
+
+    @Test
+    void testOrElseThrowWithValidValue() {
+        Optional<Integer> optional = Optional.of(42);
+        int result = optional.orElseThrow(() -> new IllegalArgumentException("Value not found"));
+        assertEquals(42, result);
+    }
+
+    @Test
+    void testOrElseThrowWithEmptyValue() {
+        Optional<Integer> optional = Optional.empty();
+        assertThrows(IllegalArgumentException.class,
+                () -> optional.orElseThrow(() -> new IllegalArgumentException("Value not found")));
+    }
+
+    @Test
+    void testMultipleFiltersChained() {
+        Optional<String> optional = Optional.of("HelloWorld");
+        Optional<String> result = optional
+                .filter(s -> s.length() > 5)
+                .filter(s -> s.contains("World"))
+                .filter(s -> !s.isEmpty());
+
+        assertTrue(result.isPresent());
+        assertEquals("HelloWorld", result.get());
+    }
+
+    @Test
+    void testMapChained() {
+        Optional<String> optional = Optional.of("123");
+        Optional<Integer> result = optional
+                .map(Integer::parseInt)
+                .map(n -> n * 2);
+
+        assertTrue(result.isPresent());
+        assertEquals(246, result.get());
+    }
+
+    @Test
+    void testFlatMapChained() {
+        Optional<String> optional = Optional.of("5");
+        Optional<Integer> result = optional
+                .flatMap(s -> {
+                    try {
+                        return Optional.of(Integer.parseInt(s) * 10);
+                    } catch (NumberFormatException e) {
+                        return Optional.empty();
+                    }
+                })
+                .flatMap(n -> Optional.of(n + 5));
+
+        assertTrue(result.isPresent());
+        assertEquals(55, result.get());
+    }
+
+    @Test
+    void testOrElseChainedOptionals() {
+        Optional<String> opt1 = Optional.empty();
+        Optional<String> opt2 = Optional.empty();
+        Optional<String> opt3 = Optional.of("found");
+
+        String result = opt1.or(() -> opt2).or(() -> opt3).orElse("default");
+        assertEquals("found", result);
+    }
+
+    @Test
+    void testStreamFromOptional() {
+        Optional<String> optional = Optional.of("test");
+        List<String> result = optional.stream().collect(java.util.stream.Collectors.toList());
+
+        assertEquals(1, result.size());
+        assertEquals("test", result.get(0));
+    }
+
+    @Test
+    void testStreamFromOptionalEmpty() {
+        Optional<String> optional = Optional.empty();
+        List<String> result = optional.stream().collect(java.util.stream.Collectors.toList());
+
+        assertEquals(0, result.size());
+    }
+
+    @Test
+    void testComplexOptionalUserScenario() {
+        List<OptionalOperations.User> users = Arrays.asList(
+                new OptionalOperations.User("Alice", Optional.of("alice@example.com"), Optional.of(25)),
+                new OptionalOperations.User("Bob", Optional.of("bob@example.com"), Optional.of(17)),
+                new OptionalOperations.User("Charlie", Optional.empty(), Optional.of(35))
+        );
+
+        String result = optionalOperations.findUserByName(users, "Bob")
+                .filter(u -> u.getAge().map(age -> age >= 18).orElse(false))
+                .flatMap(OptionalOperations.User::getEmail)
+                .orElse("user is not an adult");
+
+        assertEquals("user is not an adult", result);
+    }
+
+    @Test
+    void testOptionalOfNullableWithStream() {
+        List<String> values = Arrays.asList("apple", null, "banana", null, "cherry");
+        List<String> result = values.stream()
+                .map(Optional::ofNullable)
+                .filter(Optional::isPresent)
+                .map(Optional::get)
+                .collect(java.util.stream.Collectors.toList());
+
+        assertEquals(3, result.size());
+        assertEquals(Arrays.asList("apple", "banana", "cherry"), result);
+    }
+
+    @Test
+    void testOptionalWithPredicate() {
+        Optional<Integer> optional = Optional.of(15);
+        Optional<Integer> evenResult = optional.filter(n -> n % 2 == 0);
+        Optional<Integer> oddResult = optional.filter(n -> n % 2 != 0);
+
+        assertTrue(evenResult.isEmpty());
+        assertTrue(oddResult.isPresent());
+        assertEquals(15, oddResult.get());
+    }
+
+    @Test
+    void testOptionalCompositionWithMultipleTransformations() {
+        Optional<String> result = Optional.of(100)
+                .map(n -> n * 2)
+                .map(n -> n + 50)
+                .map(Object::toString);
+
+        assertTrue(result.isPresent());
+        assertEquals("250", result.get());
+    }
 }
