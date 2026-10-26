@@ -2,20 +2,6 @@ package com.suprun.coding;
 
 import java.util.*;
 
-/**
- * Facade class for coding practice operations.
- * This class delegates to specialized operation classes for better separation of concerns.
- * Original monolithic methods have been refactored into domain-specific classes.
- *
- * @deprecated Use specific operation classes instead:
- * - StringOperations for string manipulation
- * - NumberOperations for number operations
- * - ListOperations for list/collection operations
- * - ArrayTasks for array operations
- *
- * @author Yurii_Suprun
- */
-
 public class Coding {
 
     private static final StringOperations stringOps = new StringOperations();
