@@ -81,42 +81,34 @@ public class Coding {
     }
 
     // Deprecated delegation methods for backward compatibility
-   
     public String reverseStringWithConcatenation(String string) {
         return stringOps.reverseStringWithConcatenation(string);
     }
 
-   
     public String reverseStringWithStringBuilder(String string) {
         return stringOps.reverseStringWithStringBuilder(string);
     }
 
-   
     public List<Integer> filterEvenNumbers(List<Integer> list) {
         return listOps.filterEvenNumbers(list);
     }
 
-   
     public int maxNumber(List<Integer> list) {
         return numberOps.maxNumber(list);
     }
 
-   
     public int getDuplicate(List<Integer> numbers) {
         return listOps.getDuplicate(numbers);
     }
 
-   
     public int getDuplicateWithMap(List<Integer> numbers) {
         return listOps.getDuplicateWithMap(numbers);
     }
 
-   
     public int getDuplicateUsingStreamApi(List<Integer> numbers) {
         return listOps.getDuplicateUsingStreamApi(numbers);
     }
 
-   
     public int getDuplicateWithArray(List<Integer> numbers) {
         return listOps.getDuplicateWithArray(numbers);
     }
