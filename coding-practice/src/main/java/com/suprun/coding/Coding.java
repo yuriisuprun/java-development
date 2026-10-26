@@ -157,32 +157,26 @@ public class Coding {
         return stringOps.removeCharAt(originalString, indexToRemove);
     }
 
-   
     public int lengthOfLongestSubstring(String str) {
         return stringOps.lengthOfLongestSubstring(str);
     }
 
-   
     public int[] toSum(int[] nums, int target) {
         return listOps.toSum(nums, target);
     }
 
-   
     public List<String> getSortedHashTags(List<String> tweets) {
         return stringOps.getSortedHashTags(tweets);
     }
 
-   
     public Set<String> filterUniqueHashtags() {
         return stringOps.filterUniqueHashtags();
     }
 
-   
     public void printFormattedStrings(String[] strings, int columns_number) {
         stringOps.printFormattedStrings(strings, columns_number);
     }
 
-   
     public int[] insertionSort(int[] array) {
         int n = array.length;
         for (int i = 1; i < n; i++) {
@@ -197,17 +191,14 @@ public class Coding {
         return array;
     }
 
-   
     public int[] bubbleSort(int[] array) {
         return ArrayTasks.bubbleSortArray(array);
     }
 
-   
     public int[] reverseArray(int[] numbers) {
         return ArrayTasks.reverseIntArray(numbers);
     }
 
-   
     public int findMinInArray(int[] numbers) {
         int min = numbers[0];
         for (int number : numbers) {
@@ -218,7 +209,6 @@ public class Coding {
         return min;
     }
 
-   
     public <T extends Comparable<T>> T findMinInArrayGenericComparable(T[] numbers) {
         T min = numbers[0];
         for (T number : numbers) {
@@ -229,7 +219,6 @@ public class Coding {
         return min;
     }
 
-   
     public <T> T findMinInArrayGenericComparator(T[] numbers, java.util.Comparator<T> comparator) {
         T min = numbers[0];
         for (T number : numbers) {
@@ -240,27 +229,22 @@ public class Coding {
         return min;
     }
 
-   
     public int findMissedNumber(int[] array) {
         return numberOps.findMissedNumber(array);
     }
 
-   
     public int findMissedNumberBySum(int[] array) {
         return numberOps.findMissedNumberBySum(array);
     }
 
-   
     public int[] sortOnesZeros(int[] array) {
         return numberOps.sortOnesZeros(array);
     }
 
-   
     public String reverseString(String string) {
         return stringOps.reverseString(string);
     }
 
-   
     public List<String> getSortedHashTagsOldStyle(List<String> tweets) {
         Map<String, Integer> hashtagCountMap = new HashMap<>();
 
@@ -285,16 +269,13 @@ public class Coding {
         return sortedHashtags;
     }
 
-   
     public static int[] mergeSorted(int[] arr1, int[] arr2) {
         return ListOperations.mergeSorted(arr1, arr2);
     }
-
    
     public static int countSum(int... integers) {
         return NumberOperations.countSum(integers);
     }
-
    
     public Map<String, Integer> returnPrefieldMap() {
         return Map.of("Good", 1, "Better", 2, "Nice", 3, "Really", 4, "Day", 5,
