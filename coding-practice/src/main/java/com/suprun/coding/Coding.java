@@ -15,7 +15,7 @@ import java.util.*;
  *
  * @author Yurii_Suprun
  */
-@Deprecated(since = "2.0", forRemoval = true)
+
 public class Coding {
 
     private static final StringOperations stringOps = new StringOperations();
@@ -81,127 +81,116 @@ public class Coding {
     }
 
     // Deprecated delegation methods for backward compatibility
-    @Deprecated(since = "2.0")
+   
     public String reverseStringWithConcatenation(String string) {
         return stringOps.reverseStringWithConcatenation(string);
     }
 
-    @Deprecated(since = "2.0")
+   
     public String reverseStringWithStringBuilder(String string) {
         return stringOps.reverseStringWithStringBuilder(string);
     }
 
-    @Deprecated(since = "2.0")
+   
     public List<Integer> filterEvenNumbers(List<Integer> list) {
         return listOps.filterEvenNumbers(list);
     }
 
-    @Deprecated(since = "2.0")
+   
     public int maxNumber(List<Integer> list) {
         return numberOps.maxNumber(list);
     }
 
-    @Deprecated(since = "2.0")
+   
     public int getDuplicate(List<Integer> numbers) {
         return listOps.getDuplicate(numbers);
     }
 
-    @Deprecated(since = "2.0")
+   
     public int getDuplicateWithMap(List<Integer> numbers) {
         return listOps.getDuplicateWithMap(numbers);
     }
 
-    @Deprecated(since = "2.0")
+   
     public int getDuplicateUsingStreamApi(List<Integer> numbers) {
         return listOps.getDuplicateUsingStreamApi(numbers);
     }
 
-    @Deprecated(since = "2.0")
+   
     public int getDuplicateWithArray(List<Integer> numbers) {
         return listOps.getDuplicateWithArray(numbers);
     }
 
-    @Deprecated(since = "2.0")
     public String removeDuplicates(String str) {
         return stringOps.removeDuplicates(str);
     }
 
-    @Deprecated(since = "2.0")
     public boolean isPalindrome(String original) {
         return stringOps.isPalindrome(original);
     }
 
-    @Deprecated(since = "2.0")
     public boolean isPalindromeStringBuilder(String original) {
         return stringOps.isPalindromeStringBuilder(original);
     }
 
-    @Deprecated(since = "2.0")
     public boolean isTextPalindrome(String text) {
         return stringOps.isTextPalindrome(text);
     }
 
-    @Deprecated(since = "2.0")
     public int reverseInteger(int number) {
         return numberOps.reverseInteger(number);
     }
 
-    @Deprecated(since = "2.0")
     public int reverseIntegerWithoutString(int number) {
         return numberOps.reverseIntegerWithoutString(number);
     }
 
-    @Deprecated(since = "2.0")
     public boolean areAnagrams(String s1, String s2) {
         return stringOps.areAnagrams(s1, s2);
     }
 
-    @Deprecated(since = "2.0")
     public boolean areAnagramsOopApproach(String s1, String s2) {
         return stringOps.areAnagramsOopApproach(s1, s2);
     }
 
-    @Deprecated(since = "2.0")
     public boolean isAnagram(String[] words) {
         return stringOps.isAnagram(words);
     }
 
-    @Deprecated(since = "2.0")
     public String toggleString(String input) {
         return stringOps.toggleString(input);
     }
 
-    @Deprecated(since = "2.0")
     public String removeCharAt(String originalString, int indexToRemove) {
         return stringOps.removeCharAt(originalString, indexToRemove);
     }
 
-    @Deprecated(since = "2.0")
+   
     public int lengthOfLongestSubstring(String str) {
         return stringOps.lengthOfLongestSubstring(str);
     }
 
-    @Deprecated(since = "2.0")
+   
     public int[] toSum(int[] nums, int target) {
         return listOps.toSum(nums, target);
     }
 
-    @Deprecated(since = "2.0")
+   
     public List<String> getSortedHashTags(List<String> tweets) {
         return stringOps.getSortedHashTags(tweets);
     }
 
-    @Deprecated(since = "2.0")
+   
     public Set<String> filterUniqueHashtags() {
         return stringOps.filterUniqueHashtags();
     }
 
-    @Deprecated(since = "2.0")
+   
     public void printFormattedStrings(String[] strings, int columns_number) {
         stringOps.printFormattedStrings(strings, columns_number);
     }
 
-    @Deprecated(since = "2.0")
+   
     public int[] insertionSort(int[] array) {
         int n = array.length;
         for (int i = 1; i < n; i++) {
@@ -216,17 +205,17 @@ public class Coding {
         return array;
     }
 
-    @Deprecated(since = "2.0")
+   
     public int[] bubbleSort(int[] array) {
         return ArrayTasks.bubbleSortArray(array);
     }
 
-    @Deprecated(since = "2.0")
+   
     public int[] reverseArray(int[] numbers) {
         return ArrayTasks.reverseIntArray(numbers);
     }
 
-    @Deprecated(since = "2.0")
+   
     public int findMinInArray(int[] numbers) {
         int min = numbers[0];
         for (int number : numbers) {
@@ -237,7 +226,7 @@ public class Coding {
         return min;
     }
 
-    @Deprecated(since = "2.0")
+   
     public <T extends Comparable<T>> T findMinInArrayGenericComparable(T[] numbers) {
         T min = numbers[0];
         for (T number : numbers) {
@@ -248,7 +237,7 @@ public class Coding {
         return min;
     }
 
-    @Deprecated(since = "2.0")
+   
     public <T> T findMinInArrayGenericComparator(T[] numbers, java.util.Comparator<T> comparator) {
         T min = numbers[0];
         for (T number : numbers) {
@@ -259,27 +248,27 @@ public class Coding {
         return min;
     }
 
-    @Deprecated(since = "2.0")
+   
     public int findMissedNumber(int[] array) {
         return numberOps.findMissedNumber(array);
     }
 
-    @Deprecated(since = "2.0")
+   
     public int findMissedNumberBySum(int[] array) {
         return numberOps.findMissedNumberBySum(array);
     }
 
-    @Deprecated(since = "2.0")
+   
     public int[] sortOnesZeros(int[] array) {
         return numberOps.sortOnesZeros(array);
     }
 
-    @Deprecated(since = "2.0")
+   
     public String reverseString(String string) {
         return stringOps.reverseString(string);
     }
 
-    @Deprecated(since = "2.0")
+   
     public List<String> getSortedHashTagsOldStyle(List<String> tweets) {
         Map<String, Integer> hashtagCountMap = new HashMap<>();
 
@@ -304,17 +293,17 @@ public class Coding {
         return sortedHashtags;
     }
 
-    @Deprecated(since = "2.0")
+   
     public static int[] mergeSorted(int[] arr1, int[] arr2) {
         return ListOperations.mergeSorted(arr1, arr2);
     }
 
-    @Deprecated(since = "2.0")
+   
     public static int countSum(int... integers) {
         return NumberOperations.countSum(integers);
     }
 
-    @Deprecated(since = "2.0")
+   
     public Map<String, Integer> returnPrefieldMap() {
         return Map.of("Good", 1, "Better", 2, "Nice", 3, "Really", 4, "Day", 5,
                 "Weather", 6, "Moon", 7, "Home", 8, "White", 9, "Stone", 10);
