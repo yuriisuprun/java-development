@@ -128,6 +128,7 @@ public final class CounterDemo {
      * @return final counter value after all tasks complete
      * @throws InterruptedException if awaiting termination is interrupted
      */
+    @SuppressWarnings("resource")
     public static long runWithForkJoinPool(Stats stats) throws InterruptedException {
         ForkJoinPool pool = ForkJoinPool.commonPool();
         for (int i = 0; i < THREAD_COUNT; i++) {
