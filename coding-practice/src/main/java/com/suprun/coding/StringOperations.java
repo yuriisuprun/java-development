@@ -67,6 +67,7 @@ public class StringOperations {
      * @param string the string to reverse
      * @return the reversed string
      */
+    @SuppressWarnings("StringConcatenationInLoop")
     public String reverseStringWithConcatenation(String string) {
         String result = "";
         for (int i = string.length() - 1; i >= 0; i--) {

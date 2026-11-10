@@ -56,8 +56,7 @@ public final class CounterDemo {
      * @throws InterruptedException if awaiting termination is interrupted
      */
     public static long runWithExecutor(Stats stats) throws InterruptedException {
-        ExecutorService executor = Executors.newFixedThreadPool(THREAD_COUNT);
-        try {
+        try (ExecutorService executor = Executors.newFixedThreadPool(THREAD_COUNT)) {
             for (int i = 0; i < THREAD_COUNT; i++) {
                 executor.execute(() -> {
                     for (int j = 0; j < INCREMENTS_PER_THREAD; j++) {
@@ -65,7 +64,6 @@ public final class CounterDemo {
                     }
                 });
             }
-        } finally {
             executor.shutdown();
             if (!executor.awaitTermination(1, TimeUnit.MINUTES)) {
                 executor.shutdownNow();
@@ -82,8 +80,7 @@ public final class CounterDemo {
      * @throws InterruptedException if awaiting termination is interrupted
      */
     public static long runWithCachedThreadPool(Stats stats) throws InterruptedException {
-        ExecutorService executor = Executors.newCachedThreadPool();
-        try {
+        try (ExecutorService executor = Executors.newCachedThreadPool()) {
             for (int i = 0; i < THREAD_COUNT; i++) {
                 executor.execute(() -> {
                     for (int j = 0; j < INCREMENTS_PER_THREAD; j++) {
@@ -91,7 +88,6 @@ public final class CounterDemo {
                     }
                 });
             }
-        } finally {
             executor.shutdown();
             if (!executor.awaitTermination(1, TimeUnit.MINUTES)) {
                 executor.shutdownNow();
@@ -141,7 +137,9 @@ public final class CounterDemo {
                 }
             });
         }
-        pool.awaitQuiescence(1, TimeUnit.MINUTES);
+        if (!pool.awaitQuiescence(1, TimeUnit.MINUTES)) {
+            pool.shutdownNow();
+        }
         return stats.getCounter();
     }
 
@@ -153,8 +151,7 @@ public final class CounterDemo {
      * @throws InterruptedException if awaiting termination is interrupted
      */
     public static long runWithVirtualThreadExecutor(Stats stats) throws InterruptedException {
-        ExecutorService executor = Executors.newVirtualThreadPerTaskExecutor();
-        try {
+        try (ExecutorService executor = Executors.newVirtualThreadPerTaskExecutor()) {
             for (int i = 0; i < THREAD_COUNT; i++) {
                 executor.execute(() -> {
                     for (int j = 0; j < INCREMENTS_PER_THREAD; j++) {
@@ -162,7 +159,6 @@ public final class CounterDemo {
                     }
                 });
             }
-        } finally {
             executor.shutdown();
             if (!executor.awaitTermination(1, TimeUnit.MINUTES)) {
                 executor.shutdownNow();

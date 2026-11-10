@@ -35,7 +35,7 @@ public final class Java16Features {
             throw new IllegalArgumentException("Discount percent must be between 0 and 100");
         }
 
-        BigDecimal discountMultiplier = BigDecimal.ONE.subtract(discountPercent.divide(ONE_HUNDRED));
+        BigDecimal discountMultiplier = BigDecimal.ONE.subtract(discountPercent.divide(ONE_HUNDRED, RoundingMode.HALF_UP));
         BigDecimal discountedPrice = product.price()
                 .multiply(discountMultiplier)
                 .setScale(2, RoundingMode.HALF_UP);
