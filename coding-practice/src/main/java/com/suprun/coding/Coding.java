@@ -23,7 +23,8 @@ public class Coding {
         // String operations
 //        System.out.println("=== String Operations ===");
 //        System.out.println("First unique character: " + strOps.returnFirstUnique("abcca"));
-        System.out.println(strOps.checkIfAnagrams("silent", "listenn"));
+//        System.out.println(strOps.checkIfAnagrams("silent", "listenn"));
+        System.out.println(strOps.findDuplicates(Arrays.asList(2, 4, 8, 8, 90, 20, 20, 5, 5)));
 //        strOps.printFormattedStrings(new String[]{"4", "7", "nkjhjhjkljl", "l", "8", "kl", "oipip", "hhhsu", "6"}, 4);
 
         // List operations

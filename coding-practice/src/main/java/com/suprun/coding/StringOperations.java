@@ -29,14 +29,14 @@ public class StringOperations {
         return new String(result);
     }
 
-    public Character returnFirstUnique(String str){
+    public Character returnFirstUnique(String str) {
         char[] charArray = str.toCharArray();
         HashMap<Character, Integer> counter = new HashMap<>();
         for (char c : charArray) {
             counter.put(c, counter.getOrDefault(c, 0) + 1);
         }
         for (char c : charArray) {
-            if (counter.get(c) == 1){
+            if (counter.get(c) == 1) {
                 return c;
             }
         }
@@ -59,6 +59,20 @@ public class StringOperations {
         Arrays.sort(charArr2);
 
         return Arrays.equals(charArr1, charArr2);
+    }
+
+    public Set<Integer> findDuplicates(List<Integer> numbers) {
+        if(numbers == null) {
+            return Collections.EMPTY_SET;
+        }
+        HashSet<Integer> seen = new HashSet<>();
+        HashSet<Integer> duplicates = new HashSet<>();
+        for (Integer number : numbers) {
+            if(!seen.add(number)) {
+                duplicates.add(number);
+            }
+        }
+        return duplicates;
     }
 
     /**
@@ -417,7 +431,7 @@ public class StringOperations {
     /**
      * Prints strings formatted in columns with aligned spacing.
      *
-     * @param strings the array of strings to print
+     * @param strings       the array of strings to print
      * @param columnsNumber the number of columns
      */
     public void printFormattedStrings(String[] strings, int columnsNumber) {
