@@ -63,7 +63,7 @@ public class StringOperations {
 
     public Set<Integer> findDuplicates(List<Integer> numbers) {
         if(numbers == null) {
-            return Collections.EMPTY_SET;
+            return Collections.emptySet();
         }
         HashSet<Integer> seen = new HashSet<>();
         HashSet<Integer> duplicates = new HashSet<>();
