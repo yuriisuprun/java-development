@@ -21,49 +21,51 @@ public class Coding {
         ListOperations listOps = new ListOperations();
 
         // String operations
-        System.out.println("=== String Operations ===");
-        strOps.printFormattedStrings(new String[]{"4", "7", "nkjhjhjkljl", "l", "8", "kl", "oipip", "hhhsu", "6"}, 4);
+//        System.out.println("=== String Operations ===");
+//        System.out.println("First unique character: " + strOps.returnFirstUnique("abcca"));
+        System.out.println(strOps.checkIfAnagrams("silent", "listenn"));
+//        strOps.printFormattedStrings(new String[]{"4", "7", "nkjhjhjkljl", "l", "8", "kl", "oipip", "hhhsu", "6"}, 4);
 
         // List operations
-        System.out.println("\n=== List Operations ===");
-        System.out.println(listOps.filterEvenNumbers(Arrays.asList(1, 2, 3, 4, 5, 6, 7)));
-        System.out.println(numOps.maxNumber(Arrays.asList(1, 2, 3, 4, 5, 6, 7)));
+//        System.out.println("\n=== List Operations ===");
+//        System.out.println(listOps.filterEvenNumbers(Arrays.asList(1, 2, 3, 4, 5, 6, 7)));
+//        System.out.println(numOps.maxNumber(Arrays.asList(1, 2, 3, 4, 5, 6, 7)));
 
         // Array operations
-        System.out.println("\n=== Array Operations ===");
-        int[] arr1 = {1, 5, 9};
-        int[] arr2 = {4, 6, 7, 10};
-        System.out.println(Arrays.toString(ListOperations.mergeSorted(arr1, arr2)));
+//        System.out.println("\n=== Array Operations ===");
+//        int[] arr1 = {1, 5, 9};
+//        int[] arr2 = {4, 6, 7, 10};
+//        System.out.println(Arrays.toString(ListOperations.mergeSorted(arr1, arr2)));
 
         // Number operations
-        System.out.println("\n=== Number Operations ===");
-        System.out.println("count sum: " + NumberOperations.countSum(1, 2, 3, 4, 5));
+//        System.out.println("\n=== Number Operations ===");
+//        System.out.println("count sum: " + NumberOperations.countSum(1, 2, 3, 4, 5));
 
         // String analysis
-        String text = "Hello world! Hello Java, hello world.";
-        System.out.println("unique strings: " + StringOperations.countUniqueStrings(text));
+//        String text = "Hello world! Hello Java, hello world.";
+//        System.out.println("unique strings: " + StringOperations.countUniqueStrings(text));
 
         // Duplicate detection
-        List<Integer> integers = Arrays.asList(2, 4, 8, 8, 90, 20, 20, 5, 5);
-        List<Integer> duplicates = ListOperations.findDuplicates(integers);
-        System.out.println("duplicates: " + duplicates);
+//        List<Integer> integers = Arrays.asList(2, 4, 8, 8, 90, 20, 20, 5, 5);
+//        List<Integer> duplicates = ListOperations.findDuplicates(integers);
+//        System.out.println("duplicates: " + duplicates);
 
         // String manipulation
         List<String> unsortedStrings = Arrays.asList("cat", "white", "my", "flower", "home");
         List<String> sorted = StringOperations.sortStringsByLength(unsortedStrings);
-        System.out.println("sorted by length: " + sorted);
+//        System.out.println("sorted by length: " + sorted);
 
         List<String> separatedStrings = Arrays.asList("a", "b", "c", "d", "e");
         String joinedStrings = StringOperations.joinStrings(separatedStrings);
-        System.out.println("joined: " + joinedStrings);
+//        System.out.println("joined: " + joinedStrings);
 
         List<String> words = List.of("the", "your", "background", "picture", "way");
         String longestString = StringOperations.getLongestString(words);
-        System.out.println("longest: " + longestString);
+//        System.out.println("longest: " + longestString);
 
         List<Integer> numbers = List.of(2, 3, 3, 3, 4, 4, 5);
         Map<Integer, Long> collectedNumbers = ListOperations.collectNumbers(numbers);
-        System.out.println("collected: " + collectedNumbers);
+//        System.out.println("collected: " + collectedNumbers);
     }
 
     // Deprecated delegation methods for backward compatibility

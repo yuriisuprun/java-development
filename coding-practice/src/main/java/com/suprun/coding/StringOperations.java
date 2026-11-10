@@ -29,6 +29,38 @@ public class StringOperations {
         return new String(result);
     }
 
+    public Character returnFirstUnique(String str){
+        char[] charArray = str.toCharArray();
+        HashMap<Character, Integer> counter = new HashMap<>();
+        for (char c : charArray) {
+            counter.put(c, counter.getOrDefault(c, 0) + 1);
+        }
+        for (char c : charArray) {
+            if (counter.get(c) == 1){
+                return c;
+            }
+        }
+        return null;
+    }
+
+    public boolean checkIfAnagrams(String str1, String str2) {
+        if (str1 == null || str2 == null) {
+            return false;
+        }
+
+        if (str1.length() != str2.length()) {
+            return false;
+        }
+
+        char[] charArr1 = str1.toCharArray();
+        char[] charArr2 = str2.toCharArray();
+
+        Arrays.sort(charArr1);
+        Arrays.sort(charArr2);
+
+        return Arrays.equals(charArr1, charArr2);
+    }
+
     /**
      * Reverses a string using string concatenation (inefficient, for demonstration only).
      *
